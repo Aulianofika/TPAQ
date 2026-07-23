@@ -655,29 +655,14 @@
 
                     <div class="bento-grid">
                         <div class="form-group">
-                            <label class="form-label">KELOMPOK</label>
+                            <label class="form-label">Kelas</label>
                             <input type="text" name="kelompok" id="kelompok_input" class="custom-input"
                                 placeholder="Otomatis terisi..." readonly required style="background: rgba(0,0,0,0.02);">
                         </div>
                         <div class="form-group">
                             <label class="form-label">TAHUN PELAJARAN</label>
-                            <select name="tahun_pelajaran" class="custom-input" required style="background: #FFFFFF; border-color: rgba(0, 50, 39, 0.2); font-weight: 600; color: #003227;">
-                                @php
-                                    $currentMonth = (int)date('n');
-                                    $currentYear = (int)date('Y');
-                                    $taStart = ($currentMonth >= 7) ? $currentYear : $currentYear - 1;
-                                    if ($taStart < 2026) $taStart = 2026;
-                                    $defaultTA = $taStart . '/' . ($taStart + 1);
-                                    
-                                    $startYearList = 2026;
-                                    for($i = 0; $i < 4; $i++) {
-                                        $y = $startYearList + $i;
-                                        $tp = $y . '/' . ($y + 1);
-                                        $selected = ($defaultTA == $tp) ? 'selected' : '';
-                                        echo '<option value="'.$tp.'" '.$selected.'>'.$tp.'</option>';
-                                    }
-                                @endphp
-                            </select>
+                            <input type="text" name="tahun_pelajaran" id="tahun_pelajaran_input" class="custom-input"
+                                 placeholder="Otomatis terisi...    " readonly required style="background: rgba(0,0,0,0.02);">
                         </div>
                     </div>
                 </div>
@@ -690,7 +675,7 @@
                     </div>
                     <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #404945; margin-top: 0; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: #FFF9E6; border-radius: 12px; border-left: 4px solid #FBBF24;">
                         <span class="material-symbols-outlined" style="color: #D97706; font-size: 20px;">info</span>
-                        Silakan isi semua kolom nilai di bawah dengan skala <strong>0 - 100</strong>. Anda diwajibkan mengisi seluruh nilai agar laporan dapat disimpan.
+                        Silakan isi semua kolom nilai di bawah dengan skala <strong>0 - 100,</strong> Anda diwajibkan mengisi seluruh nilai agar laporan dapat disimpan.
                     </p>
 
                     <div class="bento-grid">
@@ -806,30 +791,24 @@
                                 <h4 class="bento-title-light">Ekstrakurikuler</h4>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">DIDIKAN SUBUH</span>
-                                    <select name="ekstra_subuh" class="nilai-input-light">
-                                        <option value="A">A</option>
-                                        <option value="B" selected>B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                    </select>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="number" name="ekstra_subuh" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai">
+                                        <span class="grade-badge grade-light" id="grade_ekstra_subuh">-</span>
+                                    </div>
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">QASIDAH/REBANA</span>
-                                    <select name="ekstra_rebana" class="nilai-input-light">
-                                        <option value="A">A</option>
-                                        <option value="B" selected>B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                    </select>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="number" name="ekstra_rebana" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai">
+                                        <span class="grade-badge grade-light" id="grade_ekstra_rebana">-</span>
+                                    </div>
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">OLAHRAGA</span>
-                                    <select name="ekstra_olahraga" class="nilai-input-light">
-                                        <option value="A">A</option>
-                                        <option value="B" selected>B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                    </select>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="number" name="ekstra_olahraga" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai">
+                                        <span class="grade-badge grade-light" id="grade_ekstra_olahraga">-</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -926,9 +905,9 @@
                             <label
                                 style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 10px; text-transform: uppercase; color: #404945;">KEPALA
                                 TPA</label>
-                            <input type="text" name="kepala_tpa" value="H. Ahmad Syukron, S.Pd.I"
-                                style="background: #FFFFFF; border-radius: 32px; border: none; padding: 12px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; color: #1C1C18; outline: none; width: 100%; box-sizing: border-box;"
-                                required>
+                            <input type="text" name="kepala_tpa" value="{{ $kepalaTPA ? $kepalaTPA->nama : 'Belum Ada Kepala TPA' }}"
+                                style="background: rgba(0,0,0,0.02); border-radius: 32px; border: none; padding: 12px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; color: #1C1C18; outline: none; width: 100%; box-sizing: border-box;"
+                                readonly required>
                         </div>
 
                         <!-- USTADZ / USTADZAH -->
@@ -967,7 +946,10 @@
         @php
             $santriMap = [];
             foreach($santris as $santri) {
-                $santriMap[$santri->id_santri] = $santri->kelas->nama_kelas ?? '';
+                $santriMap[$santri->id_santri] = [
+                    'kelas' => $santri->kelas->nama_kelas ?? '',
+                    'tahun_ajaran' => $santri->kelas->tahun_ajaran ?? ''
+                ];
             }
         @endphp
         <script>
@@ -1025,6 +1007,18 @@
                 });
 
                 calculateTotals();
+                
+                // For Ekstrakurikuler
+                const ekstraInputs = document.querySelectorAll('.hitung-ekstra');
+                ekstraInputs.forEach(input => {
+                    input.addEventListener('input', function() {
+                        let val = parseFloat(input.value);
+                        const badge = document.getElementById('grade_' + input.name);
+                        if (badge) {
+                            badge.textContent = !isNaN(val) ? getGrade(val) : '-';
+                        }
+                    });
+                });
 
 
 
@@ -1033,11 +1027,15 @@
 
             const santriInput = document.getElementById('santri_name_input');
             const kelompokInput = document.getElementById('kelompok_input');
+            const tahunInput = document.getElementById('tahun_pelajaran_input');
 
             santriInput.addEventListener('input', function () {
                 const nama = this.value;
                 if (santriData[nama]) {
-                    kelompokInput.value = santriData[nama];
+                    kelompokInput.value = santriData[nama].kelas;
+                    if (santriData[nama].tahun_ajaran) {
+                        tahunInput.value = santriData[nama].tahun_ajaran.replace('-', '/');
+                    }
                 } else {
                     kelompokInput.value = '';
                 }
@@ -1046,7 +1044,7 @@
                 function fetchAbsensi() {
                     const id_santri = document.getElementById('santri_name_input').value;
                     const caturwulan = document.querySelector('input[name="caturwulan"]:checked').value;
-                    const tahun_pelajaran = document.querySelector('select[name="tahun_pelajaran"]').value;
+                    const tahun_pelajaran = document.querySelector('input[name="tahun_pelajaran"]').value;
 
                     if (id_santri && caturwulan && tahun_pelajaran) {
                         fetch(`{{ route('admin.eraport.get_absensi') }}?id_santri=${id_santri}&caturwulan=${caturwulan}&tahun_pelajaran=${tahun_pelajaran}`)
@@ -1062,7 +1060,7 @@
 
                 // Listen for changes
                 document.getElementById('santri_name_input').addEventListener('change', fetchAbsensi);
-                document.querySelector('select[name="tahun_pelajaran"]').addEventListener('change', fetchAbsensi);
+                document.querySelector('input[name="tahun_pelajaran"]').addEventListener('change', fetchAbsensi);
                 cawuRadios.forEach(radio => {
                     radio.addEventListener('change', fetchAbsensi);
                 });

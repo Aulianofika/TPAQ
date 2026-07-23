@@ -11,7 +11,8 @@ class EraportController extends Controller
     public function index()
     {
         $santris = Santri::with('kelas')->where('status', 'aktif')->orderBy('nama', 'asc')->get();
-        return view('admin.eraport', compact('santris'));
+        $kepalaTPA = \App\Models\Pengurus::where('is_kepala', 1)->first();
+        return view('admin.eraport', compact('santris', 'kepalaTPA'));
     }
 
     public function getAbsensi(Request $request)
@@ -106,5 +107,12 @@ class EraportController extends Controller
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.eraport_pdf', compact('eraport', 'nama_guru'));
         return $pdf->stream('Preview_E-Raport.pdf');
+    }
+
+    public function destroy($id)
+    {
+        $eraport = \App\Models\Eraport::findOrFail($id);
+        $eraport->delete();
+        return redirect()->back()->with('success', 'Riwayat E-Rapor berhasil dihapus!');
     }
 }

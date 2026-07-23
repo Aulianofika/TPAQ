@@ -146,7 +146,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <div class="footer-copy">© 2024 TPA Baitur Ridwan. All rights reserved.</div>
+            <div class="footer-copy">© 2026 TPA Baitur Ridwan.</div>
         </div>
     </footer>
 
@@ -180,11 +180,9 @@
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 80) {
-                navbar.style.padding = '12px 40px';
-                navbar.style.background = 'rgba(0, 50, 39, 0.97)';
+                navbar.classList.add('scrolled');
             } else {
-                navbar.style.padding = '20px 40px';
-                navbar.style.background = 'rgba(0, 50, 39, 0.85)';
+                navbar.classList.remove('scrolled');
             }
         });
 

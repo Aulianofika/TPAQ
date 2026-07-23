@@ -195,13 +195,12 @@
         =========================== */
         .quran-section {
             width: 100%;
-            min-height: 577px;
             background: var(--cream);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 96px 24px;
+            padding: 96px 24px 64px;
             overflow: hidden;
         }
 
@@ -289,7 +288,7 @@
         .prayer-section {
             width: 100%;
             background: var(--cream-alt);
-            padding: 96px 0;
+            padding: 64px 0 96px;
         }
 
         .prayer-container {
@@ -334,47 +333,63 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 32px;
-            gap: 8px;
+            padding: 24px;
+            gap: 12px;
             background: var(--white);
-            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-            border-radius: 48px 48px 8px 8px;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.03);
+            border-radius: 24px;    
+            border: 1px solid rgba(0, 50, 39, 0.05);
+            transition: all 0.3s ease;
         }
 
         .prayer-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0px 12px 24px rgba(0, 50, 39, 0.12);
+            box-shadow: 0px 12px 24px rgba(0, 50, 39, 0.08);
+            border-color: rgba(0, 50, 39, 0.1);
+        }
+
+        .prayer-card.active-prayer {
+            background: var(--green-deep);
+            border-color: var(--green-deep);
+            transform: scale(1.05);
+            box-shadow: 0px 16px 32px rgba(0, 50, 39, 0.2);
+        }
+
+        .prayer-card.active-prayer .prayer-name,
+        .prayer-card.active-prayer .prayer-time {
+            color: var(--white);
         }
 
         .prayer-icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gold-dark);
+            margin-bottom: 4px;
         }
 
-        .prayer-icon svg {
-            width: 100%;
-            height: 100%;
+        .prayer-card.active-prayer .prayer-icon {
+            color: var(--gold-light) !important;
         }
 
         .prayer-name {
             font-family: 'Manrope', sans-serif;
             font-weight: 700;
-            font-size: 16px;
-            line-height: 24px;
+            font-size: 14px;
+            line-height: 20px;
             color: var(--text-dark);
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .prayer-time {
             font-family: 'Epilogue', sans-serif;
-            font-weight: 900;
-            font-size: 30px;
-            line-height: 36px;
+            font-weight: 800;
+            font-size: 28px;
+            line-height: 32px;
             color: var(--green-deep);
             text-align: center;
         }
@@ -481,8 +496,12 @@
             scroll-behavior: smooth;
             scrollbar-width: none;
             -ms-overflow-style: none;
-            padding-bottom: 24px;
-            /* Space for shadow/hover */
+            padding-top: 16px;
+            padding-bottom: 32px;
+            padding-left: 8px;
+            padding-right: 8px;
+            margin-left: -8px;
+            margin-right: -8px;
         }
 
         .reminder-cards::-webkit-scrollbar {
@@ -496,9 +515,9 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            border-radius: 48px 48px 8px 8px;
-            padding: 48px 41px;
-            min-height: 338px;
+            border-radius: 24px;
+            padding: 32px;
+            min-height: 280px;
             transition: all 0.3s ease;
             overflow: hidden;
             cursor: pointer;
@@ -950,6 +969,9 @@
         }
 
         @media (max-width: 768px) {
+            .hero-container {
+                padding: 64px 24px;
+            }
             .hero-title {
                 font-size: 40px;
                 letter-spacing: -1.5px;
@@ -1112,14 +1134,7 @@
                 {{-- Subuh --}}
                 <div class="prayer-card reveal delay-100">
                     <div class="prayer-icon">
-                        <svg viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16.5 4C10.977 4 6.5 8.477 6.5 14C6.5 19.523 10.977 24 16.5 24C18.656 24 20.652 23.313 22.281 22.148C20.445 22.695 18.371 22.168 17.086 20.672C15.215 18.485 15.485 15.211 17.672 13.336C19.316 11.899 21.629 11.575 23.598 12.389C22.672 7.672 19.992 4 16.5 4Z"
-                                fill="#735C00" />
-                            <path d="M16.5 6C11.53 6 7.5 10.03 7.5 15C7.5 19.97 11.53 24 16.5 24" stroke="#735C00"
-                                stroke-width="1.5" />
-                            <circle cx="26" cy="8" r="3" fill="#FED65B" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 40px;">wb_twilight</span>
                     </div>
                     <div class="prayer-name">Subuh</div>
                     <div class="prayer-time" id="time-subuh">04:21</div>
@@ -1128,25 +1143,7 @@
                 {{-- Dzuhur --}}
                 <div class="prayer-card reveal delay-200">
                     <div class="prayer-icon">
-                        <svg viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16.5" cy="16.5" r="7" fill="#735C00" />
-                            <line x1="16.5" y1="2" x2="16.5" y2="6" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="16.5" y1="27" x2="16.5" y2="31" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="2" y1="16.5" x2="6" y2="16.5" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="27" y1="16.5" x2="31" y2="16.5" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="6.4" y1="6.4" x2="9.2" y2="9.2" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="23.8" y1="23.8" x2="26.6" y2="26.6" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="26.6" y1="6.4" x2="23.8" y2="9.2" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="9.2" y1="23.8" x2="6.4" y2="26.6" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 40px;">light_mode</span>
                     </div>
                     <div class="prayer-name">Dzuhur</div>
                     <div class="prayer-time" id="time-dzuhur">11:54</div>
@@ -1155,13 +1152,7 @@
                 {{-- Ashar --}}
                 <div class="prayer-card reveal delay-200">
                     <div class="prayer-icon">
-                        <svg viewBox="0 0 33 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16.5" cy="14" r="7" fill="#735C00" />
-                            <path d="M16.5 2V6M16.5 22V26M2 14H6M27 14H31" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <path d="M7 5L9.8 7.8M23.2 20.2L26 23M26 5L23.2 7.8M9.8 20.2L7 23" stroke="#735C00"
-                                stroke-width="2" stroke-linecap="round" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 40px;">sunny</span>
                     </div>
                     <div class="prayer-name">Ashar</div>
                     <div class="prayer-time" id="time-ashar">15:19</div>
@@ -1170,16 +1161,7 @@
                 {{-- Maghrib --}}
                 <div class="prayer-card reveal delay-300">
                     <div class="prayer-icon">
-                        <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20C5 13.925 9.925 9 16 9C22.075 9 27 13.925 27 20" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="16" y1="2" x2="16" y2="5" stroke="#735C00" stroke-width="2" stroke-linecap="round" />
-                            <line x1="2" y1="20" x2="30" y2="20" stroke="#735C00" stroke-width="2" stroke-linecap="round" />
-                            <line x1="5" y1="9" x2="7.5" y2="11.5" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="27" y1="9" x2="24.5" y2="11.5" stroke="#735C00" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 40px;">nights_stay</span>
                     </div>
                     <div class="prayer-name">Maghrib</div>
                     <div class="prayer-time" id="time-maghrib">17:52</div>
@@ -1188,13 +1170,7 @@
                 {{-- Isya --}}
                 <div class="prayer-card reveal delay-400">
                     <div class="prayer-icon">
-                        <svg viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 3C10.477 3 6 7.477 6 13C6 18.523 10.477 23 16 23C18.156 23 20.152 22.313 21.781 21.148C19.945 21.695 17.871 21.168 16.586 19.672C14.715 17.485 14.985 14.211 17.172 12.336C18.816 10.899 21.129 10.575 23.098 11.389C22.172 6.672 19.492 3 16 3Z"
-                                fill="#735C00" />
-                            <circle cx="27" cy="6" r="2" fill="#FED65B" />
-                            <circle cx="23" cy="2" r="1.5" fill="#FED65B" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 40px;">bedtime</span>
                     </div>
                     <div class="prayer-name">Isya</div>
                     <div class="prayer-time" id="time-isya">19:05</div>
@@ -1231,17 +1207,7 @@
                 {{-- Card 1 --}}
                 <div class="reminder-card reveal delay-100" onclick="toggleActiveCard(this)">
                     <div class="reminder-card-icon">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 28V18C4 14.686 6.686 12 10 12H22C25.314 12 28 14.686 28 18V28" stroke="currentColor"
-                                stroke-width="1.5" stroke-linecap="round" />
-                            <path d="M2 28H30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                            <path d="M13 28V22C13 20.895 13.895 20 15 20H17C18.105 20 19 20.895 19 22V28"
-                                stroke="currentColor" stroke-width="1.5" />
-                            <path
-                                d="M16 4C14.343 4 13 5.343 13 7C13 8.657 14.343 10 16 10C17.657 10 19 8.657 19 7C19 5.343 17.657 4 16 4Z"
-                                fill="currentColor" />
-                            <path d="M16 10V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 32px;">mosque</span>
                     </div>
                     <h3 class="reminder-card-title">Doa Masuk Masjid</h3>
                     <div class="reminder-card-arabic">اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ</div>
@@ -1253,15 +1219,7 @@
                 {{-- Card 2 --}}
                 <div class="reminder-card reveal delay-200" onclick="toggleActiveCard(this)">
                     <div class="reminder-card-icon">
-                        <svg width="33" height="24" viewBox="0 0 33 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 3C2 3 7 1 16.5 1C26 1 31 3 31 3V23C31 23 26 21 16.5 21C7 21 2 23 2 23V3Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M16.5 1V21" stroke="currentColor" stroke-width="1.5" />
-                            <path d="M7 7C9.5 6.5 12 6.333 14.5 6.5" stroke="currentColor" stroke-width="1.2"
-                                stroke-linecap="round" />
-                            <path d="M7 11C9.5 10.5 12 10.333 14.5 10.5" stroke="currentColor" stroke-width="1.2"
-                                stroke-linecap="round" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 32px;">menu_book</span>
                     </div>
                     <h3 class="reminder-card-title">Adab Menuntut Ilmu</h3>
                     <p class="reminder-card-text">
@@ -1274,14 +1232,7 @@
                 {{-- Card 3 --}}
                 <div class="reminder-card reveal delay-300" onclick="toggleActiveCard(this)">
                     <div class="reminder-card-icon">
-                        <svg width="29" height="32" viewBox="0 0 29 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M14.5 28C14.5 28 3 21 3 12C3 7.582 6.582 4 11 4C12.874 4 14.592 4.674 15.94 5.793C13.97 7.246 12.667 9.473 12.667 12C12.667 16.023 15.977 19.333 20 19.333C21.358 19.333 22.626 18.952 23.704 18.293C22.352 24.023 14.5 28 14.5 28Z"
-                                fill="currentColor" />
-                            <path
-                                d="M20 4C17.239 4 15 6.239 15 9C15 11.761 17.239 14 20 14C22.761 14 25 11.761 25 9C25 6.239 22.761 4 20 4Z"
-                                fill="currentColor" opacity="0.7" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 32px;">volunteer_activism</span>
                     </div>
                     <h3 class="reminder-card-title">Berbakti pada Orang Tua</h3>
                     <p class="reminder-card-text">
@@ -1293,13 +1244,7 @@
                 {{-- Card 4 --}}
                 <div class="reminder-card reveal delay-400" onclick="toggleActiveCard(this)">
                     <div class="reminder-card-icon">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M16 10V16L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 32px;">hourglass_empty</span>
                     </div>
                     <h3 class="reminder-card-title">Keutamaan Sabar</h3>
                     <p class="reminder-card-text">
@@ -1311,13 +1256,7 @@
                 {{-- Card 5 --}}
                 <div class="reminder-card reveal delay-500" onclick="toggleActiveCard(this)">
                     <div class="reminder-card-icon">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M8 12C8 9.79086 9.79086 8 12 8H20C22.2091 8 24 9.79086 24 12V20C24 22.2091 22.2091 24 20 24H12C9.79086 24 8 22.2091 8 20V12Z"
-                                stroke="currentColor" stroke-width="1.5" />
-                            <path d="M12 16H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                            <path d="M12 20H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        </svg>
+                        <span class="material-symbols-outlined" style="font-size: 32px;">chat</span>
                     </div>
                     <h3 class="reminder-card-title">Menjaga Lisan</h3>
                     <p class="reminder-card-text">
@@ -1509,20 +1448,86 @@
 @push('scripts')
     <script>
         // Prayer times
-        function updatePrayerTimes() {
-            const times = {
+        async function updatePrayerTimes() {
+            // Default times in case API fails
+            const defaultTimes = {
                 subuh: '04:21',
                 dzuhur: '11:54',
                 ashar: '15:19',
                 maghrib: '17:52',
                 isya: '19:05'
             };
+            
+            let times = defaultTimes;
+            
+            try {
+                // Fetch today's prayer times for Padang, Sumatera Barat (0314)
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                
+                const response = await fetch(`https://api.myquran.com/v2/sholat/jadwal/0314/${year}/${month}/${day}`);
+                const result = await response.json();
+                
+                if (result && result.status && result.data && result.data.jadwal) {
+                    const jadwal = result.data.jadwal;
+                    times = {
+                        subuh: jadwal.subuh,
+                        dzuhur: jadwal.dzuhur,
+                        ashar: jadwal.ashar,
+                        maghrib: jadwal.maghrib,
+                        isya: jadwal.isya
+                    };
+                }
+            } catch (error) {
+                console.error('Failed to fetch prayer times, using default.', error);
+            }
+
+            // Update DOM with times
             Object.entries(times).forEach(([key, val]) => {
                 const el = document.getElementById('time-' + key);
                 if (el) el.textContent = val;
             });
+            
+            // Highlight current/next prayer
+            highlightCurrentPrayer(times);
         }
+        
+        function highlightCurrentPrayer(times) {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            const prayerMinutes = Object.entries(times).map(([key, val]) => {
+                const [h, m] = val.split(':').map(Number);
+                return { key, minutes: h * 60 + m };
+            });
+            
+            // Default to Isya if we are past Isya
+            let currentPrayer = 'isya';
+            
+            // Find the closest past prayer
+            for (let i = prayerMinutes.length - 1; i >= 0; i--) {
+                if (currentTime >= prayerMinutes[i].minutes) {
+                    currentPrayer = prayerMinutes[i].key;
+                    break;
+                }
+            }
+            
+            // Remove active-prayer from all
+            document.querySelectorAll('.prayer-card').forEach(card => {
+                card.classList.remove('active-prayer');
+            });
+            
+            // Add active-prayer to current
+            const currentEl = document.getElementById('time-' + currentPrayer);
+            if (currentEl) {
+                currentEl.closest('.prayer-card').classList.add('active-prayer');
+            }
+        }
+        
         updatePrayerTimes();
+
 
         const reminderContainer = document.getElementById('reminder-cards');
 

@@ -492,7 +492,7 @@
                 </div>
 
                 <select name="id_kelas" class="filter-select" onchange="this.form.submit()">
-                    <option value="">Semua Kelas</option>
+                    <option value="">Semua Tingkat</option>
                     @foreach($classes as $c)
                         <option value="{{ $c->id_kelas }}" {{ $id_kelas == $c->id_kelas ? 'selected' : '' }}>
                             {{ $c->nama_kelas }}

@@ -1054,21 +1054,26 @@
 </div>
 
 <!-- Modal Hapus Pembayaran -->
-<div class="modal-overlay" id="deleteModal">
-    <div class="modal-container danger-modal">
-        <div style="width: 80px; height: 80px; background: #FEF2F2; color: #DC2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
-            <span class="material-symbols-outlined" style="font-size: 40px;">delete_forever</span>
+<div id="deleteModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div style="background: white; border-radius: 24px; padding: 32px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+        <button type="button" onclick="closeDeleteModal()" style="position: absolute; right: 24px; top: 24px; background: none; border: none; cursor: pointer; color: #64748B; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s;" onmouseover="this.style.background='#F1F5F9'" onmouseout="this.style.background='none'">
+            <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+        
+        <h3 style="font-family: 'Epilogue', sans-serif; font-weight: 700; font-size: 20px; color: #003227; margin: 0 0 16px 0;">Hapus Data Pembayaran</h3>
+        
+        <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #64748B; margin: 0 0 32px 0; line-height: 1.6;">
+            Apakah Anda yakin ingin menghapus data pembayaran ini? Tindakan ini bersifat permanen dan tidak dapat dibatalkan.
+        </p>
+        
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button type="button" onclick="closeDeleteModal()" style="flex: 1; padding: 12px 24px; border-radius: 32px; border: 1px solid #E2E8F0; background: white; color: #475569; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='white'">Batal</button>
+            <form id="deleteForm" method="POST" style="margin: 0; flex: 1; display: flex;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" style="width: 100%; padding: 12px 24px; border-radius: 32px; border: none; background: #DC2626; color: white; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s;" onmouseover="this.style.background='#B91C1C'" onmouseout="this.style.background='#DC2626'">Hapus Data</button>
+            </form>
         </div>
-        <h3 style="font-family: 'Epilogue', sans-serif; font-weight: 800; font-size: 24px; color: #1C1C18; margin: 0 0 12px 0;">Hapus Data?</h3>
-        <p style="font-family: 'Plus Jakarta Sans', sans-serif; color: #78716C; margin: 0 0 32px 0;">Apakah Anda yakin ingin menghapus data pembayaran ini? Data yang dihapus tidak dapat dikembalikan.</p>
-        <form id="deleteForm" method="POST">
-            @csrf
-            @method('DELETE')
-            <div class="form-actions center">
-                <button type="button" class="cancel-btn" onclick="closeModal('deleteModal')">Batal</button>
-                <button type="submit" class="danger-btn">Ya, Hapus</button>
-            </div>
-        </form>
     </div>
 </div>
 
@@ -1103,13 +1108,36 @@
         const form = document.getElementById('deleteForm');
         form.action = `{{ url('/admin/iuran') }}/${id}`;
         
-        openModal('deleteModal');
+        const modal = document.getElementById('deleteModal');
+        modal.style.display = 'flex';
+        // Animasi pop in
+        const modalContent = modal.querySelector('div');
+        modalContent.style.opacity = '0';
+        modalContent.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            modalContent.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            modalContent.style.opacity = '1';
+            modalContent.style.transform = 'scale(1)';
+        }, 10);
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        const modalContent = modal.querySelector('div');
+        modalContent.style.opacity = '0';
+        modalContent.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
     }
 
     // Tutup modal jika klik di luar
     window.onclick = function(event) {
         if (event.target.classList.contains('modal-overlay')) {
             event.target.style.display = 'none';
+        }
+        if (event.target.id === 'deleteModal') {
+            closeDeleteModal();
         }
     }
 

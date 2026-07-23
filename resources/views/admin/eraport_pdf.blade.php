@@ -218,7 +218,7 @@
             <td align="right">Periode : Catur Wulan {{ $cawuStr }}</td>
         </tr>
         <tr>
-            <td>Kelompok : {{ $eraport->kelompok }}</td>
+            <td>Kelas : {{ $eraport->kelompok }}</td>
             <td align="right"></td>
         </tr>
     </table>

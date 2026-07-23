@@ -64,6 +64,11 @@ body {
     transition: all 0.3s ease;
 }
 
+.navbar.scrolled {
+    padding: 12px 40px;
+    background: rgba(0, 50, 39, 0.97);
+}
+
 .navbar-brand {
     font-family: 'Epilogue', serif;
     font-weight: 900;
@@ -302,7 +307,8 @@ body {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        margin-top: 0; /* Reset margin on mobile so it doesn't overlap weirdly */
+        margin-top: 0;
+        padding: 48px 24px 32px;
     }
     
     .footer-col {
@@ -424,6 +430,10 @@ body {
 @media (max-width: 768px) {
     .navbar {
         padding: 16px 24px;
+    }
+    
+    .navbar.scrolled {
+        padding: 12px 24px;
     }
 
     .navbar-toggle {

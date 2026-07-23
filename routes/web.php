@@ -44,6 +44,7 @@ Route::prefix('admin')->middleware(['auth', 'guru'])->group(function () {
     Route::get('/eraport/pdf/{id}', [\App\Http\Controllers\Admin\EraportController::class, 'cetakPdf'])->name('admin.eraport.pdf');
     Route::get('/eraport/preview/{id}', [\App\Http\Controllers\Admin\EraportController::class, 'previewPdf'])->name('admin.eraport.preview');
     Route::get('/eraport/get-absensi', [\App\Http\Controllers\Admin\EraportController::class, 'getAbsensi'])->name('admin.eraport.get_absensi');
+    Route::delete('/eraport/{id}', [\App\Http\Controllers\Admin\EraportController::class, 'destroy'])->name('admin.eraport.delete');
 
     // Hafalan
     Route::get('/hafalan', [\App\Http\Controllers\Admin\HafalanController::class, 'index'])->name('admin.hafalan');
