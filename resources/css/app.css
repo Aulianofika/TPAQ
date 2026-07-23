@@ -1,0 +1,461 @@
+/* ============================================
+   TPA AL-IMAN — Global Stylesheet
+   app.css
+   ============================================ */
+
+/* ===========================
+   CSS RESET & BASE
+=========================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --green-deep: #003227;
+    --green-mid: #004B3C;
+    --green-footer: #064E3B;
+    --green-dark: #065F46;
+    --green-teal: #7CBAA6;
+    --green-mint: #B0EFDA;
+    --cream: #FCF9F2;
+    --cream-alt: #F6F3EC;
+    --gold: #FED65B;
+    --gold-light: #FFE088;
+    --gold-dark: #735C00;
+    --gold-darker: #745C00;
+    --amber: #FBBF24;
+    --text-dark: #1C1C18;
+    --text-mid: #404945;
+    --white: #FFFFFF;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(0, 50, 39, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(176, 239, 218, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-family: 'Epilogue', serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--amber);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.navbar-toggle span {
+    width: 24px;
+    height: 3px;
+    background-color: var(--gold);
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+}
+
+.navbar-links a {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: rgba(209, 250, 229, 0.8);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+    color: var(--green-mint);
+}
+
+.navbar-cta {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 24px;
+    background: var(--gold);
+    color: var(--gold-darker);
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.navbar-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+.footer {
+    width: 100%;
+    background: var(--green-deep);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 64px 32px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-brand {
+    font-family: 'Liberation Serif', serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    color: #DCB127;
+    display: flex;
+    align-items: center;
+}
+
+.footer-tagline {
+    font-family: 'Liberation Serif', serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #FFFFFF;
+}
+
+.footer-social {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.footer-social-link {
+    width: 40px;
+    height: 40px;
+    background: #065F46;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FBBF24;
+    transition: all 0.2s;
+}
+
+.footer-social-link:hover {
+    background: rgba(167, 243, 208, 0.2);
+    transform: translateY(-2px);
+}
+
+.footer-heading {
+    font-family: 'Liberation Serif', serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #DCB127;
+    margin-bottom: 8px;
+}
+
+.footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer-nav a {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-nav a:hover {
+    color: var(--green-mint);
+}
+
+.footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
+.footer-contact-icon {
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-hours-box {
+    background: #003227;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-hours-day {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #DCB127;
+}
+
+.footer-hours-time {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.footer-bottom {
+    padding: 32px 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    width: 100%;
+}
+
+.footer-copy {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+    .footer {
+        height: auto;
+    }
+    .footer-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-top: 0; /* Reset margin on mobile so it doesn't overlap weirdly */
+    }
+    
+    .footer-col {
+        align-items: center;
+        width: 100%;
+        margin-bottom: 24px;
+    }
+
+    .footer-contact-item {
+        justify-content: center;
+    }
+}
+
+/* ===========================
+   ANIMATIONS (global)
+=========================== */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scrollBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(6px);
+        opacity: 0.5;
+    }
+}
+
+/* Intersection observer classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Delay utilities */
+.delay-100 {
+    transition-delay: 0.1s;
+}
+
+.delay-200 {
+    transition-delay: 0.2s;
+}
+
+.delay-300 {
+    transition-delay: 0.3s;
+}
+
+.delay-400 {
+    transition-delay: 0.4s;
+}
+
+/* ===========================
+   RESPONSIVE (global)
+=========================== */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 16px 24px;
+    }
+
+    .navbar-toggle {
+        display: flex;
+    }
+
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 50, 39, 0.98);
+        padding: 24px;
+        gap: 16px;
+        border-bottom: 1px solid rgba(176, 239, 218, 0.1);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
+
+    .navbar-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar-links a {
+        display: block;
+        padding: 12px;
+        font-size: 16px;
+    }
+}
