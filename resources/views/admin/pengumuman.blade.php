@@ -377,7 +377,7 @@
                         <td>
                             <div class="foto-cell">
                                 @if($p->gambar)
-                                    <img src="{{ Storage::url($p->gambar) }}" alt="Gambar" class="foto-img">
+                                    <img src="{{ Storage::url($p->gambar) }}" alt="Gambar" class="foto-img" onclick="viewImage('{{ Storage::url($p->gambar) }}', '{{ addslashes($p->judul) }}')" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                                 @else
                                     <div class="foto-img"
                                         style="background:#EBE8E1; display:flex; align-items:center; justify-content:center;">
@@ -587,5 +587,24 @@
                 modal.style.display = 'none';
             }, 300);
         }
-    </script>
+        function viewImage(url, title) {
+        Swal.fire({
+            title: title,
+            imageUrl: url,
+            imageAlt: title,
+            showConfirmButton: false,
+            showCloseButton: true,
+            customClass: {
+                image: 'swal-image-viewer'
+            }
+        });
+    }
+</script>
+<style>
+.swal-image-viewer {
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+</style>
 @endpush

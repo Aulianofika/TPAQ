@@ -752,7 +752,7 @@
                                 <span style="display: block; font-family: 'Epilogue', sans-serif; font-size: 14px; font-weight: 700; color: #003227;">{{ auth()->user()->name ?? 'Admin Utama' }}</span>
                                 <span style="display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; color: #78716C; text-transform: capitalize;">{{ auth()->user()->role ?? 'Administrator' }}</span>
                             </div>
-                            <form action="{{ route('logout') }}" method="POST" style="margin:0; padding:0;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="margin:0; padding:0;" onsubmit="confirmLogout(event)">
                                 @csrf
                                 <button type="submit" class="dropdown-item"
                                     style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left; font-family: inherit; margin-top: 4px;">
@@ -852,6 +852,26 @@
                 });
             }
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan keluar dari sesi ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#064E3B',
+                cancelButtonColor: '#DC2626',
+                confirmButtonText: 'Ya, keluar!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            })
+        }
     </script>
     @stack('scripts')
 </body>

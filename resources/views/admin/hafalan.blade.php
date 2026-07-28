@@ -844,7 +844,7 @@
                             <td style="padding-right: 24px;">
                                 <div class="action-buttons">
                                     @if(empty($target) || empty($target->target))
-                                    <button onclick="alert('Silakan atur Target Kelas terlebih dahulu sebelum mengisi progres hafalan santri!')" class="btn-icon btn-edit" title="Atur target kelas terlebih dahulu" style="opacity: 0.5; cursor: not-allowed;">
+                                    <button onclick="Swal.fire({icon: 'info', title: 'Target Belum Diatur', text: 'Silakan atur Target Kelas terlebih dahulu sebelum mengisi progres hafalan santri!', confirmButtonColor: '#004B3C', confirmButtonText: 'Mengerti'})" class="btn-icon btn-edit" title="Atur target kelas terlebih dahulu" style="opacity: 0.5; cursor: not-allowed;">
                                         <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                     </button>
                                     @else
@@ -986,7 +986,13 @@
         const start = document.getElementById('target-surah-start').value.trim();
         const end = document.getElementById('target-surah-end').value.trim();
         if (!start || !end) {
-            alert('Surah Awal dan Surah Akhir harus diisi untuk menentukan target kelas!');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Data Belum Lengkap',
+                text: 'Surah Awal dan Surah Akhir harus diisi untuk menentukan target kelas!',
+                confirmButtonColor: '#004B3C',
+                confirmButtonText: 'Oke'
+            });
             return false;
         }
         return true;
@@ -1000,7 +1006,13 @@
         
         if (status !== 'belum') {
             if (!surah || !ayat) {
-                alert('Nama Surah dan Ayat Terakhir harus diisi jika status selain "Belum Dievaluasi"!');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Data Belum Lengkap',
+                    text: 'Nama Surah dan Ayat Terakhir harus diisi jika status selain "Belum Dievaluasi"!',
+                    confirmButtonColor: '#004B3C',
+                    confirmButtonText: 'Oke'
+                });
                 return false;
             }
         }

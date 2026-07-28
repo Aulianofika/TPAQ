@@ -44,6 +44,15 @@ class PengurusController extends Controller
 
     public function store(Request $request)
     {
+        $messages = [
+            'nama.required' => 'Nama wajib diisi.',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih.',
+            'jenis_kelamin.in' => 'Pilihan jenis kelamin tidak valid.',
+            'foto.image' => 'File yang diunggah harus berupa gambar.',
+            'foto.mimes' => 'Format foto harus berupa jpeg, png, jpg, atau webp.',
+            'foto.max' => 'Ukuran foto maksimal adalah 2MB (2048 KB).',
+        ];
+
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:L,P',
@@ -52,7 +61,7 @@ class PengurusController extends Controller
             'quote' => 'nullable|string',
             'is_kepala' => 'nullable|boolean',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ]);
+        ], $messages);
         
         $validated['is_kepala'] = $request->has('is_kepala');
 
@@ -72,6 +81,15 @@ class PengurusController extends Controller
 
     public function update(Request $request, $id)
     {
+        $messages = [
+            'nama.required' => 'Nama wajib diisi.',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih.',
+            'jenis_kelamin.in' => 'Pilihan jenis kelamin tidak valid.',
+            'foto.image' => 'File yang diunggah harus berupa gambar.',
+            'foto.mimes' => 'Format foto harus berupa jpeg, png, jpg, atau webp.',
+            'foto.max' => 'Ukuran foto maksimal adalah 2MB (2048 KB).',
+        ];
+
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:L,P',
@@ -80,7 +98,7 @@ class PengurusController extends Controller
             'quote' => 'nullable|string',
             'is_kepala' => 'nullable|boolean',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ]);
+        ], $messages);
 
         $validated['is_kepala'] = $request->has('is_kepala');
 
@@ -135,7 +153,18 @@ class PengurusController extends Controller
             $rules['password'] = 'required|min:8|confirmed';
         }
 
-        $request->validate($rules);
+        $messages = [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email ini sudah terdaftar/digunakan.',
+            'role.required' => 'Role (peran) wajib dipilih.',
+            'role.in' => 'Pilihan role tidak valid.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi minimal harus 8 karakter.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+        ];
+
+        $request->validate($rules, $messages);
 
         if ($pengurus->id_user && $pengurus->user) {
             $user = $pengurus->user;

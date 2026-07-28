@@ -71,6 +71,14 @@ class EraportController extends Controller
 
     public function store(Request $request)
     {
+        $messages = [
+            'id_santri.required' => 'Nama santri wajib dipilih.',
+            'id_santri.exists' => 'Santri yang dipilih tidak valid.',
+            'tahun_pelajaran.required' => 'Tahun pelajaran wajib diisi.',
+            'caturwulan.required' => 'Caturwulan wajib dipilih.',
+            'kelompok.required' => 'Kelompok kelas wajib diisi.',
+        ];
+
         $validated = $request->validate([
             'id_santri' => 'required|exists:santris,id_santri',
             'caturwulan' => 'required|in:1,2,3',
@@ -101,7 +109,7 @@ class EraportController extends Controller
             'tanggal_pelaporan' => 'nullable|date',
             'catatan_guru' => 'nullable|string',
             'status_kenaikan' => 'nullable|string|max:50',
-        ]);
+        ], $messages);
 
         $validated['absen_sakit'] = $validated['absen_sakit'] ?? 0;
         $validated['absen_izin'] = $validated['absen_izin'] ?? 0;

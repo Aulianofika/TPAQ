@@ -281,7 +281,7 @@
             @forelse($pengumuman as $p)
                 <div class="pengumuman-card {{ $p->kategori == 'penting' ? 'important' : '' }}">
                     @if($p->gambar)
-                        <img src="{{ Storage::url($p->gambar) }}" alt="{{ $p->judul }}" class="card-image">
+                        <img src="{{ Storage::url($p->gambar) }}" alt="{{ $p->judul }}" class="card-image" onclick="viewImage('{{ Storage::url($p->gambar) }}', '{{ addslashes($p->judul) }}')" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                     @else
                         <div class="card-image" style="display:flex; align-items:center; justify-content:center; background:#EBE8E1;">
                             <span class="material-symbols-outlined" style="font-size: 48px; color: #BFc9c4;">campaign</span>
@@ -318,3 +318,28 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function viewImage(url, title) {
+        Swal.fire({
+            title: title,
+            imageUrl: url,
+            imageAlt: title,
+            showConfirmButton: false,
+            showCloseButton: true,
+            customClass: {
+                image: 'swal-image-viewer'
+            }
+        });
+    }
+</script>
+<style>
+.swal-image-viewer {
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+</style>
+@endpush

@@ -414,6 +414,13 @@
             {{ session('error') }}
         </div>
     @endif
+
+    @if($errors->any())
+        <div class="alert alert-error">
+            <span class="material-symbols-outlined" style="font-size: 20px;">error</span>
+            {{ $errors->first() }}
+        </div>
+    @endif
     
     <!-- Header -->
     <div class="page-header">

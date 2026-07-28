@@ -757,9 +757,13 @@
                         <div class="form-group" style="flex:1;">
                             <label class="form-label">Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="form-input" required>
+                                <option value="" disabled selected>-- Pilih Jenis Kelamin --</option>
                                 <option value="L">Laki-Laki</option>
                                 <option value="P">Perempuan</option>
                             </select>
+                            @error('jenis_kelamin')
+                                <div style="color: #BA1A1A; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -802,6 +806,7 @@
                         <div class="form-group" style="flex:1;">
                             <label class="form-label">Jenis Kelamin</label>
                             <select name="jenis_kelamin" id="editJK" class="form-input" required>
+                                <option value="" disabled>-- Pilih Jenis Kelamin --</option>
                                 <option value="L">Laki-Laki</option>
                                 <option value="P">Perempuan</option>
                             </select>

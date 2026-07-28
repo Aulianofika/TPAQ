@@ -156,7 +156,7 @@
     <main class="detail-container">
         <div class="detail-card">
             @if($pengumuman->gambar)
-                <img src="{{ Storage::url($pengumuman->gambar) }}" alt="{{ $pengumuman->judul }}" class="detail-image">
+                <img src="{{ Storage::url($pengumuman->gambar) }}" alt="{{ $pengumuman->judul }}" class="detail-image" onclick="viewImage('{{ Storage::url($pengumuman->gambar) }}', '{{ addslashes($pengumuman->judul) }}')" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
             @else
                 <div class="detail-image-placeholder">
                     <span class="material-symbols-outlined" style="font-size: 64px; color: #BFc9c4;">campaign</span>
@@ -194,3 +194,28 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function viewImage(url, title) {
+        Swal.fire({
+            title: title,
+            imageUrl: url,
+            imageAlt: title,
+            showConfirmButton: false,
+            showCloseButton: true,
+            customClass: {
+                image: 'swal-image-viewer'
+            }
+        });
+    }
+</script>
+<style>
+.swal-image-viewer {
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+</style>
+@endpush

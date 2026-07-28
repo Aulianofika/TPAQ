@@ -120,11 +120,15 @@ class AbsensiController extends Controller
 
     public function store(Request $request)
     {
+        $messages = [
+            'tanggal.required' => 'Tanggal absensi wajib dipilih.'
+        ];
+
         $request->validate([
             'tanggal' => 'required|date',
             'attendance' => 'nullable|array',
             'attendance.*' => 'required|in:hadir,izin,sakit,alfa',
-        ]);
+        ], $messages);
 
         $date = $request->input('tanggal');
         $attendanceData = $request->input('attendance', []);

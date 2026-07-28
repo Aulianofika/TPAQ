@@ -355,7 +355,7 @@
             @else
                 <div class="masonry-columns">
                 @foreach($galeris as $item)
-                    <div class="gallery-item reveal gallery-box" data-kategori="{{ $item->kategori }}">
+                    <div class="gallery-item reveal gallery-box" data-kategori="{{ $item->kategori }}" onclick="viewImage('{{ Storage::url($item->foto) }}', '{{ addslashes($item->judul) }}')" style="cursor: pointer;">
                         <div class="item-bg" style="background-image: url('{{ Storage::url($item->foto) }}'); background-size: cover; background-position: center;"></div>
                         <div class="item-overlay">
                             <div class="item-tag">{{ strtoupper(str_replace('_', ' ', $item->kategori)) }}</div>
@@ -384,7 +384,21 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    function viewImage(url, title) {
+        Swal.fire({
+            title: title,
+            imageUrl: url,
+            imageAlt: title,
+            showConfirmButton: false,
+            showCloseButton: true,
+            customClass: {
+                image: 'swal-image-viewer'
+            }
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const filterBtns = document.querySelectorAll('.filter-btn');
         const galleryItems = document.querySelectorAll('.gallery-box');
@@ -409,4 +423,11 @@
         });
     });
 </script>
+<style>
+.swal-image-viewer {
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+</style>
 @endpush

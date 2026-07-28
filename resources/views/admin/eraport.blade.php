@@ -573,7 +573,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('admin.eraport.store') }}" method="POST">
+            <form action="{{ route('admin.eraport.store') }}" method="POST" id="eraportForm" novalidate>
                 @csrf
 
                 @if(session('success'))
@@ -594,6 +594,13 @@
                                 <span class="material-symbols-outlined" style="font-size: 20px;">print</span> Cetak PDF Sekarang
                             </a>
                         @endif
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div class="alert alert-error" style="background: #FEE2E2; border: 1px solid #EF4444; color: #991B1B; padding: 16px 24px; border-radius: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">error</span>
+                        {{ $errors->first() }}
                     </div>
                 @endif
 
@@ -1035,38 +1042,37 @@
                 } else {
                     kelompokInput.value = '';
                 }
-
-                // --- AUTO FILL ABSENSI ---
-                function fetchAbsensi() {
-                    const id_santri = document.getElementById('santri_name_input').value;
-                    const caturwulan = document.querySelector('input[name="caturwulan"]:checked').value;
-                    const tahun_pelajaran = document.querySelector('input[name="tahun_pelajaran"]').value;
-
-                    if (id_santri && caturwulan && tahun_pelajaran) {
-                        fetch(`{{ route('admin.eraport.get_absensi') }}?id_santri=${id_santri}&caturwulan=${caturwulan}&tahun_pelajaran=${tahun_pelajaran}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                document.querySelector('input[name="absen_sakit"]').value = data.sakit;
-                                document.querySelector('input[name="absen_izin"]').value = data.izin;
-                                document.querySelector('input[name="absen_alpa"]').value = data.alfa;
-                            })
-                            .catch(error => console.error('Error fetching absensi:', error));
-                    }
-                }
-
-                // Listen for changes
-                document.getElementById('santri_name_input').addEventListener('change', fetchAbsensi);
-                document.querySelector('input[name="tahun_pelajaran"]').addEventListener('change', fetchAbsensi);
-                cawuRadios.forEach(radio => {
-                    radio.addEventListener('change', fetchAbsensi);
-                });
-                
+                fetchAbsensi();
             });
+
+            // --- AUTO FILL ABSENSI ---
+            function fetchAbsensi() {
+                const id_santri = document.getElementById('santri_name_input').value;
+                const caturwulan = document.querySelector('input[name="caturwulan"]:checked');
+                const tahun_pelajaran = document.querySelector('input[name="tahun_pelajaran"]').value;
+
+                if (id_santri && caturwulan && tahun_pelajaran) {
+                    fetch(`{{ route('admin.eraport.get_absensi') }}?id_santri=${id_santri}&caturwulan=${caturwulan.value}&tahun_pelajaran=${tahun_pelajaran}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.querySelector('input[name="absen_sakit"]').value = data.sakit;
+                            document.querySelector('input[name="absen_izin"]').value = data.izin;
+                            document.querySelector('input[name="absen_alpa"]').value = data.alfa;
+                        })
+                        .catch(error => console.error('Error fetching absensi:', error));
+                }
+            }
 
             // Caturwulan Radio Button Logic
             const cawuRadios = document.querySelectorAll('.cawu-radio');
             const cawuLabels = document.querySelectorAll('.cawu-label');
             const statusKenaikanContainer = document.getElementById('status_kenaikan_container');
+
+            // Listen for changes for auto-fill absensi
+            document.querySelector('input[name="tahun_pelajaran"]').addEventListener('change', fetchAbsensi);
+            cawuRadios.forEach(radio => {
+                radio.addEventListener('change', fetchAbsensi);
+            });
 
             function updateCawuStyle() {
                 cawuRadios.forEach((radio, index) => {
