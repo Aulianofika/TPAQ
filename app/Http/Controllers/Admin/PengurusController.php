@@ -51,7 +51,7 @@ class PengurusController extends Controller
             'alamat' => 'nullable|string',
             'quote' => 'nullable|string',
             'is_kepala' => 'nullable|boolean',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
         
         $validated['is_kepala'] = $request->has('is_kepala');
@@ -79,7 +79,7 @@ class PengurusController extends Controller
             'alamat' => 'nullable|string',
             'quote' => 'nullable|string',
             'is_kepala' => 'nullable|boolean',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $validated['is_kepala'] = $request->has('is_kepala');

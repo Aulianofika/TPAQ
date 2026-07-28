@@ -18,6 +18,7 @@ Route::get('/pengumuman/{id}', [HomeController::class, 'pengumumanDetail'])->nam
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout.get');
 
 
 // Rute Lupa & Reset Password
@@ -27,7 +28,7 @@ Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])-
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 // Authenticated Routes (Guru & Admin)
-Route::prefix('admin')->middleware(['auth', 'guru'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'guru', 'nocache'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Bagian Guru (Accessible by Guru & Admin)
@@ -55,6 +56,7 @@ Route::prefix('admin')->middleware(['auth', 'guru'])->group(function () {
     // Progress Santri
     Route::get('/santri/progress', [\App\Http\Controllers\Admin\SantriProgressController::class, 'index'])->name('admin.santri.progress');
     Route::get('/santri/progress/{id}', [\App\Http\Controllers\Admin\SantriProgressController::class, 'show'])->name('admin.santri.progress.show');
+    Route::post('/santri/progress/{id}/pindah-kelas', [\App\Http\Controllers\Admin\SantriProgressController::class, 'pindahKelas'])->name('admin.santri.progress.pindah-kelas');
 
 
     // Admin Only Routes

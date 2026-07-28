@@ -652,7 +652,7 @@
     <!-- Bagian Hero (Header Atas) -->
     <div class="hero-header">
         <div class="hero-content">
-            <span class="hero-badge">Caturwulan {{ $caturwulan }} • TA {{ $tahun_pelajaran }}</span>
+            <span class="hero-badge">Caturwulan {{ $caturwulan }} </span>
             <h3 class="hero-title">Mencetak Generasi Qur'ani yang Berakhlak Mulia.</h3>
             <p class="hero-subtitle">Pantau dan bimbing hafalan santri dengan penuh kesabaran untuk mencapai target kurikulum tahun ajaran ini.</p>
         </div>
@@ -718,31 +718,22 @@
                 <h3 class="table-title">Hafalan Santri</h3>
                 
                 <div class="filter-group">
+                    <div style="position: relative;">
+                        <span class="material-symbols-outlined" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #78716C;">search</span>
+                        <input type="text" id="searchHafalan" placeholder="Cari nama santri..." 
+                            style="padding: 10px 12px 10px 38px; border: 1px solid #E5E7EB; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; outline: none; width: 200px; background: #F9FAFB; transition: border-color 0.2s;"
+                            onfocus="this.style.borderColor='#004B3C'" onblur="this.style.borderColor='#E5E7EB'">
+                    </div>
                     <select name="caturwulan" class="filter-select" onchange="document.getElementById('filterForm').submit()">
-                        @php
-                            $taStart = substr($tahun_pelajaran, 0, 4);
-                            $taEnd = substr($tahun_pelajaran, 5, 4);
-                        @endphp
-                        <option value="1" @selected($caturwulan == '1')>Caturwulan I (Juli - Okt {{ $taStart }})</option>
-                        <option value="2" @selected($caturwulan == '2')>Caturwulan II (Nov {{ $taStart }} - Feb {{ $taEnd }})</option>
-                        <option value="3" @selected($caturwulan == '3')>Caturwulan III (Mar - Jun {{ $taEnd }})</option>
+                        <option value="1" @selected($caturwulan == '1')>Caturwulan I (Juli - Oktober)</option>
+                        <option value="2" @selected($caturwulan == '2')>Caturwulan II (November - Februari)</option>
+                        <option value="3" @selected($caturwulan == '3')>Caturwulan III (Maret - Juni)</option>
                     </select>
                     
                     <select name="id_kelas" class="filter-select" onchange="document.getElementById('filterForm').submit()">
                         @foreach($classes as $kls)
                             <option value="{{ $kls->id_kelas }}" @selected($id_kelas == $kls->id_kelas)>{{ $kls->nama_kelas }}</option>
                         @endforeach
-                    </select>
-                    
-                    <select name="tahun_pelajaran" class="filter-select" onchange="document.getElementById('filterForm').submit()">
-                        @php
-                            $startYear = 2026;
-                            for($i = 0; $i < 3; $i++) {
-                                $y = $startYear + $i;
-                                $tp = $y . '/' . ($y + 1);
-                                echo '<option value="'.$tp.'" '.($tahun_pelajaran == $tp ? 'selected' : '').'>TA '.$tp.'</option>';
-                            }
-                        @endphp
                     </select>
                 </div>
             </div>
@@ -903,7 +894,6 @@
             @csrf
             <input type="hidden" name="id_kelas" value="{{ $id_kelas }}">
             <input type="hidden" name="caturwulan" value="{{ $caturwulan }}">
-            <input type="hidden" name="tahun_pelajaran" value="{{ $tahun_pelajaran }}">
             
             <div class="form-group">
                 <label class="form-label">Deskripsi Target (Dari - Sampai)</label>
@@ -938,7 +928,6 @@
             @csrf
             <input type="hidden" name="id_kelas" value="{{ $id_kelas }}">
             <input type="hidden" name="caturwulan" value="{{ $caturwulan }}">
-            <input type="hidden" name="tahun_pelajaran" value="{{ $tahun_pelajaran }}">
             
             <div class="form-group">
                 <label class="form-label">Nama Santri</label>
@@ -1101,6 +1090,19 @@
         toggleModal('updateModal');
     }
 
+
+    // Search filter for Hafalan table
+    document.getElementById('searchHafalan').addEventListener('input', function() {
+        const keyword = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.data-table tbody tr');
+        rows.forEach(row => {
+            const nameEl = row.querySelector('.santri-name');
+            if (nameEl) {
+                const name = nameEl.textContent.toLowerCase();
+                row.style.display = name.includes(keyword) ? '' : 'none';
+            }
+        });
+    });
 
 </script>
 @endsection

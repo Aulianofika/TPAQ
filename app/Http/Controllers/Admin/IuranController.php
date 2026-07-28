@@ -122,16 +122,16 @@ class IuranController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'id_santri' => 'required|exists:santris,id_santri',
-            'bulan' => 'required|string',
-            'tahun' => 'required|integer',
-            'jumlah' => 'required|integer',
+            'bulan' => 'required|string|in:Januari,Februari,Maret,April,Mei,Juni,Juli,Agustus,September,Oktober,November,Desember',
+            'tahun' => 'required|integer|min:2020|max:2099',
+            'jumlah' => 'required|integer|min:0',
             'status' => 'required|in:lunas,belum',
             'tanggal_bayar' => 'nullable|date',
         ]);
 
-        Pembayaran::create($request->all());
+        Pembayaran::create($validated);
 
         return redirect()->back()->with('success', 'Pembayaran berhasil dicatat.');
     }

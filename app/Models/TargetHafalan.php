@@ -11,7 +11,6 @@ class TargetHafalan extends Model
     protected $fillable = [
         'id_kelas',
         'caturwulan',
-        'tahun_pelajaran',
         'target',
     ];
 

@@ -308,13 +308,13 @@
             </div>
             @endif
 
-            <form action="{{ route('login.post') }}" method="POST">
+            <form action="{{ route('login.post') }}" method="POST" novalidate>
                 @csrf
                 <div class="input-group">
                     <label class="input-label" for="email">Alamat Email</label>
                     <div class="input-wrapper">
                         <span class="material-symbols-outlined input-icon">mail</span>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="guru@baiturridwan.com" value="{{ old('email') }}" required>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="guru@baiturridwan.com" value="{{ old('email') }}">
                     </div>
                     @error('email')
                         <div class="error-message">{{ $message }}</div>
@@ -325,7 +325,7 @@
                     <label class="input-label" for="password">Kata Sandi</label>
                     <div class="input-wrapper">
                         <span class="material-symbols-outlined input-icon">lock</span>
-                        <input type="password" id="password" name="password" class="form-input" style="padding-right: 48px;" placeholder="••••••••" required>
+                        <input type="password" id="password" name="password" class="form-input" style="padding-right: 48px;" placeholder="••••••••">
                         <button type="button" onclick="togglePassword()" style="position: absolute; right: 16px; background: none; border: none; color: #9CA3AF; cursor: pointer; display: flex; align-items: center; padding: 0;">
                             <span class="material-symbols-outlined" id="toggleIcon" style="font-size: 20px;">visibility</span>
                         </button>

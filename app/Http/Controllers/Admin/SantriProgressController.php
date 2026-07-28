@@ -49,7 +49,6 @@ class SantriProgressController extends Controller
             $student->attendance_percentage = $s_total > 0 ? round(($s_hadir / $s_total) * 100) : 100;
 
             $latest_progres = ProgresHafalan::where('id_santri', $student->id_santri)
-                ->orderBy('tahun_pelajaran', 'desc')
                 ->orderBy('caturwulan', 'desc')
                 ->first();
 
@@ -84,7 +83,6 @@ class SantriProgressController extends Controller
 
         // 2. Hafalan Progress
         $progres_hafalans = ProgresHafalan::where('id_santri', $id)
-            ->orderBy('tahun_pelajaran', 'desc')
             ->orderBy('caturwulan', 'desc')
             ->get();
 
@@ -95,19 +93,35 @@ class SantriProgressController extends Controller
 
         // Target Hafalan for comparison
         $targets = TargetHafalan::where('id_kelas', $student->id_kelas)
-            ->orderBy('tahun_pelajaran', 'desc')
             ->orderBy('caturwulan', 'desc')
             ->get();
 
         // 3. Eraport History
         $eraports = Eraport::where('id_santri', $id)
-            ->orderBy('tahun_pelajaran', 'desc')
             ->orderBy('caturwulan', 'desc')
             ->get();
 
+        $classes = Kelas::all();
+
         return view('admin.santri_progress.detail', compact(
             'student', 'sakit', 'izin', 'alfa', 'hadir', 'total_absensi', 'attendance_percentage', 'absensi_logs',
-            'progres_hafalans', 'riwayat_hafalans', 'targets', 'eraports'
+            'progres_hafalans', 'riwayat_hafalans', 'targets', 'eraports', 'classes'
         ));
+    }
+
+    public function pindahKelas($id, Request $request)
+    {
+        $request->validate([
+            'id_kelas' => 'required|exists:kelas,id_kelas',
+            'status' => 'required|in:aktif,lulus',
+        ]);
+
+        $santri = Santri::findOrFail($id);
+        $santri->id_kelas = $request->id_kelas;
+        $santri->status = $request->status;
+        $santri->save();
+
+        $statusLabel = $request->status === 'lulus' ? 'diluluskan' : 'dipindahkan ke kelas baru';
+        return redirect()->route('admin.santri.progress.show', $id)->with('success', "Santri berhasil {$statusLabel}!");
     }
 }

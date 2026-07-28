@@ -289,7 +289,7 @@
             </div>
             @endif
             
-            <form action="{{ route('password.update') }}" method="POST">
+            <form action="{{ route('password.update') }}" method="POST" novalidate>
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <input type="hidden" name="email" value="{{ $email }}">
@@ -298,7 +298,7 @@
                     <label class="input-label" for="password">Kata Sandi Baru</label>
                     <div class="input-wrapper">
                         <span class="material-symbols-outlined input-icon">lock</span>
-                        <input type="password" id="password" name="password" class="form-input" placeholder="Minimal 8 karakter" required>
+                        <input type="password" id="password" name="password" class="form-input" placeholder="Minimal 8 karakter">
                     </div>
                     @error('password')
                         <div class="error-message">{{ $message }}</div>
@@ -309,7 +309,7 @@
                     <label class="input-label" for="password_confirmation">Konfirmasi Kata Sandi Baru</label>
                     <div class="input-wrapper">
                         <span class="material-symbols-outlined input-icon">lock_reset</span>
-                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" placeholder="Ulangi kata sandi baru" required>
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" placeholder="Ulangi kata sandi baru">
                     </div>
                 </div>
 

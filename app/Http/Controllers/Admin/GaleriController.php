@@ -21,7 +21,7 @@ class GaleriController extends Controller
             'judul' => 'required|string|max:255',
             'kategori' => 'required|in:pembelajaran,kegiatan,wisuda,prestasi',
             'deskripsi' => 'nullable|string',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -40,7 +40,7 @@ class GaleriController extends Controller
             'judul' => 'required|string|max:255',
             'kategori' => 'required|in:pembelajaran,kegiatan,wisuda,prestasi',
             'deskripsi' => 'nullable|string',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $galeri = Galeri::findOrFail($id);

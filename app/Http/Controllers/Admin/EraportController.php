@@ -71,18 +71,43 @@ class EraportController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'id_santri' => 'required|exists:santris,id_santri',
-            'kelompok' => 'required|string',
-            'tahun_pelajaran' => 'required|string',
+            'caturwulan' => 'required|in:1,2,3',
+            'kelompok' => 'required|string|max:255',
+            'tahun_pelajaran' => 'required|string|max:20',
+            'nilai_tajwid' => 'nullable|string|max:5',
+            'nilai_fashahah' => 'nullable|string|max:5',
+            'nilai_irama' => 'nullable|string|max:5',
+            'nilai_adab' => 'nullable|string|max:5',
+            'nilai_ibadah' => 'nullable|string|max:5',
+            'nilai_doa' => 'nullable|string|max:5',
+            'nilai_surat' => 'nullable|string|max:5',
+            'nilai_sejarah' => 'nullable|string|max:5',
+            'nilai_dakwah' => 'nullable|string|max:5',
+            'nilai_akhlak' => 'nullable|string|max:5',
+            'ekstra_subuh' => 'nullable|string|max:5',
+            'ekstra_rebana' => 'nullable|string|max:5',
+            'ekstra_olahraga' => 'nullable|string|max:5',
+            'sikap_disiplin' => 'nullable|string|max:5',
+            'sikap_kebersihan' => 'nullable|string|max:5',
+            'absen_sakit' => 'nullable|integer|min:0',
+            'absen_izin' => 'nullable|integer|min:0',
+            'absen_alpa' => 'nullable|integer|min:0',
+            'jumlah_nilai' => 'nullable|numeric|min:0',
+            'rata_rata' => 'nullable|numeric|min:0',
+            'kepala_tpa' => 'nullable|string|max:255',
+            'nama_pengajar' => 'nullable|string|max:255',
+            'tanggal_pelaporan' => 'nullable|date',
+            'catatan_guru' => 'nullable|string',
+            'status_kenaikan' => 'nullable|string|max:50',
         ]);
 
-        $data = $request->all();
-        $data['absen_sakit'] = $data['absen_sakit'] ?: 0;
-        $data['absen_izin'] = $data['absen_izin'] ?: 0;
-        $data['absen_alpa'] = $data['absen_alpa'] ?: 0;
+        $validated['absen_sakit'] = $validated['absen_sakit'] ?? 0;
+        $validated['absen_izin'] = $validated['absen_izin'] ?? 0;
+        $validated['absen_alpa'] = $validated['absen_alpa'] ?? 0;
 
-        $eraport = \App\Models\Eraport::create($data);
+        $eraport = \App\Models\Eraport::create($validated);
 
         return redirect()->back()->with('success', 'E-Raport berhasil disimpan!')->with('last_id_eraport', $eraport->id_eraport);
     }

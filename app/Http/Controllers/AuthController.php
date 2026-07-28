@@ -145,6 +145,12 @@ class AuthController extends Controller
             return redirect()->route('login')->withErrors(['email' => 'Permintaan reset password tidak valid atau sudah kadaluwarsa.']);
         }
 
+        // Validasi masa berlaku token (60 menit)
+        if (now()->diffInMinutes($resetRecord->created_at) > 60) {
+            DB::table('password_reset_tokens')->where('email', $email)->delete();
+            return redirect()->route('login')->withErrors(['email' => 'Token reset password sudah kadaluwarsa. Silakan ajukan permintaan baru.']);
+        }
+
         return view('auth.reset-password', compact('token', 'email'));
     }
 
@@ -166,6 +172,12 @@ class AuthController extends Controller
 
         if (!$resetRecord || !Hash::check($request->token, $resetRecord->token)) {
             return back()->withErrors(['email' => 'Token reset kata sandi tidak valid atau sudah kadaluwarsa.']);
+        }
+
+        // Validasi masa berlaku token (60 menit)
+        if (now()->diffInMinutes($resetRecord->created_at) > 60) {
+            DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+            return back()->withErrors(['email' => 'Token reset kata sandi sudah kadaluwarsa. Silakan ajukan permintaan baru.']);
         }
 
         // Update User Password

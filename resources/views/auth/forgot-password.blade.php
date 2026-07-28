@@ -311,13 +311,13 @@
                 </div>
             @endif
             
-            <form action="{{ route('password.email') }}" method="POST">
+            <form action="{{ route('password.email') }}" method="POST" novalidate>
                 @csrf
                 <div class="input-group">
                     <label class="input-label" for="email">Alamat Email</label>
                     <div class="input-wrapper">
                         <span class="material-symbols-outlined input-icon">mail</span>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="guru@baiturridwan.com" value="{{ old('email') }}" required>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="guru@baiturridwan.com" value="{{ old('email') }}">
                     </div>
                     @error('email')
                         <div class="error-message" style="color: #ef4444; font-size: 13px; margin-top: 6px; font-weight: 500;">{{ $message }}</div>

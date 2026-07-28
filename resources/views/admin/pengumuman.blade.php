@@ -157,24 +157,19 @@
             text-transform: uppercase;
         }
 
-        .role-pembelajaran {
-            background: #E8F5E9;
-            color: #2E7D32;
+        .role-informasi {
+            background: #E5E7EB;
+            color: #404945;
         }
 
         .role-kegiatan {
-            background: #E3F2FD;
-            color: #1565C0;
+            background: #B0EFDA;
+            color: #003227;
         }
 
-        .role-wisuda {
-            background: #FFF3E0;
-            color: #E65100;
-        }
-
-        .role-prestasi {
-            background: #FCE4EC;
-            color: #C2185B;
+        .role-penting {
+            background: #FED65B;
+            color: #745C00;
         }
 
         .btn-icon {

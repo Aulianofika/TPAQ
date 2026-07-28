@@ -662,7 +662,7 @@
                         <div class="form-group">
                             <label class="form-label">TAHUN PELAJARAN</label>
                             <input type="text" name="tahun_pelajaran" id="tahun_pelajaran_input" class="custom-input"
-                                 placeholder="Otomatis terisi...    " readonly required style="background: rgba(0,0,0,0.02);">
+                                 placeholder="Contoh: 2026/2027" required style="background: #FFFFFF;">
                         </div>
                     </div>
                 </div>
@@ -947,8 +947,7 @@
             $santriMap = [];
             foreach($santris as $santri) {
                 $santriMap[$santri->id_santri] = [
-                    'kelas' => $santri->kelas->nama_kelas ?? '',
-                    'tahun_ajaran' => $santri->kelas->tahun_ajaran ?? ''
+                    'kelas' => $santri->kelas->nama_kelas ?? ''
                 ];
             }
         @endphp
@@ -1033,9 +1032,6 @@
                 const nama = this.value;
                 if (santriData[nama]) {
                     kelompokInput.value = santriData[nama].kelas;
-                    if (santriData[nama].tahun_ajaran) {
-                        tahunInput.value = santriData[nama].tahun_ajaran.replace('-', '/');
-                    }
                 } else {
                     kelompokInput.value = '';
                 }

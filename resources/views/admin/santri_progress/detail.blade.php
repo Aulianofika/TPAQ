@@ -185,6 +185,32 @@
         transform: translateY(-1px);
     }
 
+    .btn-pindah-kelas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: #F6F3EC;
+        color: #003227;
+        border: 1px solid rgba(191, 201, 196, 0.3);
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 14px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        width: 100%;
+        margin-top: 8px;
+        box-sizing: border-box;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-pindah-kelas:hover {
+        background: #004B3C;
+        color: white;
+        transform: translateY(-1px);
+    }
+
     /* Tab Layout & Navigation */
     .tab-container {
         display: flex;
@@ -581,14 +607,12 @@
                         $capaianText = $latestProgress ? $latestProgress->capaian : '-';
                         $statusVal = $latestProgress ? $latestProgress->status : 'belum';
                         $cwText = $latestProgress ? $latestProgress->caturwulan : '-';
-                        $taText = $latestProgress ? $latestProgress->tahun_pelajaran : '-';
                         $keteranganText = $latestProgress ? $latestProgress->keterangan : '';
 
                         // Match target for class caturwulan
                         $targetMatch = null;
                         if ($latestProgress) {
                             $targetMatch = $targets->where('caturwulan', $latestProgress->caturwulan)
-                                ->where('tahun_pelajaran', $latestProgress->tahun_pelajaran)
                                 ->first();
                         }
                         $targetStr = $targetMatch ? str_replace('s/d', 'sampai', $targetMatch->target) : '-';
@@ -614,7 +638,7 @@
                             . "Alhamdulillah, berikut kami sampaikan kabar perkembangan terbaru Ananda *" . $student->nama . "* di TPA Baitur Ridwan:\n\n"
                             . "1. *Kehadiran*: " . $attendance_percentage . "% (" . $hadir . " dari " . $total_absensi . " pertemuan)\n"
                             . "2. *Hafalan Terakhir*: " . ($capaianText != '-' ? $capaianText : '-') . "\n"
-                            . "3. *Target Belajar (Cw " . $cwText . " TA " . $taText . ")*: " . $targetStr . "\n"
+                            . "3. *Target Belajar (Cw " . $cwText . ")*: " . $targetStr . "\n"
                             . "4. *Kondisi Hafalan*: " . $displayStatus . "\n\n"
                             . $statusNote . "\n";
                         
@@ -632,6 +656,12 @@
                         <span>Kirim Perkembangan (WA)</span>
                     </a>
                 @endif
+
+                <!-- Tombol Pindah Kelas / Luluskan -->
+                <button type="button" onclick="openPindahKelasModal()" class="btn-pindah-kelas">
+                    <span class="material-symbols-outlined">swap_horiz</span>
+                    <span>Pindah Kelas / Luluskan</span>
+                </button>
             </div>
         </div>
 
@@ -763,13 +793,12 @@
                                 @php
                                     // Match target
                                     $targetMatch = $targets->where('caturwulan', $progres->caturwulan)
-                                        ->where('tahun_pelajaran', $progres->tahun_pelajaran)
                                         ->first();
                                 @endphp
                                 <div style="padding: 16px; background: #F6F3EC; border-radius: 16px;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                         <span style="font-weight: 700; color: #003227; font-size: 14px;">
-                                            Cw {{ $progres->caturwulan }} (TA {{ $progres->tahun_pelajaran }})
+                                            CaturWulan {{ $progres->caturwulan }}
                                         </span>
                                         <span class="badge-status {{ $progres->status }}">
                                             {{ $progres->status }}
@@ -811,7 +840,7 @@
                                     <div class="timeline-content">
                                         <div class="timeline-title">Capaian Setoran</div>
                                         <p class="timeline-desc">
-                                            Menyetorkan hafalan <strong>"{{ $riwayat->capaian }}"</strong> di Caturwulan {{ $riwayat->caturwulan }} (TA {{ $riwayat->tahun_pelajaran }}).
+                                            Menyetorkan hafalan <strong>"{{ $riwayat->capaian }}"</strong> di Caturwulan {{ $riwayat->caturwulan }}.
                                             Status: <span class="badge-status {{ $riwayat->status }}" style="font-size: 9px; padding: 2px 6px;">{{ $riwayat->status }}</span>
                                         </p>
                                         @if($riwayat->keterangan)
@@ -889,6 +918,52 @@
     </div>
 </div>
 
+<!-- Modal Pindah Kelas -->
+<div id="pindahKelasModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div style="background: white; border-radius: 24px; padding: 32px; width: 90%; max-width: 440px; position: relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
+        <button type="button" onclick="closePindahKelasModal()" style="position: absolute; right: 24px; top: 24px; background: none; border: none; cursor: pointer; color: #64748B; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s;" onmouseover="this.style.background='#F1F5F9'" onmouseout="this.style.background='none'">
+            <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+        </button>
+        
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+            <div style="width: 40px; height: 40px; background: #E6F0EE; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="color: #004B3C; font-size: 20px;">swap_horiz</span>
+            </div>
+            <h3 style="font-family: 'Epilogue', sans-serif; font-weight: 700; font-size: 20px; color: #003227; margin: 0;">Pindah Kelas / Luluskan</h3>
+        </div>
+
+        <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #64748B; margin: 0 0 24px 0; line-height: 1.6;">
+            Pindahkan <strong>{{ $student->nama }}</strong> ke kelas baru, atau ubah statusnya menjadi <strong>Lulus</strong>.
+        </p>
+
+        <form method="POST" action="{{ route('admin.santri.progress.pindah-kelas', $student->id_santri) }}">
+            @csrf
+            <div style="margin-bottom: 16px;">
+                <label style="font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 13px; color: #003227; display: block; margin-bottom: 6px;">Kelas Tujuan</label>
+                <select name="id_kelas" required style="width: 100%; padding: 12px; border: 1px solid #E5E7EB; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; background: #F9FAFB; outline: none;">
+                    @foreach($classes as $kls)
+                        <option value="{{ $kls->id_kelas }}" @selected($student->id_kelas == $kls->id_kelas)>{{ $kls->nama_kelas }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 13px; color: #003227; display: block; margin-bottom: 6px;">Status Santri</label>
+                <select name="status" required id="statusPindahKelas" onchange="toggleKelasField()" style="width: 100%; padding: 12px; border: 1px solid #E5E7EB; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; background: #F9FAFB; outline: none;">
+                    <option value="aktif" @selected($student->status == 'aktif')>Aktif (Naik Kelas)</option>
+                    <option value="lulus" @selected($student->status == 'lulus')>Lulus / Tamat</option>
+                </select>
+                <small style="color: #6b7280; font-size: 12px; margin-top: 6px; display: block; font-family: 'Plus Jakarta Sans', sans-serif;">Jika memilih <strong>Lulus</strong>, santri tidak akan muncul lagi di daftar aktif.</small>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button type="button" onclick="closePindahKelasModal()" style="flex: 1; padding: 12px 24px; border-radius: 32px; border: 1px solid #E2E8F0; background: white; color: #475569; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='white'">Batal</button>
+                <button type="submit" style="flex: 1; padding: 12px 24px; border-radius: 32px; border: none; background: #004B3C; color: white; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s;" onmouseover="this.style.background='#003227'" onmouseout="this.style.background='#004B3C'">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     function switchTab(evt, tabId) {
         // Get all elements with class="tab-pane" and hide them
@@ -907,5 +982,32 @@
         document.getElementById(tabId).classList.add('active');
         evt.currentTarget.classList.add('active');
     }
+    function openPindahKelasModal() {
+        const modal = document.getElementById('pindahKelasModal');
+        modal.style.display = 'flex';
+        const content = modal.querySelector('div');
+        content.style.opacity = '0';
+        content.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            content.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            content.style.opacity = '1';
+            content.style.transform = 'scale(1)';
+        }, 10);
+    }
+
+    function closePindahKelasModal() {
+        const modal = document.getElementById('pindahKelasModal');
+        const content = modal.querySelector('div');
+        content.style.opacity = '0';
+        content.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    // Click outside to close modal
+    document.getElementById('pindahKelasModal').addEventListener('click', function(e) {
+        if (e.target === this) closePindahKelasModal();
+    });
 </script>
 @endsection

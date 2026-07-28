@@ -22,7 +22,7 @@ class PengumumanController extends Controller
             'kategori' => 'required|in:penting,kegiatan,informasi',
             'isi' => 'required|string',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -42,7 +42,7 @@ class PengumumanController extends Controller
             'kategori' => 'required|in:penting,kegiatan,informasi',
             'isi' => 'required|string',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $pengumuman = Pengumuman::findOrFail($id);

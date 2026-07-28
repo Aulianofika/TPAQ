@@ -12,7 +12,6 @@ class RiwayatHafalan extends Model
     protected $fillable = [
         'id_santri',
         'caturwulan',
-        'tahun_pelajaran',
         'capaian',
         'status',
         'keterangan',

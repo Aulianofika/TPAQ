@@ -166,27 +166,32 @@
     }
 
     .action-btn {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         border: none;
-        background: transparent;
-        display: flex;
-        justify-content: center;
+        background: #F6F3EC;
+        color: #004B3C;
+        display: inline-flex;
         align-items: center;
-        color: #A8A29E;
+        justify-content: center;
         cursor: pointer;
         transition: all 0.2s ease;
     }
 
     .action-btn:hover {
-        background: #F3F4F6;
-        color: #1F2937;
+        background: #004B3C;
+        color: #FFFFFF;
+    }
+
+    .action-btn.btn-delete {
+        background: #F6F3EC;
+        color: #BA1A1A;
     }
 
     .action-btn.btn-delete:hover {
-        background: #FEE2E2;
-        color: #EF4444;
+        background: #BA1A1A;
+        color: #FFFFFF;
     }
     
     .badge-year {
@@ -430,7 +435,6 @@
                         <th style="padding-left: 32px;">No</th>
                         <th>Nama Kelas</th>
                         <th>Wali Kelas / Pengajar</th>
-                        <th>Tahun Ajaran</th>
                         <th style="text-align: center; padding-right: 32px;">Aksi</th>
                     </tr>
                 </thead>
@@ -446,16 +450,9 @@
                         <td>
                             <p class="text-data">{{ $k->pengajar->nama ?? 'Tidak Ada' }}</p>
                         </td>
-                        <td>
-                            @if($k->tahun_ajaran)
-                                <span class="badge-year">{{ $k->tahun_ajaran }}</span>
-                            @else
-                                <span class="text-data-muted">Belum Diatur</span>
-                            @endif
-                        </td>
                         <td style="padding-right: 32px;">
                             <div class="actions-cell">
-                                <button class="action-btn" onclick="openEditModal({{ $k->id_kelas }}, '{{ addslashes($k->nama_kelas) }}', '{{ $k->id_pengajar }}', '{{ addslashes($k->tahun_ajaran) }}')" title="Edit Kelas">
+                                <button class="action-btn" onclick="openEditModal({{ $k->id_kelas }}, '{{ addslashes($k->nama_kelas) }}', '{{ $k->id_pengajar }}')" title="Edit Kelas">
                                     <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                 </button>
                                 <button type="button" class="action-btn btn-delete" onclick="openDeleteModal('{{ route('admin.kelas.destroy', $k->id_kelas) }}')" title="Hapus Kelas">
@@ -503,11 +500,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label class="form-label">Tahun Ajaran</label>
-                <input type="text" name="tahun_ajaran" class="form-control" placeholder="Contoh: 2027-2028">
-                <small style="color: #6b7280; font-size: 12px; margin-top: 4px; display: block; font-family: 'Plus Jakarta Sans', sans-serif;">Masukkan tahun ajaran untuk keperluan rekapitulasi data santri per tahun.</small>
-            </div>
+
             
             <div class="form-actions">
                 <button type="button" class="cancel-btn" onclick="closeModal('createModal')">Batal</button>
@@ -542,10 +535,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label class="form-label">Tahun Ajaran</label>
-                <input type="text" id="edit_tahun_ajaran" name="tahun_ajaran" class="form-control">
-            </div>
+
             
             <div class="form-actions">
                 <button type="button" class="cancel-btn" onclick="closeModal('editModal')">Batal</button>
@@ -589,10 +579,9 @@
         document.getElementById(id).style.display = 'none';
     }
 
-    function openEditModal(id, nama, id_pengajar, tahun) {
+    function openEditModal(id, nama, id_pengajar) {
         document.getElementById('edit_nama_kelas').value = nama;
         document.getElementById('edit_id_pengajar').value = id_pengajar;
-        document.getElementById('edit_tahun_ajaran').value = tahun;
         document.getElementById('editForm').action = `/admin/kelas/${id}`;
         document.getElementById('editModal').style.display = 'flex';
     }

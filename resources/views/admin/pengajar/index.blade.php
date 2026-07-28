@@ -289,25 +289,38 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 1px solid rgba(191, 201, 196, 0.4);
-            background: #FFFFFF;
+            border: none;
+            background: #F6F3EC;
+            color: #004B3C;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #707975;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon-danger {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #F6F3EC;
+            color: #BA1A1A;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .btn-icon:hover {
-            background: #F6F3EC;
-            color: #003227;
+            background: #004B3C;
+            color: #FFFFFF;
         }
 
         .btn-icon-danger:hover {
-            background: #FEF2F2;
-            border-color: #FECACA;
-            color: #BA1A1A;
+            background: #BA1A1A;
+            color: #FFFFFF;
         }
 
         /* Header Button */
@@ -614,12 +627,12 @@
                                 @if($p->id_user)
                                     <span
                                         style="display:inline-flex; align-items:center; gap:4px; padding:4px 12px; background:#ECFDF5; color:#047857; border-radius:9999px; font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600;">
-                                        ✅ Aktif
+                                        Aktif
                                     </span>
                                 @else
                                     <span
                                         style="display:inline-flex; align-items:center; gap:4px; padding:4px 12px; background:#FEF2F2; color:#B91C1C; border-radius:9999px; font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600;">
-                                        ❌ Belum Ada
+                                        Belum Ada
                                     </span>
                                 @endif
                             </td>

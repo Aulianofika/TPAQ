@@ -49,7 +49,7 @@ class PengajarController extends Controller
             'jenis_kelamin' => 'required|in:L,P',
             'no_hp' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
         
         if ($request->hasFile('foto')) {
@@ -69,7 +69,7 @@ class PengajarController extends Controller
             'jenis_kelamin' => 'required|in:L,P',
             'no_hp' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $pengajar = Pengajar::findOrFail($id);
