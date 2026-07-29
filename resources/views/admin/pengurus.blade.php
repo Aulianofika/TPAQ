@@ -798,15 +798,14 @@
                     </div>
                     <div class="form-group" style="display:flex; align-items:center; gap:8px;">
                         <input type="checkbox" name="is_kepala" value="1" id="createKepala"
+                            onchange="toggleQuoteGroup('createKepala', 'createQuoteGroup')"
                             style="width:16px; height:16px;">
                         <label for="createKepala"
                             style="font-family:'Plus Jakarta Sans'; font-size:14px; color:#404945; cursor:pointer;">Jadikan
                             sebagai Kepala TPA</label>
                     </div>
 
-
-
-                    <div class="form-group">
+                    <div class="form-group" id="createQuoteGroup" style="display: none;">
                         <label class="form-label">Kutipan / Pesan Kepala TPA (Opsional)</label>
                         <textarea name="quote" class="form-input" rows="2"
                             placeholder="Cth: Misi utama kami adalah menanamkan kecintaan..."></textarea>
@@ -857,15 +856,15 @@
                         <input type="file" name="foto" class="form-input" accept="image/*">
                     </div>
                     <div class="form-group" style="display:flex; align-items:center; gap:8px;">
-                        <input type="checkbox" name="is_kepala" value="1" id="editKepala" style="width:16px; height:16px;">
+                        <input type="checkbox" name="is_kepala" value="1" id="editKepala"
+                            onchange="toggleQuoteGroup('editKepala', 'editQuoteGroup')"
+                            style="width:16px; height:16px;">
                         <label for="editKepala"
                             style="font-family:'Plus Jakarta Sans'; font-size:14px; color:#404945; cursor:pointer;">Jadikan
                             sebagai Kepala TPA</label>
                     </div>
 
-
-
-                    <div class="form-group">
+                    <div class="form-group" id="editQuoteGroup" style="display: none;">
                         <label class="form-label">Kutipan / Pesan Kepala TPA (Opsional)</label>
                         <textarea name="quote" id="editQuote" class="form-input" rows="2"></textarea>
                     </div>
@@ -973,7 +972,19 @@
 
 @push('scripts')
     <script>
+        function toggleQuoteGroup(checkboxId, groupId) {
+            const cb = document.getElementById(checkboxId);
+            const group = document.getElementById(groupId);
+            if (cb && group) {
+                group.style.display = cb.checked ? 'block' : 'none';
+            }
+        }
+
         function openModal(id) {
+            if (id === 'createModal') {
+                document.getElementById('createKepala').checked = false;
+                toggleQuoteGroup('createKepala', 'createQuoteGroup');
+            }
             document.getElementById(id).classList.add('active');
         }
 
@@ -991,6 +1002,8 @@
             document.getElementById('editAlamat').value = alamat !== 'null' ? alamat : '';
             document.getElementById('editKepala').checked = is_kepala;
             document.getElementById('editQuote').value = quote !== 'null' ? quote : '';
+
+            toggleQuoteGroup('editKepala', 'editQuoteGroup');
 
             openModal('editModal');
         }

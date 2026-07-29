@@ -9,7 +9,6 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [HomeController::class, 'profil'])->name('profil');
-Route::get('/program', [HomeController::class, 'program'])->name('program');
 Route::get('/pengurus', [HomeController::class, 'pengurus'])->name('pengurus');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/pengumuman', [HomeController::class, 'pengumuman'])->name('pengumuman.index');
@@ -36,6 +35,7 @@ Route::prefix('admin')->middleware(['auth', 'guru', 'nocache'])->group(function 
     Route::get('/absensi', [AbsensiController::class, 'index'])->name('admin.absensi');
     Route::get('/absensi/rekap', [AbsensiController::class, 'rekap'])->name('admin.absensi.rekap');
     Route::get('/absensi/rekap/pdf', [AbsensiController::class, 'cetakPdf'])->name('admin.absensi.pdf');
+    Route::get('/absensi/rekap/preview', [AbsensiController::class, 'previewPdf'])->name('admin.absensi.preview');
     Route::post('/absensi', [AbsensiController::class, 'store'])->name('admin.absensi.store');
 
     // E-Rapor

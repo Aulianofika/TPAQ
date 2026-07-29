@@ -425,7 +425,7 @@
         transition: all 0.2s ease;
     }
     .btn-icon:hover { background: #F3F4F6; color: #1F2937; }
-    .btn-edit { }
+
     .btn-wa { color: #25D366; }
     .btn-wa:hover { background: #F0FDF4; color: #15803D; }
 
@@ -754,6 +754,7 @@
                 <tbody>
                     @forelse($santris as $santri)
                         @php
+                            /** @var \Illuminate\Support\Collection $classes */
                             $prog = $progres[$santri->id_santri] ?? null;
                             $capaian = $prog->capaian ?? '-';
                             $status = $prog->status ?? 'belum';
@@ -848,7 +849,7 @@
                                         <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                     </button>
                                     @else
-                                    <button onclick="openUpdateModal({{ $santri->id_santri }}, '{{ addslashes($santri->nama) }}', '{{ addslashes($capaian) }}', '{{ $status }}', '{{ addslashes($keterangan) }}')" class="btn-icon btn-edit" title="Update Progres">
+                                    <button onclick="openUpdateModal('{{ $santri->id_santri }}', '{{ addslashes($santri->nama) }}', '{{ addslashes($capaian) }}', '{{ $status }}', '{{ addslashes($keterangan) }}')" class="btn-icon btn-edit" title="Update Progres">
                                         <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                     </button>
                                     @endif

@@ -62,7 +62,7 @@ class SantriProgressController extends Controller
         ));
     }
 
-    public function show($id, Request $request)
+    public function show(string $id, Request $request)
     {
         $student = Santri::with(['kelas'])->findOrFail($id);
 
@@ -109,7 +109,7 @@ class SantriProgressController extends Controller
         ));
     }
 
-    public function pindahKelas($id, Request $request)
+    public function pindahKelas(string $id, Request $request)
     {
         $request->validate([
             'id_kelas' => 'required|exists:kelas,id_kelas',

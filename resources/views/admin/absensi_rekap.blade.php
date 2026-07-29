@@ -344,15 +344,13 @@
                     @endforeach
                 </select>
 
-                <select name="tahun" class="filter-select" onchange="document.getElementById('filterForm').submit()">
-                    @for($y = date('Y'); $y >= date('Y') - 3; $y--)
-                        <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
-                    @endfor
-                </select>
-
-                <a href="{{ route('admin.absensi.pdf', request()->all()) }}" target="_blank" class="btn-submit">
+                <!-- <a href="{{ route('admin.absensi.preview', request()->all()) }}" target="_blank" class="btn-submit" style="background: #D97706; border-color: #D97706; text-decoration: none;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+                    Preview
+                </a> -->
+                <a href="{{ route('admin.absensi.pdf', request()->all()) }}" target="_blank" class="btn-submit" style="text-decoration: none;">
                     <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
-                    Cetak PDF
+                    Cetak 
                 </a>
             </form>
         </div>
@@ -367,7 +365,6 @@
                         <th style="text-align: center;" title="Izin">Izin</th>
                         <th style="text-align: center;" title="Sakit">Sakit</th>
                         <th style="text-align: center;" title="Alfa / Tanpa Keterangan">Alfa</th>
-                        <th style="text-align: center;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -378,33 +375,6 @@
                             $sakit = $student->absensis->where('status', 'sakit')->count();
                             $alfa = $student->absensis->where('status', 'alfa')->count();
 
-                            $bulanName = $months[str_pad($bulan, 2, '0', STR_PAD_LEFT)] ?? '';
-                            $noHp = $student->no_hp_wali ?? '';
-                            if (strpos($noHp, '0') === 0) {
-                                $noHp = '62' . substr($noHp, 1);
-                            }
-                            $noHpWa = preg_replace('/[^0-9]/', '', $noHp);
-
-                            // Compile dynamic warm note based on attendance data
-                            if ($alfa > 0) {
-                                $absensiNote = "Mohon dibantu dipantau Pak/Bu, agar jika ananda berhalangan hadir dapat mengirimkan kabar izin kepada kami pengajar TPA.";
-                            } elseif ($hadir == 0 && $izin == 0 && $sakit == 0) {
-                                $absensiNote = "Bulan ini ananda belum sempat hadir di kelas. Mari kita semangati bersama agar ananda bisa aktif kembali belajar.";
-                            } else {
-                                $absensiNote = "Alhamdulillah, terima kasih banyak atas keaktifan ananda hadir di kelas bulan ini. Semoga terus dipertahankan semangat belajarnya.";
-                            }
-
-                            $waText = "Assalamu'alaikum Warahmatullahi Wabarakatuh,\n\n"
-                                . "Bapak/Ibu Wali dari Ananda *" . $student->nama . "*.\n\n"
-                                . "Alhamdulillah, berikut kami sampaikan laporan rekapitulasi kehadiran Ananda *" . $student->nama . "* selama bulan " . $bulanName . " " . $tahun . " di TPA Baitur Ridwan:\n\n"
-                                . "- *Hadir*: " . $hadir . " hari\n"
-                                . "- *Izin*: " . $izin . " hari\n"
-                                . "- *Sakit*: " . $sakit . " hari\n"
-                                . "- *Alfa (Tanpa Keterangan)*: " . $alfa . " hari\n\n"
-                                . $absensiNote . "\n\n"
-                                . "Terima kasih atas perhatian dan dukungan Bapak/Ibu sekalian. Semoga ananda terus istiqomah dalam belajar.\n\n"
-                                . "Wassalamu'alaikum Warahmatullahi Wabarakatuh.";
-                                
                             $avatarIndex = $student->id_santri % 4;
                             $initials = strtoupper(substr($student->nama, 0, 1));
                         @endphp
@@ -422,22 +392,10 @@
                             <td style="text-align: center;"><span class="badge-count count-izin">{{ $izin }}</span></td>
                             <td style="text-align: center;"><span class="badge-count count-sakit">{{ $sakit }}</span></td>
                             <td style="text-align: center;"><span class="badge-count count-alfa">{{ $alfa }}</span></td>
-                            <td style="text-align: center;">
-                                @if(!empty($noHpWa))
-                                    <a href="https://wa.me/{{ $noHpWa }}?text={{ urlencode($waText) }}" 
-                                       target="_blank" 
-                                       style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #ECFDF5; color: #059669; border-radius: 8px; text-decoration: none;"
-                                       title="Kirim Laporan WA">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.663-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                                    </a>
-                                @else
-                                    <span style="color: #A8A29E; font-size: 12px; font-style: italic;">-</span>
-                                @endif
-                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7">
+                            <td colspan="6">
                                 <div class="empty-state">
                                     <span class="material-symbols-outlined empty-icon">assignment</span>
                                     <p style="margin: 0; font-weight: 600; font-size: 16px;">Belum ada data rekap absensi</p>

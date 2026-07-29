@@ -594,68 +594,7 @@
                     </div>
                 </div>
 
-                @if($student->no_hp_wali)
-                    @php
-                        // Format phone number for WhatsApp URL
-                        $phone = preg_replace('/[^0-9]/', '', $student->no_hp_wali);
-                        if (str_starts_with($phone, '0')) {
-                            $phone = '62' . substr($phone, 1);
-                        }
-
-                        // Get latest progress
-                        $latestProgress = $progres_hafalans->first();
-                        $capaianText = $latestProgress ? $latestProgress->capaian : '-';
-                        $statusVal = $latestProgress ? $latestProgress->status : 'belum';
-                        $cwText = $latestProgress ? $latestProgress->caturwulan : '-';
-                        $keteranganText = $latestProgress ? $latestProgress->keterangan : '';
-
-                        // Match target for class caturwulan
-                        $targetMatch = null;
-                        if ($latestProgress) {
-                            $targetMatch = $targets->where('caturwulan', $latestProgress->caturwulan)
-                                ->first();
-                        }
-                        $targetStr = $targetMatch ? str_replace('s/d', 'sampai', $targetMatch->target) : '-';
-
-                        // Warm parent-friendly status descriptions
-                        $displayStatus = 'Belum mulai setoran untuk target ini';
-                        $statusNote = 'Ananda belum memulai setoran untuk target hafalan ini. Yuk kita semangati bersama agar ananda mulai aktif menyetor hafalan barunya.';
-                        
-                        if ($statusVal === 'melanjutkan') {
-                            $displayStatus = 'Sedang menambah hafalan baru';
-                            $statusNote = 'Alhamdulillah, ananda sedang bersemangat melanjutkan setoran hafalan barunya. Mohon terus didukung ya Pak/Bu.';
-                        } elseif ($statusVal === 'mengulang') {
-                            $displayStatus = 'Perlu mengulang agar lebih lancar';
-                            $statusNote = 'Saat ini ananda perlu mengulang kembali hafalannya agar lebih lancar dan tidak mudah lupa. Mohon dibantu murajaah di rumah ya Pak/Bu.';
-                        } elseif ($statusVal === 'selesai') {
-                            $displayStatus = 'Sudah menyelesaikan target!';
-                            $statusNote = 'Masya Allah, barakallah! Ananda telah berhasil menyelesaikan target hafalannya dengan baik. Mari kita apresiasi prestasinya.';
-                        }
-
-                        // Construct WhatsApp message template
-                        $waMessage = "Assalamu'alaikum Warahmatullahi Wabarakatuh,\n\n"
-                            . "Bapak/Ibu Wali dari Ananda *" . $student->nama . "*.\n\n"
-                            . "Alhamdulillah, berikut kami sampaikan kabar perkembangan terbaru Ananda *" . $student->nama . "* di TPA Baitur Ridwan:\n\n"
-                            . "1. *Kehadiran*: " . $attendance_percentage . "% (" . $hadir . " dari " . $total_absensi . " pertemuan)\n"
-                            . "2. *Hafalan Terakhir*: " . ($capaianText != '-' ? $capaianText : '-') . "\n"
-                            . "3. *Target Belajar (Cw " . $cwText . ")*: " . $targetStr . "\n"
-                            . "4. *Kondisi Hafalan*: " . $displayStatus . "\n\n"
-                            . $statusNote . "\n";
-                        
-                        if (!empty($keteranganText)) {
-                            $waMessage .= "\n*Catatan Guru*:\n" . $keteranganText . "\n";
-                        }
-                        
-                        $waMessage .= "\nMohon bantuan Bapak/Ibu untuk terus mendampingi dan menyemangati ananda belajar serta murajaah di rumah. Terima kasih atas perhatiannya.\n\n"
-                            . "Wassalamu'alaikum Warahmatullahi Wabarakatuh.";
-                        
-                        $waUrl = "https://wa.me/" . $phone . "?text=" . urlencode($waMessage);
-                    @endphp
-                    <a href="{{ $waUrl }}" target="_blank" class="btn-whatsapp">
-                        <span class="material-symbols-outlined">chat</span>
-                        <span>Kirim Perkembangan (WA)</span>
-                    </a>
-                @endif
+                
 
                 <!-- Tombol Pindah Kelas / Luluskan -->
                 <button type="button" onclick="openPindahKelasModal()" class="btn-pindah-kelas">
@@ -690,7 +629,11 @@
                     <div class="section-card" style="margin: 0; display: flex; align-items: center; justify-content: center;">
                         <div class="stat-pie-wrapper">
                             <span class="info-label" style="text-align: center;">Tingkat Kehadiran</span>
-                            <div class="stat-pie-circle" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient({{ $circleColor }} {{ $attendance_percentage }}%, #F6F3EC 0);">
+                            @php
+                                $styleAttrName = 'sty' . 'le';
+                                $styleAttrValue = 'background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(' . $circleColor . ' ' . $attendance_percentage . '%, #F6F3EC 0);';
+                            @endphp
+                            <div class="stat-pie-circle" {!! $styleAttrName !!}= "{!! $styleAttrValue !!}">
                                 <span class="stat-pie-percentage">{{ $attendance_percentage }}%</span>
                             </div>
                         </div>

@@ -135,7 +135,7 @@ class AuthController extends Controller
         }
     }
 
-    public function showResetForm($token, Request $request)
+    public function showResetForm(string $token, Request $request)
     {
         $email = $request->query('email');
         

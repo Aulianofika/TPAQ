@@ -1,3 +1,5 @@
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Str;
 @extends('layouts.layout')
 
 @section('title', 'TPA Al-Quran — Taman Pendidikan Al-Quran')
@@ -1094,7 +1096,7 @@
 
             {{-- Buttons --}}
             <div class="hero-buttons">
-                <a href="{{ route('program') }}" class="btn-primary">Lihat Program</a>
+                <a href="{{ route('profil') }}" class="btn-primary">Lihat Profil TPA</a>
                 <a href="#jadwal" class="btn-secondary">Lihat Jadwal</a>
             </div>
         </div>
@@ -1185,7 +1187,7 @@
             <div class="reminder-header">
                 <div class="reminder-title-group reveal">
                     <div class="reminder-label">Pengingat Islami</div>
-                    <h2 class="reminder-title">Hikmah Harian</h2>
+                    <h2 class="reminder-title">Hadits dan Doa</h2>
                 </div>
                 <div class="reminder-nav reveal">
                     <button class="reminder-nav-btn prev" aria-label="Previous" onclick="prevCard()">
@@ -1419,29 +1421,7 @@
         </div>
     </section>
 
-    {{-- ======================== STATS ======================== --}}
-    <section class="stats-section">
-        <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-card reveal delay-100">
-                    <div class="stat-number">120<span>+</span></div>
-                    <div class="stat-label">Santri Aktif</div>
-                </div>
-                <div class="stat-card reveal delay-200">
-                    <div class="stat-number">12<span>+</span></div>
-                    <div class="stat-label">Ustadz &amp; Ustadzah</div>
-                </div>
-                <div class="stat-card reveal delay-300">
-                    <div class="stat-number">8<span>+</span></div>
-                    <div class="stat-label">Tahun Berdiri</div>
-                </div>
-                <div class="stat-card reveal delay-400">
-                    <div class="stat-number">45<span>+</span></div>
-                    <div class="stat-label">Hafizh Quran</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
 @endsection
 

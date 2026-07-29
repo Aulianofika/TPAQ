@@ -118,6 +118,34 @@ class AbsensiController extends Controller
         return $pdf->download('Rekap_Absensi_'.$kelasName.'_'.$bulan.'-'.$tahun.'.pdf');
     }
 
+    public function previewPdf(Request $request)
+    {
+        $classes = Kelas::all();
+        $selected_class_id = $request->input('id_kelas', 'semua');
+        $bulan = $request->input('bulan', date('m'));
+        $tahun = $request->input('tahun', date('Y'));
+
+        $kelas = $selected_class_id === 'semua' ? null : Kelas::find($selected_class_id);
+        $students = collect();
+        if ($selected_class_id === 'semua') {
+            $students = Santri::where('status', 'aktif')->with(['kelas', 'absensis' => function($query) use ($bulan, $tahun) {
+                $query->whereMonth('tanggal', $bulan)
+                      ->whereYear('tanggal', $tahun);
+            }])->get();
+        } elseif ($selected_class_id) {
+            $students = Santri::where('id_kelas', $selected_class_id)->where('status', 'aktif')->with(['kelas', 'absensis' => function($query) use ($bulan, $tahun) {
+                $query->whereMonth('tanggal', $bulan)
+                      ->whereYear('tanggal', $tahun);
+            }])->get();
+        }
+
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $nama_guru = $user ? ($user->pengajar ? $user->pengajar->nama : $user->name) : '( .................................... )';
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.absensi_pdf', compact('students', 'kelas', 'bulan', 'tahun', 'nama_guru'));
+        return $pdf->stream('Preview_Rekap_Absensi.pdf');
+    }
+
     public function store(Request $request)
     {
         $messages = [

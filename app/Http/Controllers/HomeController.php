@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 
 use App\Models\Pengumuman;
 use App\Models\Galeri;
@@ -20,11 +20,6 @@ class HomeController extends Controller
     public function profil()
     {
         return view('profile');
-    }
-
-    public function program()
-    {
-        return view('program');
     }
 
     public function pengurus()
@@ -46,7 +41,7 @@ class HomeController extends Controller
         return view('pengumuman', compact('pengumuman'));
     }
 
-    public function pengumumanDetail($id)
+    public function pengumumanDetail(string $id)
     {
         $pengumuman = Pengumuman::findOrFail($id);
         return view('pengumuman_detail', compact('pengumuman'));

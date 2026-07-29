@@ -34,7 +34,7 @@ class GaleriController extends Controller
         return redirect()->back()->with('success', 'Foto berhasil ditambahkan ke Galeri!');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
@@ -58,7 +58,7 @@ class GaleriController extends Controller
         return redirect()->back()->with('success', 'Data galeri berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $galeri = Galeri::findOrFail($id);
 

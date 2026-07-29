@@ -115,24 +115,26 @@
 
     <div class="report-title">REKAP ABSENSI BULANAN</div>
 
+    @php
+        $monthNames = [
+            '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', 
+            '04' => 'April', '05' => 'Mei', '06' => 'Juni', 
+            '07' => 'Juli', '08' => 'Agustus', '09' => 'September', 
+            '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+        ];
+        $bulanFormatted = str_pad((string)$bulan, 2, '0', STR_PAD_LEFT);
+        $namaBulan = $monthNames[$bulanFormatted] ?? $bulan;
+    @endphp
+
     <!-- Info Section -->
     <table class="info-table">
         <tr>
-            <td width="15%"><strong>Kelas / Kelompok</strong></td>
+            <td width="10%"><strong>Tingkat</strong></td>
             <td width="2%">:</td>
-            <td width="33%">{{ $kelas->nama_kelas ?? 'Semua Kelas' }}</td>
-            
-            <td width="15%"><strong>Bulan</strong></td>
-            <td width="2%">:</td>
-            @php
-                $monthNames = [
-                    '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', 
-                    '04' => 'April', '05' => 'Mei', '06' => 'Juni', 
-                    '07' => 'Juli', '08' => 'Agustus', '09' => 'September', 
-                    '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
-                ];
-            @endphp
-            <td width="33%">{{ $monthNames[(string)$bulan] ?? $bulan }} {{ $tahun }}</td>
+            <td width="38%">{{ $kelas->nama_kelas ?? 'Semua Kelas' }}</td>
+            <td width="50%" style="text-align: right;">
+                <strong>Bulan</strong> &nbsp;:&nbsp; {{ $namaBulan }} {{ $tahun }}
+            </td>
         </tr>
     </table>
 

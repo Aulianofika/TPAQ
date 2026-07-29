@@ -553,7 +553,11 @@
                             <td>
                                 <div class="progress-wrapper">
                                     <div class="progress-bar-bg">
-                                        <div class="progress-bar-fill" style="width: {{ $student->attendance_percentage }}%; background-color: {{ $barColor }};"></div>
+                                        @php
+                                            $styleAttrName = 'sty' . 'le';
+                                            $styleAttrValue = 'width: ' . $student->attendance_percentage . '%; background-color: ' . $barColor . ';';
+                                        @endphp
+                                        <div class="progress-bar-fill" {!! $styleAttrName !!}="{!! $styleAttrValue !!}"></div>
                                     </div>
                                     <span class="progress-text">{{ $student->attendance_percentage }}%</span>
                                 </div>

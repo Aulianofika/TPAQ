@@ -35,7 +35,7 @@ class PengumumanController extends Controller
         return redirect()->back()->with('success', 'Pengumuman berhasil ditambahkan!');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
@@ -60,7 +60,7 @@ class PengumumanController extends Controller
         return redirect()->back()->with('success', 'Pengumuman berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $pengumuman = Pengumuman::findOrFail($id);
 

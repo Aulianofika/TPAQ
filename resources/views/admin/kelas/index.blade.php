@@ -452,10 +452,10 @@
                         </td>
                         <td style="padding-right: 32px;">
                             <div class="actions-cell">
-                                <button class="action-btn" onclick="openEditModal({{ $k->id_kelas }}, '{{ addslashes($k->nama_kelas) }}', '{{ $k->id_pengajar }}')" title="Edit Kelas">
+                                <button class="action-btn" onclick="openEditModal('{{ $k->id_kelas }}', '{{ addslashes($k->nama_kelas) }}', '{{ $k->id_pengajar }}')" title="Edit Kelas">
                                     <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                 </button>
-                                <button type="button" class="action-btn btn-delete" onclick="openDeleteModal('{{ route('admin.kelas.destroy', $k->id_kelas) }}')" title="Hapus Kelas">
+                                <button type="button" class="action-btn btn-delete" onclick="openDeleteModal(`{{ route('admin.kelas.destroy', $k->id_kelas) }}`)" title="Hapus Kelas">
                                     <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
                                 </button>
                             </div>

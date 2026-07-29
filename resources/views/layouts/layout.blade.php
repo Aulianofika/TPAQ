@@ -42,7 +42,6 @@
         <ul class="navbar-links" id="navbar-links">
             <li><a href="{{ url('/') }}#beranda">Beranda</a></li>
             <li><a href="{{ url('/profil') }}">Profil</a></li>
-            <li><a href="{{ url('/program') }}">Program</a></li>
             <li><a href="{{ url('/pengurus') }}">Pengelola TPA</a></li>
             <li><a href="{{ url('/galeri') }}">Galeri</a></li>
             <li><a href="{{ url('/pengumuman') }}">Pengumuman</a></li>
@@ -87,10 +86,10 @@
             <div class="footer-col">
                 <div class="footer-heading">Quick Links</div>
                 <div class="footer-nav">
-                    <a href="#">Programs</a>
-                    <a href="#">Schedule</a>
-                    <a href="#">Enrollment</a>
-                    <a href="#">Privacy Policy</a>
+                    <a href="{{ url('/profil') }}">Profil TPA</a>
+                    <a href="{{ url('/pengurus') }}">Pengelola TPA</a>
+                    <a href="{{ url('/galeri') }}">Galeri</a>
+                    <a href="{{ url('/pengumuman') }}">Pengumuman</a>
                 </div>
             </div>
 

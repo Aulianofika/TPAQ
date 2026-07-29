@@ -71,7 +71,7 @@ class PengajarController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $messages = [
             'nama.required' => 'Nama wajib diisi.',
@@ -105,7 +105,7 @@ class PengajarController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $pengajar = Pengajar::findOrFail($id);
 
@@ -124,7 +124,7 @@ class PengajarController extends Controller
         return redirect()->back()->with('success', 'Data berhasil dihapus!');
     }
 
-    public function createAccount(Request $request, $id)
+    public function createAccount(Request $request, string $id)
     {
         $pengajar = Pengajar::findOrFail($id);
 

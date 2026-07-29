@@ -116,7 +116,7 @@ class HafalanController extends Controller
         return redirect()->back()->with('success', 'Progres hafalan santri berhasil diperbarui!');
     }
 
-    public function getRiwayat($id_santri, Request $request)
+    public function getRiwayat(string $id_santri, Request $request)
     {
         $caturwulan = $request->query('caturwulan');
 

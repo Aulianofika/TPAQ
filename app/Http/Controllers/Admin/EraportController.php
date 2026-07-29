@@ -63,10 +63,22 @@ class EraportController extends Controller
         ]);
     }
 
-    public function riwayat()
+    public function riwayat(Request $request)
     {
-        $eraports = \App\Models\Eraport::with('santri')->latest()->get();
-        return view('admin.eraport_riwayat', compact('eraports'));
+        $classes = \App\Models\Kelas::all();
+        $selected_class_id = $request->input('id_kelas', 'semua');
+
+        $query = \App\Models\Eraport::with('santri.kelas')->latest();
+
+        if ($selected_class_id && $selected_class_id !== 'semua') {
+            $query->whereHas('santri', function ($q) use ($selected_class_id) {
+                $q->where('id_kelas', $selected_class_id);
+            });
+        }
+
+        $eraports = $query->get();
+
+        return view('admin.eraport_riwayat', compact('eraports', 'classes', 'selected_class_id'));
     }
 
     public function store(Request $request)
@@ -77,6 +89,21 @@ class EraportController extends Controller
             'tahun_pelajaran.required' => 'Tahun pelajaran wajib diisi.',
             'caturwulan.required' => 'Caturwulan wajib dipilih.',
             'kelompok.required' => 'Kelompok kelas wajib diisi.',
+            'nilai_tajwid.required' => 'Nilai Tajwid wajib diisi.',
+            'nilai_fashahah.required' => 'Nilai Fashahah wajib diisi.',
+            'nilai_irama.required' => 'Nilai Irama/Lagu wajib diisi.',
+            'nilai_adab.required' => 'Nilai Adab wajib diisi.',
+            'nilai_ibadah.required' => 'Nilai Praktek Ibadah wajib diisi.',
+            'nilai_doa.required' => 'Nilai Hafalan Doa Harian wajib diisi.',
+            'nilai_surat.required' => 'Nilai Hafalan Surat Pendek wajib diisi.',
+            'nilai_sejarah.required' => 'Nilai Sejarah Islam wajib diisi.',
+            'nilai_dakwah.required' => 'Nilai Dakwah wajib diisi.',
+            'nilai_akhlak.required' => 'Nilai Akhlak wajib diisi.',
+            'ekstra_subuh.required' => 'Nilai Ekstra Sholat Subuh wajib diisi.',
+            'ekstra_rebana.required' => 'Nilai Ekstra Rebana wajib diisi.',
+            'ekstra_olahraga.required' => 'Nilai Ekstra Olahraga wajib diisi.',
+            'sikap_disiplin.required' => 'Nilai Sikap Disiplin wajib diisi.',
+            'sikap_kebersihan.required' => 'Nilai Sikap Kebersihan wajib diisi.',
         ];
 
         $validated = $request->validate([
@@ -84,21 +111,21 @@ class EraportController extends Controller
             'caturwulan' => 'required|in:1,2,3',
             'kelompok' => 'required|string|max:255',
             'tahun_pelajaran' => 'required|string|max:20',
-            'nilai_tajwid' => 'nullable|string|max:5',
-            'nilai_fashahah' => 'nullable|string|max:5',
-            'nilai_irama' => 'nullable|string|max:5',
-            'nilai_adab' => 'nullable|string|max:5',
-            'nilai_ibadah' => 'nullable|string|max:5',
-            'nilai_doa' => 'nullable|string|max:5',
-            'nilai_surat' => 'nullable|string|max:5',
-            'nilai_sejarah' => 'nullable|string|max:5',
-            'nilai_dakwah' => 'nullable|string|max:5',
-            'nilai_akhlak' => 'nullable|string|max:5',
-            'ekstra_subuh' => 'nullable|string|max:5',
-            'ekstra_rebana' => 'nullable|string|max:5',
-            'ekstra_olahraga' => 'nullable|string|max:5',
-            'sikap_disiplin' => 'nullable|string|max:5',
-            'sikap_kebersihan' => 'nullable|string|max:5',
+            'nilai_tajwid' => 'required|string|max:5',
+            'nilai_fashahah' => 'required|string|max:5',
+            'nilai_irama' => 'required|string|max:5',
+            'nilai_adab' => 'required|string|max:5',
+            'nilai_ibadah' => 'required|string|max:5',
+            'nilai_doa' => 'required|string|max:5',
+            'nilai_surat' => 'required|string|max:5',
+            'nilai_sejarah' => 'required|string|max:5',
+            'nilai_dakwah' => 'required|string|max:5',
+            'nilai_akhlak' => 'required|string|max:5',
+            'ekstra_subuh' => 'required|string|max:5',
+            'ekstra_rebana' => 'required|string|max:5',
+            'ekstra_olahraga' => 'required|string|max:5',
+            'sikap_disiplin' => 'required|string|max:5',
+            'sikap_kebersihan' => 'required|string|max:5',
             'absen_sakit' => 'nullable|integer|min:0',
             'absen_izin' => 'nullable|integer|min:0',
             'absen_alpa' => 'nullable|integer|min:0',
@@ -120,7 +147,7 @@ class EraportController extends Controller
         return redirect()->back()->with('success', 'E-Raport berhasil disimpan!')->with('last_id_eraport', $eraport->id_eraport);
     }
 
-    public function cetakPdf($id)
+    public function cetakPdf(string $id)
     {
         $eraport = \App\Models\Eraport::with('santri')->findOrFail($id);
         
@@ -131,7 +158,7 @@ class EraportController extends Controller
         $namaSantri = $eraport->santri ? $eraport->santri->nama : 'Unknown';
         return $pdf->download('E-Raport_'.$namaSantri.'.pdf');
     }
-    public function previewPdf($id)
+    public function previewPdf(string $id)
     {
         $eraport = \App\Models\Eraport::with('santri')->findOrFail($id);
         
@@ -142,7 +169,7 @@ class EraportController extends Controller
         return $pdf->stream('Preview_E-Raport.pdf');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $eraport = \App\Models\Eraport::findOrFail($id);
         $eraport->delete();

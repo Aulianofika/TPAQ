@@ -616,19 +616,21 @@
                         <div class="cawu-container">
                             <label style="cursor: pointer;">
                                 <input type="radio" name="caturwulan" value="1" class="cawu-radio" style="display: none;"
-                                    checked>
+                                    {{ old('caturwulan', '1') == '1' ? 'checked' : '' }}>
                                 <div class="cawu-label"
                                     style="padding: 10px 24px; border-radius: 32px; font-family: 'Epilogue'; font-weight: 700; font-size: 14px; transition: all 0.3s;">
                                     Caturwulan I (Juli - Okt)</div>
                             </label>
                             <label style="cursor: pointer;">
-                                <input type="radio" name="caturwulan" value="2" class="cawu-radio" style="display: none;">
+                                <input type="radio" name="caturwulan" value="2" class="cawu-radio" style="display: none;"
+                                    {{ old('caturwulan') == '2' ? 'checked' : '' }}>
                                 <div class="cawu-label"
                                     style="padding: 10px 24px; border-radius: 32px; font-family: 'Epilogue'; font-weight: 700; font-size: 14px; transition: all 0.3s;">
                                     Caturwulan II (Nov - Feb)</div>
                             </label>
                             <label style="cursor: pointer;">
-                                <input type="radio" name="caturwulan" value="3" class="cawu-radio" style="display: none;">
+                                <input type="radio" name="caturwulan" value="3" class="cawu-radio" style="display: none;"
+                                    {{ old('caturwulan') == '3' ? 'checked' : '' }}>
                                 <div class="cawu-label"
                                     style="padding: 10px 24px; border-radius: 32px; font-family: 'Epilogue'; font-weight: 700; font-size: 14px; transition: all 0.3s;">
                                     Caturwulan III (Mar - Jun)</div>
@@ -643,9 +645,9 @@
                         <select name="status_kenaikan" class="custom-input"
                             style="background: #FFFFFF; border-color: rgba(0, 50, 39, 0.2); font-weight: 600; color: #003227;">
                             <option value="">-- Pilih Status Kenaikan --</option>
-                            <option value="Naik">Pindah Jilid / Kelas</option>
-                            <option value="Tetap">Tinggal di Jilid / Kelas</option>
-                            <option value="Lulus">Tamat / Lulus</option>
+                            <option value="Naik" {{ old('status_kenaikan') == 'Naik' ? 'selected' : '' }}>Pindah Jilid / Kelas</option>
+                            <option value="Tetap" {{ old('status_kenaikan') == 'Tetap' ? 'selected' : '' }}>Tinggal di Jilid / Kelas</option>
+                            <option value="Lulus" {{ old('status_kenaikan') == 'Lulus' ? 'selected' : '' }}>Tamat / Lulus</option>
                         </select>
                     </div>
 
@@ -655,7 +657,7 @@
                             style="width:100%; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:12px; padding:12px 16px;">
                             <option value="">-- Pilih Santri --</option>
                             @foreach($santris as $santri)
-                                <option value="{{ $santri->id_santri }}">{{ $santri->nama }}</option>
+                                <option value="{{ $santri->id_santri }}" {{ old('id_santri') == $santri->id_santri ? 'selected' : '' }}>{{ $santri->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -664,12 +666,12 @@
                         <div class="form-group">
                             <label class="form-label">Kelas</label>
                             <input type="text" name="kelompok" id="kelompok_input" class="custom-input"
-                                placeholder="Otomatis terisi..." readonly required style="background: rgba(0,0,0,0.02);">
+                                placeholder="Otomatis terisi..." readonly required style="background: rgba(0,0,0,0.02);" value="{{ old('kelompok') }}">
                         </div>
                         <div class="form-group">
                             <label class="form-label">TAHUN PELAJARAN</label>
                             <input type="text" name="tahun_pelajaran" id="tahun_pelajaran_input" class="custom-input"
-                                 placeholder="Contoh: 2026/2027" required style="background: #FFFFFF;">
+                                 placeholder="Contoh: 2026/2027" required style="background: #FFFFFF;" value="{{ old('tahun_pelajaran') }}">
                         </div>
                     </div>
                 </div>
@@ -694,7 +696,7 @@
                                 <span class="nilai-label-dark">TAJWID</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_tajwid" class="nilai-input-dark hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_tajwid') }}">
                                     <span class="grade-badge grade-dark" id="grade_nilai_tajwid">-</span>
                                 </div>
                             </div>
@@ -702,7 +704,7 @@
                                 <span class="nilai-label-dark">FASHAHAH</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_fashahah" class="nilai-input-dark hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_fashahah') }}">
                                     <span class="grade-badge grade-dark" id="grade_nilai_fashahah">-</span>
                                 </div>
                             </div>
@@ -710,7 +712,7 @@
                                 <span class="nilai-label-dark">IRAMA / LAGU</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_irama" class="nilai-input-dark hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_irama') }}">
                                     <span class="grade-badge grade-dark" id="grade_nilai_irama">-</span>
                                 </div>
                             </div>
@@ -718,7 +720,7 @@
                                 <span class="nilai-label-dark">ADAB</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_adab" class="nilai-input-dark hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_adab') }}">
                                     <span class="grade-badge grade-dark" id="grade_nilai_adab">-</span>
                                 </div>
                             </div>
@@ -730,7 +732,7 @@
                                 <span class="nilai-label-light">PRAKTEK IBADAH</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_ibadah" class="nilai-input-light hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_ibadah') }}">
                                     <span class="grade-badge grade-light" id="grade_nilai_ibadah">-</span>
                                 </div>
                             </div>
@@ -738,7 +740,7 @@
                                 <span class="nilai-label-light">HAFALAN DOA HARIAN</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_doa" class="nilai-input-light hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_doa') }}">
                                     <span class="grade-badge grade-light" id="grade_nilai_doa">-</span>
                                 </div>
                             </div>
@@ -746,7 +748,7 @@
                                 <span class="nilai-label-light">HAFALAN SURAT PENDEK</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_surat" class="nilai-input-light hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_surat') }}">
                                     <span class="grade-badge grade-light" id="grade_nilai_surat">-</span>
                                 </div>
                             </div>
@@ -758,7 +760,7 @@
                                 <span class="nilai-label-light">SEJARAH ISLAM</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_sejarah" class="nilai-input-light hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_sejarah') }}">
                                     <span class="grade-badge grade-light" id="grade_nilai_sejarah">-</span>
                                 </div>
                             </div>
@@ -766,7 +768,7 @@
                                 <span class="nilai-label-light">DAKWAH / PIDATO</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_dakwah" class="nilai-input-light hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_dakwah') }}">
                                     <span class="grade-badge grade-light" id="grade_nilai_dakwah">-</span>
                                 </div>
                             </div>
@@ -774,7 +776,7 @@
                                 <span class="nilai-label-light">AKHLAK & KHAT</span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <input type="number" name="nilai_akhlak" class="nilai-input-light hitung-nilai" min="0"
-                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required>
+                                        max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" required value="{{ old('nilai_akhlak') }}">
                                     <span class="grade-badge grade-light" id="grade_nilai_akhlak">-</span>
                                 </div>
                             </div>
@@ -799,21 +801,21 @@
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">DIDIKAN SUBUH</span>
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <input type="number" name="ekstra_subuh" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai">
+                                        <input type="number" name="ekstra_subuh" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_subuh') }}">
                                         <span class="grade-badge grade-light" id="grade_ekstra_subuh">-</span>
                                     </div>
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">QASIDAH/REBANA</span>
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <input type="number" name="ekstra_rebana" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai">
+                                        <input type="number" name="ekstra_rebana" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_rebana') }}">
                                         <span class="grade-badge grade-light" id="grade_ekstra_rebana">-</span>
                                     </div>
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">OLAHRAGA</span>
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <input type="number" name="ekstra_olahraga" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai">
+                                        <input type="number" name="ekstra_olahraga" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_olahraga') }}">
                                         <span class="grade-badge grade-light" id="grade_ekstra_olahraga">-</span>
                                     </div>
                                 </div>
@@ -825,19 +827,19 @@
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">DISIPLIN</span>
                                     <select name="sikap_disiplin" class="nilai-input-light">
-                                        <option value="A">A</option>
-                                        <option value="B" selected>B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
+                                        <option value="A" {{ old('sikap_disiplin') == 'A' ? 'selected' : '' }}>A</option>
+                                        <option value="B" {{ old('sikap_disiplin', 'B') == 'B' ? 'selected' : '' }}>B</option>
+                                        <option value="C" {{ old('sikap_disiplin') == 'C' ? 'selected' : '' }}>C</option>
+                                        <option value="D" {{ old('sikap_disiplin') == 'D' ? 'selected' : '' }}>D</option>
                                     </select>
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">KEBERSIHAN</span>
                                     <select name="sikap_kebersihan" class="nilai-input-light">
-                                        <option value="A">A</option>
-                                        <option value="B" selected>B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
+                                        <option value="A" {{ old('sikap_kebersihan') == 'A' ? 'selected' : '' }}>A</option>
+                                        <option value="B" {{ old('sikap_kebersihan', 'B') == 'B' ? 'selected' : '' }}>B</option>
+                                        <option value="C" {{ old('sikap_kebersihan') == 'C' ? 'selected' : '' }}>C</option>
+                                        <option value="D" {{ old('sikap_kebersihan') == 'D' ? 'selected' : '' }}>D</option>
                                     </select>
                                 </div>
 
@@ -845,17 +847,17 @@
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">SAKIT</span>
                                     <input type="number" name="absen_sakit" class="nilai-input-light" style="width: 60px;"
-                                        placeholder="0" min="0">
+                                        placeholder="0" min="0" value="{{ old('absen_sakit') }}">
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">IZIN</span>
                                     <input type="number" name="absen_izin" class="nilai-input-light" style="width: 60px;"
-                                        placeholder="0" min="0">
+                                        placeholder="0" min="0" value="{{ old('absen_izin') }}">
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">ALPA</span>
                                     <input type="number" name="absen_alpa" class="nilai-input-light" style="width: 60px;"
-                                        placeholder="0" min="0">
+                                        placeholder="0" min="0" value="{{ old('absen_alpa') }}">
                                 </div>
                             </div>
                         </div>
@@ -892,7 +894,7 @@
                     <div class="form-group" style="margin-top: 16px;">
                         <textarea name="catatan_guru" class="custom-input" rows="4"
                             placeholder="Tuliskan catatan perkembangan, motivasi, atau pesan untuk santri..."
-                            style="resize: vertical; padding: 16px; border-radius: 16px;"></textarea>
+                            style="resize: vertical; padding: 16px; border-radius: 16px;">{{ old('catatan_guru') }}</textarea>
                     </div>
                 </div>
 

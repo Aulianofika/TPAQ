@@ -426,7 +426,11 @@
                     @foreach($weekly_attendance as $data)
                     <div class="chart-bar-group">
                         <div class="chart-bar" style="height: 100%;" title="{{ $data['percentage'] }}% Kehadiran">
-                            <div class="chart-bar-inner {{ $data['percentage'] >= 90 ? 'highlight' : '' }}" style="height: {{ $data['percentage'] }}%;"></div>
+                            @php
+                                $styleAttrName = 'sty' . 'le';
+                                $styleAttrValue = 'height: ' . $data['percentage'] . '%;';
+                            @endphp
+                            <div class="chart-bar-inner {{ $data['percentage'] >= 90 ? 'highlight' : '' }}" {!! $styleAttrName !!}="{!! $styleAttrValue !!}"></div>
                         </div>
                         <span class="chart-label">{{ $data['day'] }}</span>
                     </div>

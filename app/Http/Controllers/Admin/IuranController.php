@@ -136,7 +136,7 @@ class IuranController extends Controller
         return redirect()->back()->with('success', 'Pembayaran berhasil dicatat.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'jumlah' => 'required|integer',
@@ -150,7 +150,7 @@ class IuranController extends Controller
         return redirect()->back()->with('success', 'Data pembayaran berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $pembayaran = Pembayaran::findOrFail($id);
         $pembayaran->delete();

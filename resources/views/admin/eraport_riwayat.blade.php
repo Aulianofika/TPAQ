@@ -291,6 +291,18 @@
             </div>
 
             <form action="{{ route('admin.eraport.riwayat') }}" method="GET" class="search-filter-form" id="filterForm">
+                <div style="position: relative; display: flex; align-items: center;">
+                    <select name="id_kelas" onchange="this.form.submit()" class="select-class-filter" style="background: #F6F3EC; border: 1px solid #BFC9C4; border-radius: 9999px; padding: 10px 36px 10px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #003227; font-weight: 600; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none;">
+                        <option value="semua" {{ $selected_class_id == 'semua' ? 'selected' : '' }}>Semua Kelas</option>
+                        @foreach($classes as $kelas)
+                            <option value="{{ $kelas->id_kelas }}" {{ $selected_class_id == $kelas->id_kelas ? 'selected' : '' }}>
+                                Kelas {{ $kelas->nama_kelas }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <span class="material-symbols-outlined" style="position: absolute; right: 12px; pointer-events: none; color: #57534E; font-size: 20px;">expand_more</span>
+                </div>
+
                 <div class="search-input-wrapper">
                     <span class="material-symbols-outlined search-icon">search</span>
                     <input type="text" id="searchInput" placeholder="Cari nama santri..." autocomplete="off" class="input-search">
@@ -366,7 +378,7 @@
                                     <a href="{{ route('admin.eraport.pdf', $raport->id_eraport) }}" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #E0E7FF; color: #4338CA; border-radius: 12px; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.background='#C7D2FE'" onmouseout="this.style.background='#E0E7FF'" title="Cetak/Unduh PDF">
                                         <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
                                     </a>
-                                    <button type="button" onclick="openDeleteModal('{{ route('admin.eraport.delete', $raport->id_eraport) }}')" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #FEE2E2; color: #DC2626; border: none; border-radius: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#FECACA'" onmouseout="this.style.background='#FEE2E2'" title="Hapus">
+                                    <button type="button" onclick="openDeleteModal(`{{ route('admin.eraport.delete', $raport->id_eraport) }}`)" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #FEE2E2; color: #DC2626; border: none; border-radius: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#FECACA'" onmouseout="this.style.background='#FEE2E2'" title="Hapus">
                                         <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
                                     </button>
                                 </div>

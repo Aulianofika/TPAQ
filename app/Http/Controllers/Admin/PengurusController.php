@@ -79,7 +79,7 @@ class PengurusController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $messages = [
             'nama.required' => 'Nama wajib diisi.',
@@ -121,7 +121,7 @@ class PengurusController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $pengurus = Pengurus::findOrFail($id);
 
@@ -140,7 +140,7 @@ class PengurusController extends Controller
         return redirect()->back()->with('success', 'Data berhasil dihapus!');
     }
 
-    public function createAccount(Request $request, $id)
+    public function createAccount(Request $request, string $id)
     {
         $pengurus = Pengurus::findOrFail($id);
 

@@ -29,7 +29,7 @@ class KelasController extends Controller
         return redirect()->route('admin.kelas.index')->with('success', 'Data Kelas berhasil ditambahkan.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $validated = $request->validate([
             'nama_kelas' => 'required|string|max:255',
@@ -42,7 +42,7 @@ class KelasController extends Controller
         return redirect()->route('admin.kelas.index')->with('success', 'Data Kelas berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $kelas = Kelas::findOrFail($id);
         

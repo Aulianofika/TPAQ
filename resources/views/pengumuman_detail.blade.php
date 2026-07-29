@@ -24,13 +24,7 @@
     }
 
     .hero-bg-pattern {
-        position: absolute;
-        inset: 0;
-        background-image: url('https://images.unsplash.com/photo-1542816417-0983c9c9ad53?q=80&w=1200');
-        background-size: cover;
-        background-position: center;
-        opacity: 0.1;
-        z-index: 0;
+        display: none;
     }
 
     .detail-container {
