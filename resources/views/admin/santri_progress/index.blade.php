@@ -57,21 +57,9 @@
     /* Stats Grid */
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 24px;
         width: 100%;
-    }
-
-    @media (max-width: 1200px) {
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
     }
 
     .stat-card {
@@ -416,6 +404,25 @@
         color: #BFC9C4;
         margin-bottom: 16px;
     }
+
+    /* Responsive Additions */
+    @media (max-width: 768px) {
+        .content-canvas { padding: 16px; gap: 20px; }
+        .header-title { font-size: 24px; line-height: 1.2; }
+        .header-subtitle { font-size: 14px; }
+        .table-header-bar { padding: 20px; flex-direction: column; align-items: flex-start; }
+        .search-filter-form { width: 100%; flex-direction: column; align-items: stretch; }
+        .search-input-wrapper { width: 100%; }
+        .input-search { width: 100%; box-sizing: border-box; }
+        .filter-select { width: 100%; box-sizing: border-box; }
+    }
+    @media (max-width: 480px) {
+        .stat-card { padding: 16px; gap: 12px; border-radius: 20px; }
+        .stat-value { font-size: 24px; }
+        .stat-icon-wrapper { width: 40px; height: 40px; border-radius: 12px; }
+        .santri-table td, .santri-table th { padding: 12px 16px; }
+        .btn-detail { padding: 6px 12px; font-size: 12px; }
+    }
 </style>
 @endpush
 
@@ -434,48 +441,7 @@
         </div>
     </div>
 
-    <!-- Stats Grid (Bento) -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-header">
-                <span class="stat-label">Total Santri Aktif</span>
-                <div class="stat-icon-wrapper santri">
-                    <span class="material-symbols-outlined">group</span>
-                </div>
-            </div>
-            <p class="stat-value">{{ $total_santri }}</p>
-        </div>
 
-        <div class="stat-card">
-            <div class="stat-header">
-                <span class="stat-label">Rata-rata Kehadiran</span>
-                <div class="stat-icon-wrapper attendance">
-                    <span class="material-symbols-outlined">event_available</span>
-                </div>
-            </div>
-            <p class="stat-value">{{ $avg_attendance }}%</p>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-header">
-                <span class="stat-label">Progres Hafalan Diinput</span>
-                <div class="stat-icon-wrapper hafalan">
-                    <span class="material-symbols-outlined">menu_book</span>
-                </div>
-            </div>
-            <p class="stat-value">{{ $total_hafalan_progress }}</p>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-header">
-                <span class="stat-label">E-Rapor Diterbitkan</span>
-                <div class="stat-icon-wrapper raport">
-                    <span class="material-symbols-outlined">school</span>
-                </div>
-            </div>
-            <p class="stat-value">{{ $total_eraports }}</p>
-        </div>
-    </div>
 
     <!-- Table Card Box -->
     <div class="table-section">

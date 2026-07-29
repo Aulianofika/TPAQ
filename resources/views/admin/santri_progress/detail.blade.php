@@ -525,6 +525,26 @@
     .btn-action-sm .material-symbols-outlined {
         font-size: 14px;
     }
+
+    /* Responsive Additions */
+    @media (max-width: 768px) {
+        .content-canvas { padding: 16px; gap: 20px; }
+        .header-title { font-size: 24px; line-height: 1.2; }
+        .page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+        .btn-back { width: 100%; justify-content: center; box-sizing: border-box; }
+        .detail-grid { gap: 20px; }
+        .tab-navigation { overflow-x: auto; white-space: nowrap; padding-bottom: 4px; }
+        .tab-btn { flex: 0 0 auto; }
+        .absensi-summary-grid { grid-template-columns: 1fr; }
+        .eraport-grid { grid-template-columns: 1fr; }
+        .tab-grid-2 { grid-template-columns: 1fr; flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+        .profile-card { padding: 20px; border-radius: 20px; }
+        .section-card { padding: 20px; border-radius: 20px; }
+        .data-table th, .data-table td { padding: 10px 12px; }
+    }
 </style>
 @endpush
 
