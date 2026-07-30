@@ -36,34 +36,10 @@ class IuranController extends Controller
             
         $total_santri = Santri::where('status', 'aktif')->count();
 
-        // 3. Tunggakan (Dihitung akumulasi dari Januari 2026 sampai bulan yang dipilih)
-        $startYear = 2026;
-        $startMonth = 1; // Januari
-        
-        $selectedMonthIndex = array_search($bulan, $bulan_array) + 1;
-        $selectedYear = (int)$tahun;
-        
-        $total_months = (($selectedYear - $startYear) * 12) + ($selectedMonthIndex - $startMonth) + 1;
-        if ($total_months < 0) {
-            $total_months = 0;
-        }
-
-        // Ambil semua pembayaran lunas
-        $all_lunas_payments = Pembayaran::where('status', 'lunas')->get();
-        $lunas_accumulated = 0;
-        $tunggakan_amount = 0; // Tidak lagi dipakai secara tunggal karena kita akumulasi
-        
-        foreach ($all_lunas_payments as $payment) {
-            $pMonth = array_search($payment->bulan, $bulan_array) + 1;
-            $pYear = (int)$payment->tahun;
-            
-            if ($pYear >= 2026 && ($pYear < $selectedYear || ($pYear == $selectedYear && $pMonth <= $selectedMonthIndex))) {
-                $lunas_accumulated++;
-            }
-        }
-
-        // Jumlah "bulan santri" yang menunggak
-        $santri_tunggakan_count = max(0, ($total_santri * $total_months) - $lunas_accumulated);
+        // 3. Tunggakan (Untuk bulan yang dipilih)
+        // Santri yang belum lunas pada bulan tersebut
+        $santri_tunggakan_count = max(0, $total_santri - $lunas_count);
+        $tunggakan_amount = 0; // Set to 0 since we calculate it dynamically in view
         
         // (Opsional) Jika sistem men-generate record 'belum' lunas secara otomatis tiap bulan, 
         // kita bisa query dari tabel Pembayaran. Namun jika tidak, $total_santri - $lunas_count adalah cara teraman.

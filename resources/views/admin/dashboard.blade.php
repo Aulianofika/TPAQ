@@ -475,7 +475,21 @@
 
         <!-- Right Column -->
         <div class="col-right">
-
+            <!-- SECTION IURAN: Hanya untuk Admin -->
+            @if(auth()->check() && auth()->user()->role === 'admin')
+            <div class="card-box" style="background: linear-gradient(135deg, #21443aff 0%, #059669 100%); color: white;">
+                <h3 class="card-title" style="color: white;">Info Iuran Bulan Ini</h3>
+                <div style="margin-top: 16px; display: flex; align-items: center; gap: 16px;">
+                    <div class="activity-icon" style="background: rgba(255, 255, 255, 0.2); color: white;">
+                        <span class="material-symbols-outlined">payments</span>
+                    </div>
+                    <div>
+                        <p style="margin: 0; font-size: 14px; font-weight: 500; opacity: 0.9;">Total Terkumpul</p>
+                        <h2 style="margin: 4px 0 0 0; font-family: 'Epilogue', sans-serif; font-weight: 800;">Rp {{ number_format($total_iuran ?? 0, 0, ',', '.') }}</h2>
+                    </div>
+                </div>
+            </div>
+            @endif
 
             <!-- SECTION 6: Aktivitas Terbaru -->
             <div class="card-box activity-card">

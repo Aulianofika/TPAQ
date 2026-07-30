@@ -46,6 +46,7 @@ Route::prefix('admin')->middleware(['auth', 'guru', 'nocache'])->group(function 
     Route::get('/eraport/preview/{id}', [\App\Http\Controllers\Admin\EraportController::class, 'previewPdf'])->name('admin.eraport.preview');
     Route::get('/eraport/get-absensi', [\App\Http\Controllers\Admin\EraportController::class, 'getAbsensi'])->name('admin.eraport.get_absensi');
     Route::delete('/eraport/{id}', [\App\Http\Controllers\Admin\EraportController::class, 'destroy'])->name('admin.eraport.delete');
+    Route::get('/eraport/{id}', function () { abort(404); });
 
     // Hafalan
     Route::get('/hafalan', [\App\Http\Controllers\Admin\HafalanController::class, 'index'])->name('admin.hafalan');

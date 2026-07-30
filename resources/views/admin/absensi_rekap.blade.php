@@ -394,7 +394,7 @@
                             <td style="text-align: center;"><span class="badge-count count-alfa">{{ $alfa }}</span></td>
                         </tr>
                     @empty
-                        <tr>
+                        <tr class="empty-row">
                             <td colspan="6">
                                 <div class="empty-state">
                                     <span class="material-symbols-outlined empty-icon">assignment</span>
@@ -403,6 +403,15 @@
                             </td>
                         </tr>
                     @endforelse
+                    <tr id="noSearchResult" style="display: none;">
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <span class="material-symbols-outlined empty-icon" style="font-size: 48px; margin-bottom: 16px; color: #BFC9C4;">search_off</span>
+                                <p style="margin: 0; font-weight: 600; font-size: 16px; color: #003227;">Data Santri tidak ditemukan</p>
+                                <p style="margin: 4px 0 0 0; font-size: 14px; color: #78716C;">Tidak ada data santri yang cocok dengan kata kunci pencarian Anda.</p>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -414,7 +423,8 @@
 <script>
     document.getElementById('searchInput').addEventListener('keyup', function() {
         let filter = this.value.toLowerCase();
-        let rows = document.querySelectorAll('.riwayat-table tbody tr');
+        let rows = document.querySelectorAll('.riwayat-table tbody tr:not(#noSearchResult):not(.empty-row)');
+        let visibleCount = 0;
         
         rows.forEach(row => {
             let nameElement = row.querySelector('.profile-name');
@@ -422,11 +432,17 @@
                 let name = nameElement.textContent || nameElement.innerText;
                 if (name.toLowerCase().indexOf(filter) > -1) {
                     row.style.display = "";
+                    visibleCount++;
                 } else {
                     row.style.display = "none";
                 }
             }
         });
+
+        let noSearchResult = document.getElementById('noSearchResult');
+        if (noSearchResult && rows.length > 0) {
+            noSearchResult.style.display = (visibleCount === 0 && filter !== '') ? "" : "none";
+        }
     });
 </script>
 @endpush

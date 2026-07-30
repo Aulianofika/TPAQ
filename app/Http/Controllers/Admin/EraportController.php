@@ -173,6 +173,6 @@ class EraportController extends Controller
     {
         $eraport = \App\Models\Eraport::findOrFail($id);
         $eraport->delete();
-        return redirect()->back()->with('success', 'Riwayat E-Rapor berhasil dihapus!');
+        return redirect()->back()->with('success', 'E-Rapor berhasil dihapus!');
     }
 }

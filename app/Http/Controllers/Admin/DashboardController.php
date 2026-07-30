@@ -71,6 +71,15 @@ class DashboardController extends Controller
             ];
         }
 
+        $total_iuran = 0;
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            // Mengambil data asli total pembayaran iuran bulan ini yang berstatus Lunas
+            $total_iuran = \App\Models\Pembayaran::where('status', 'Lunas')
+                ->whereMonth('tanggal_bayar', now()->month)
+                ->whereYear('tanggal_bayar', now()->year)
+                ->sum('jumlah');
+        }
+
         return view('admin.dashboard', compact(
             'total_santri', 
             'santri_aktif', 
@@ -78,7 +87,8 @@ class DashboardController extends Controller
             'persentase_hadir',
             'total_absensi',
             'aktivitas_terbaru',
-            'weekly_attendance'
+            'weekly_attendance',
+            'total_iuran'
         ));
     }
 }

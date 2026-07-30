@@ -1,5 +1,3 @@
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Str;
 @extends('layouts.layout')
 
 @section('title', 'TPA Al-Quran — Taman Pendidikan Al-Quran')
@@ -1037,23 +1035,40 @@ use Illuminate\Support\Str;
                 left: 14px;
             }
             .timeline-item {
-                flex-direction: row !important;
-                gap: 16px;
+                display: grid !important;
+                grid-template-columns: 32px 1fr;
+                gap: 8px 16px;
+                align-items: start;
             }
             .timeline-item.left .timeline-content-left,
-            .timeline-item.right .timeline-content-left {
-                display: none;
-            }
+            .timeline-item.right .timeline-content-left,
             .timeline-item.left .timeline-content-right,
             .timeline-item.right .timeline-content-right {
-                flex: 1;
-                display: flex;
+                display: flex !important;
                 flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
+                align-items: flex-start !important;
+                text-align: left !important;
             }
+            .timeline-item.left {
+                grid-template-areas:
+                    "node time"
+                    "node content";
+            }
+            .timeline-item.left .timeline-node { grid-area: node; margin-top: 4px; }
+            .timeline-item.left .timeline-content-right { grid-area: time; }
+            .timeline-item.left .timeline-content-left { grid-area: content; }
+
+            .timeline-item.right {
+                grid-template-areas:
+                    "node time"
+                    "node content";
+            }
+            .timeline-item.right .timeline-node { grid-area: node; margin-top: 4px; }
+            .timeline-item.right .timeline-content-left { grid-area: time; }
+            .timeline-item.right .timeline-content-right { grid-area: content; }
+            
             .timeline-time-badge {
-                margin-bottom: 8px;
+                margin-bottom: 0;
             }
         }
 
@@ -1285,7 +1300,7 @@ use Illuminate\Support\Str;
                 <div class="timeline-item left reveal">
                     <div class="timeline-content-left">
                         <div class="timeline-act-title">Pembukaan &amp; Doa</div>
-                        <div class="timeline-act-desc">Santri berkumpul, membaca doa bersama dan tadarus Al-Quran.</div>
+                        <div class="timeline-act-desc">Santri tadarus Al-Quran bersama</div>
                     </div>
                     <div class="timeline-node">
                         <div class="timeline-dot">
@@ -1297,7 +1312,7 @@ use Illuminate\Support\Str;
                     </div>
                     <div class="timeline-content-right">
                         <div class="timeline-time-badge">
-                            <span class="timeline-time-text">15:30 – 16:00</span>
+                            <span class="timeline-time-text">15:00 – 15:30</span>
                         </div>
                     </div>
                 </div>
@@ -1306,7 +1321,7 @@ use Illuminate\Support\Str;
                 <div class="timeline-item right reveal">
                     <div class="timeline-content-left">
                         <div class="timeline-time-badge">
-                            <span class="timeline-time-text">16:00 – 16:45</span>
+                            <span class="timeline-time-text">15:30 – 16:30</span>
                         </div>
                     </div>
                     <div class="timeline-node">
@@ -1325,8 +1340,8 @@ use Illuminate\Support\Str;
                 {{-- Item 3 --}}
                 <div class="timeline-item left reveal">
                     <div class="timeline-content-left">
-                        <div class="timeline-act-title">Belajar Membaca Quran</div>
-                        <div class="timeline-act-desc">Pengajaran iqra, tajwid dan hafalan surat pilihan.</div>
+                        <div class="timeline-act-title">Shalat Jamaah </div>
+                        <div class="timeline-act-desc">Santri sholat Ashar Berjamaah</div>
                     </div>
                     <div class="timeline-node">
                         <div class="timeline-dot">
@@ -1338,7 +1353,7 @@ use Illuminate\Support\Str;
                     </div>
                     <div class="timeline-content-right">
                         <div class="timeline-time-badge">
-                            <span class="timeline-time-text">16:45 – 17:30</span>
+                            <span class="timeline-time-text">16:30 – 17:30</span>
                         </div>
                     </div>
                 </div>
@@ -1358,8 +1373,8 @@ use Illuminate\Support\Str;
                         </div>
                     </div>
                     <div class="timeline-content-right">
-                        <div class="timeline-act-title">Shalat Jamaah &amp; Pulang</div>
-                        <div class="timeline-act-desc">Shalat Maghrib berjamaah dan penutupan kegiatan.</div>
+                        <div class="timeline-act-title">Muraja'ah &amp; Pulang</div>
+                        <div class="timeline-act-desc">Muroja'ah hafalan surat dan penutup kegiatan</div>
                     </div>
                 </div>
             </div>

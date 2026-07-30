@@ -36,7 +36,8 @@
         color: #002019; /* Teks hijau gelap */
         padding: 16px;
         border-radius: 12px;
-        display: flex;
+        display: inline-flex; 
+        width: fit-content;
         align-items: center;
         gap: 8px;
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -865,12 +866,21 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
+                        <tr class="empty-row">
                             <td colspan="5">
-                                <div class="empty-state">Tidak ada data santri aktif di kelas ini.</div>
+                                <div class="empty-state" style="padding: 48px; text-align: center; color: #A8A29E;">Tidak ada data santri aktif di kelas ini.</div>
                             </td>
                         </tr>
                     @endforelse
+                    <tr id="noSearchResult" style="display: none;">
+                        <td colspan="5">
+                            <div class="empty-state" style="padding: 48px; text-align: center;">
+                                <span class="material-symbols-outlined" style="font-size: 48px; margin-bottom: 16px; color: #BFC9C4; opacity: 0.5;">search_off</span>
+                                <p style="font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; font-weight: 700; color: #003227;">Data Santri tidak ditemukan</p>
+                                <p style="font-family: 'Plus Jakarta Sans', sans-serif; margin: 4px 0 0 0; font-size: 14px; color: #78716C;">Tidak ada data santri yang cocok dengan kata kunci pencarian Anda.</p>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -1107,14 +1117,26 @@
     // Search filter for Hafalan table
     document.getElementById('searchHafalan').addEventListener('input', function() {
         const keyword = this.value.toLowerCase();
-        const rows = document.querySelectorAll('.data-table tbody tr');
+        const rows = document.querySelectorAll('.data-table tbody tr:not(#noSearchResult):not(.empty-row)');
+        let visibleCount = 0;
+        
         rows.forEach(row => {
             const nameEl = row.querySelector('.santri-name');
             if (nameEl) {
                 const name = nameEl.textContent.toLowerCase();
-                row.style.display = name.includes(keyword) ? '' : 'none';
+                if (name.includes(keyword)) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
             }
         });
+
+        let noSearchResult = document.getElementById('noSearchResult');
+        if (noSearchResult && rows.length > 0) {
+            noSearchResult.style.display = (visibleCount === 0 && keyword !== '') ? "" : "none";
+        }
     });
 
 </script>
