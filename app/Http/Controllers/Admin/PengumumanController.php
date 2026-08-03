@@ -23,6 +23,17 @@ class PengumumanController extends Controller
             'isi' => 'required|string',
             'tanggal' => 'required|date',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ], [
+            'judul.required' => 'Judul pengumuman wajib diisi.',
+            'judul.max' => 'Judul maksimal 255 karakter.',
+            'kategori.required' => 'Kategori wajib dipilih.',
+            'kategori.in' => 'Kategori yang dipilih tidak valid.',
+            'isi.required' => 'Isi pengumuman wajib diisi.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Format tanggal tidak valid.',
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus berupa jpeg, png, jpg, atau webp.',
+            'gambar.max' => 'Ukuran gambar maksimal adalah 2MB (2048 KB).',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -43,6 +54,17 @@ class PengumumanController extends Controller
             'isi' => 'required|string',
             'tanggal' => 'required|date',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ], [
+            'judul.required' => 'Judul pengumuman wajib diisi.',
+            'judul.max' => 'Judul maksimal 255 karakter.',
+            'kategori.required' => 'Kategori wajib dipilih.',
+            'kategori.in' => 'Kategori yang dipilih tidak valid.',
+            'isi.required' => 'Isi pengumuman wajib diisi.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Format tanggal tidak valid.',
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus berupa jpeg, png, jpg, atau webp.',
+            'gambar.max' => 'Ukuran gambar maksimal adalah 2MB (2048 KB).',
         ]);
 
         $pengumuman = Pengumuman::findOrFail($id);

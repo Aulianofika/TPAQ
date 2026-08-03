@@ -326,6 +326,27 @@
 
 @section('content')
     <div class="content-canvas">
+        @if(session('success'))
+            <div style="background-color: #D1FAE5; border: 1px solid #10B981; color: #065F46; padding: 16px 24px; border-radius: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; display: inline-flex; width: fit-content; align-items: center; gap: 8px; margin-bottom: 24px;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">check_circle</span>
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div style="background-color: #FEE2E2; border: 1px solid #EF4444; color: #991B1B; padding: 16px 24px; border-radius: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; margin-bottom: 24px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">error</span>
+                    Gagal Menyimpan Data
+                </div>
+                <ul style="margin: 0; padding-left: 24px;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <!-- Page Header Section -->
         <div class="page-header">
             <div>
@@ -342,24 +363,6 @@
                 Tambah Pengumuman
             </button>
         </div>
-
-    @if(session('success'))
-        <div
-            style="background: #E8F5E9; color: #2E7D32; padding: 16px; border-radius: 12px; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div
-            style="background: #FFEBEE; color: #BA1A1A; padding: 16px; border-radius: 12px; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;">
-            <ul style="margin: 0; padding-left: 20px;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <div class="canvas-card">
         <table class="custom-table">

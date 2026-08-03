@@ -129,13 +129,17 @@ class AbsensiController extends Controller
         $students = collect();
         if ($selected_class_id === 'semua') {
             $students = Santri::where('status', 'aktif')->with(['kelas', 'absensis' => function($query) use ($bulan, $tahun) {
-                $query->whereMonth('tanggal', $bulan)
-                      ->whereYear('tanggal', $tahun);
+                if ($bulan !== 'semua') {
+                    $query->whereMonth('tanggal', $bulan);
+                }
+                $query->whereYear('tanggal', $tahun);
             }])->get();
         } elseif ($selected_class_id) {
             $students = Santri::where('id_kelas', $selected_class_id)->where('status', 'aktif')->with(['kelas', 'absensis' => function($query) use ($bulan, $tahun) {
-                $query->whereMonth('tanggal', $bulan)
-                      ->whereYear('tanggal', $tahun);
+                if ($bulan !== 'semua') {
+                    $query->whereMonth('tanggal', $bulan);
+                }
+                $query->whereYear('tanggal', $tahun);
             }])->get();
         }
 

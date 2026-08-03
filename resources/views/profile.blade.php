@@ -729,6 +729,60 @@
         </div>
     </section>
 
+    {{-- ======================== SEJARAH ======================== --}}
+    <section class="history-section" style="background: #ffffff; padding: 96px 24px;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="section-header-center reveal">
+                <h2 class="section-title-center">Sejarah Berdirinya</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="history-timeline reveal delay-100" style="position: relative; margin-top: 48px; padding-left: 28px;">
+                <!-- Vertical Line -->
+                <div style="position: absolute; left: 0; top: 12px; bottom: 12px; width: 2px; background: rgba(0, 50, 39, 0.1);"></div>
+                
+                <!-- Item 2000 -->
+                <div style="position: relative; margin-bottom: 48px;">
+                    <!-- Dot -->
+                    <div style="position: absolute; left: -33px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--green-deep); border: 2px solid #ffffff; box-shadow: 0 0 0 4px rgba(0, 50, 39, 0.1);"></div>
+                    
+                    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+                        <h3 style="margin: 0; font-family: 'Epilogue', sans-serif; font-size: 28px; font-weight: 800; color: var(--green-deep);">Tahun 2000</h3>
+                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; color: #78716C;">Awal Berdiri</span>
+                    </div>
+                    
+                    <p style="font-family: 'Manrope', sans-serif; font-size: 16px; line-height: 1.8; color: rgba(0, 50, 39, 0.8); text-align: justify; margin: 0 0 12px 0;">
+                        Didirikan pertama kali di Jorong Balai Sabuah, diinisiasi secara swadaya oleh para tokoh masyarakat, alim ulama, cadiak pandai, dan ninik mamak setempat. Latar belakang utamanya adalah tingginya kesadaran warga untuk menyediakan wadah pendidikan agama non-formal bagi anak usia dini.
+                    </p>
+                    <p style="font-family: 'Manrope', sans-serif; font-size: 16px; line-height: 1.8; color: rgba(0, 50, 39, 0.8); text-align: justify; margin: 0;">
+                        Pada masa awal, proses pembelajaran berlangsung secara tradisional dengan memanfaatkan fasilitas surau atau masjid setempat agar anak-anak tidak perlu menempuh jarak jauh ke nagari lain demi belajar mengaji.
+                    </p>
+                </div>
+
+                <!-- Item 2016 -->
+                <div style="position: relative;">
+                    <!-- Dot -->
+                    <div style="position: absolute; left: -33px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #FED65B; border: 2px solid #ffffff; box-shadow: 0 0 0 4px rgba(254, 214, 91, 0.2);"></div>
+                    
+                    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+                        <h3 style="margin: 0; font-family: 'Epilogue', sans-serif; font-size: 28px; font-weight: 800; color: var(--green-deep);">Tahun 2016</h3>
+                        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; color: #78716C;">Resmi & Terakreditasi</span>
+                    </div>
+                    
+                    <p style="font-family: 'Manrope', sans-serif; font-size: 16px; line-height: 1.8; color: rgba(0, 50, 39, 0.8); text-align: justify; margin: 0 0 16px 0;">
+                        Seiring berjalannya waktu dan meningkatnya jumlah santri, pengurus terus membenahi tata kelola administrasi lembaga hingga upaya formalisasi ini membuahkan hasil.
+                    </p>
+                    <div style="background: rgba(0, 50, 39, 0.03); border-radius: 12px; padding: 24px; border-left: 4px solid var(--green-deep);">
+                        <p style="font-family: 'Manrope', sans-serif; font-size: 16px; line-height: 1.7; color: rgba(0, 50, 39, 0.9); text-align: justify; margin: 0;">
+                            TPA Baiturridwan resmi memperoleh legalitas dari pemerintah <strong>(SK Izin Operasional No. 490 Tahun 2016)</strong>. Di bawah kepemimpinan Ibu Exmi Susilawati, lembaga ini bertransformasi hingga meraih <strong>Akreditasi B</strong> sebagai wujud jaminan mutu pendidikan Al-Qur'an.
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
     {{-- ======================== VISION & MISSION ======================== --}}
     <section class="vm-section">
         <div class="vm-container">
@@ -745,7 +799,7 @@
                         <h3 class="vision-title">Visi Kami</h3>
                     </div>
                     <div class="vision-content">
-                        <p class="vision-text">"Menjadi lembaga pendidikan Al-Qur'an terdepan yang melahirkan generasi Rabbani, cinta Al-Qur'an, dan berakhlakul karimah."</p>
+                        <p class="vision-text">"Terwujudnya generasi muda Jorong Balai Sabuah yang Qur'ani, berakhlak mulia, cerdas, dan cinta masjid sejak dini."</p>
                     </div>
                     </div>
 
@@ -758,15 +812,19 @@
                     <div class="mission-list">
                         <div class="mission-item">
                             <svg class="mission-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                            <span class="mission-text">Menyelenggarakan pendidikan Al-Qur'an dengan metode yang mudah, menyenangkan, dan tepat.</span>
+                            <span class="mission-text">Menyelenggarakan pembelajaran metode Iqra dan Al-Qur'an secara tartil, fasih, dan sesuai dengan ilmu tajwid.</span>
                         </div>
                         <div class="mission-item">
                             <svg class="mission-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                            <span class="mission-text">Membina akhlak santri sesuai dengan tuntunan sunnah Rasulullah SAW dalam kehidupan sehari-hari.</span>
+                            <span class="mission-text">Menanamkan nilai-nilai adab islamiyah, hafalan doa harian, dan praktik ibadah (salat fardu dan sunah) dalam kehidupan sehari-hari santri.</span>
                         </div>
                         <div class="mission-item">
                             <svg class="mission-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                            <span class="mission-text">Membangun sinergi dengan orang tua untuk mendukung keberhasilan pendidikan anak di rumah.</span>
+                            <span class="mission-text">Membentuk karakter santri yang berbakti kepada orang tua, menghormati sesama, serta berguna bagi agama, bangsa, dan nagari.</span>
+                        </div>
+                        <div class="mission-item">
+                            <svg class="mission-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                            <span class="mission-text">Mengembangkan kreativitas dan bakat santri melalui kegiatan pembiasaan islami, seni islami, dan perlombaan keagamaan.</span>
                         </div>
                     </div>
                 </div>

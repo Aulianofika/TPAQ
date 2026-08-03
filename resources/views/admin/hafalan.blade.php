@@ -716,7 +716,7 @@
         <!-- Judul Tabel dan Filter -->
         <form id="filterForm" method="GET" action="{{ route('admin.hafalan') }}">
             <div class="table-header-flex">
-                <h3 class="table-title">Hafalan Santri</h3>
+                <h3 class="table-title">Hafalan Santri <span style="font-size: 14px; font-weight: 600; color: #78716C; margin-left: 8px;">(Tahun {{ date('Y') }})</span></h3>
                 
                 <div class="filter-group">
                     <div style="position: relative;">
@@ -726,9 +726,9 @@
                             onfocus="this.style.borderColor='#004B3C'" onblur="this.style.borderColor='#E5E7EB'">
                     </div>
                     <select name="caturwulan" class="filter-select" onchange="document.getElementById('filterForm').submit()">
-                        <option value="1" @selected($caturwulan == '1')>Caturwulan I (Juli - Oktober)</option>
-                        <option value="2" @selected($caturwulan == '2')>Caturwulan II (November - Februari)</option>
-                        <option value="3" @selected($caturwulan == '3')>Caturwulan III (Maret - Juni)</option>
+                        <option value="1" @selected($caturwulan == '1')>Caturwulan I (Juli - Oktober) - {{ date('Y') }}</option>
+                        <option value="2" @selected($caturwulan == '2')>Caturwulan II (November - Februari) - {{ date('Y') }}</option>
+                        <option value="3" @selected($caturwulan == '3')>Caturwulan III (Maret - Juni) - {{ date('Y') }}</option>
                     </select>
                     
                     <select name="id_kelas" class="filter-select" onchange="document.getElementById('filterForm').submit()">

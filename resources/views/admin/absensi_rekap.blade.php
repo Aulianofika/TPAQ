@@ -331,6 +331,7 @@
                 </select>
 
                 <select name="bulan" class="filter-select" onchange="document.getElementById('filterForm').submit()">
+                    <option value="semua" {{ $bulan == 'semua' ? 'selected' : '' }}>Semua Bulan (Pertahun)</option>
                     @php
                         $months = [
                             '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', 
@@ -342,6 +343,16 @@
                     @foreach($months as $num => $name)
                         <option value="{{ $num }}" {{ $bulan == $num ? 'selected' : '' }}>{{ $name }}</option>
                     @endforeach
+                </select>
+
+                <select name="tahun" class="filter-select" onchange="document.getElementById('filterForm').submit()">
+                    @php
+                        $currentYear = date('Y');
+                        $startYear = 2020; // Or whatever start year is appropriate, 2020 is safe
+                    @endphp
+                    @for($i = $currentYear; $i >= $startYear; $i--)
+                        <option value="{{ $i }}" {{ (isset($tahun) ? $tahun : $currentYear) == $i ? 'selected' : '' }}>{{ $i }}</option>
+                    @endfor
                 </select>
 
                 <!-- <a href="{{ route('admin.absensi.preview', request()->all()) }}" target="_blank" class="btn-submit" style="background: #D97706; border-color: #D97706; text-decoration: none;">

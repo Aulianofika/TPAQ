@@ -744,7 +744,7 @@
 <div class="content-canvas">
 
     @if(session('success'))
-        <div style="background-color: #D1FAE5; border: 1px solid #10B981; color: #065F46; padding: 16px 24px; border-radius: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+        <div style="background-color: #D1FAE5; border: 1px solid #10B981; color: #065F46; padding: 16px 24px; border-radius: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; display: inline-flex; width: fit-content; align-items: center; gap: 8px;">
             <span class="material-symbols-outlined" style="font-size: 20px;">check_circle</span>
             {{ session('success') }}
         </div>

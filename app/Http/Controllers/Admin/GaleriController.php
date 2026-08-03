@@ -22,6 +22,15 @@ class GaleriController extends Controller
             'kategori' => 'required|in:pembelajaran,kegiatan,wisuda,prestasi',
             'deskripsi' => 'nullable|string',
             'foto' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ], [
+            'judul.required' => 'Judul wajib diisi.',
+            'judul.max' => 'Judul maksimal 255 karakter.',
+            'kategori.required' => 'Kategori wajib dipilih.',
+            'kategori.in' => 'Kategori yang dipilih tidak valid.',
+            'foto.required' => 'Foto wajib diunggah.',
+            'foto.image' => 'File yang diunggah harus berupa gambar.',
+            'foto.mimes' => 'Format foto harus berupa jpeg, png, jpg, atau webp.',
+            'foto.max' => 'Ukuran foto maksimal adalah 2MB (2048 KB).',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -41,6 +50,14 @@ class GaleriController extends Controller
             'kategori' => 'required|in:pembelajaran,kegiatan,wisuda,prestasi',
             'deskripsi' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ], [
+            'judul.required' => 'Judul wajib diisi.',
+            'judul.max' => 'Judul maksimal 255 karakter.',
+            'kategori.required' => 'Kategori wajib dipilih.',
+            'kategori.in' => 'Kategori yang dipilih tidak valid.',
+            'foto.image' => 'File yang diunggah harus berupa gambar.',
+            'foto.mimes' => 'Format foto harus berupa jpeg, png, jpg, atau webp.',
+            'foto.max' => 'Ukuran foto maksimal adalah 2MB (2048 KB).',
         ]);
 
         $galeri = Galeri::findOrFail($id);

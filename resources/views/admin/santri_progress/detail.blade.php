@@ -550,6 +550,14 @@
 
 @section('content')
 <div class="content-canvas">
+
+    @if(session('success'))
+        <div style="background-color: #D1FAE5; border: 1px solid #10B981; color: #065F46; padding: 16px 24px; border-radius: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; display: inline-flex; width: fit-content; align-items: center; gap: 8px; margin-bottom: 24px;">
+            <span class="material-symbols-outlined" style="font-size: 20px;">check_circle</span>
+            {{ session('success') }}
+        </div>
+    @endif
+
     <!-- Header -->
     <div class="page-header">
         <div>
@@ -761,7 +769,7 @@
                                 <div style="padding: 16px; background: #F6F3EC; border-radius: 16px;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                         <span style="font-weight: 700; color: #003227; font-size: 14px;">
-                                            CaturWulan {{ $progres->caturwulan }}
+                                            CaturWulan {{ $progres->caturwulan }} <span style="color: #78716C; font-weight: 600; font-size: 12px; margin-left: 4px;">({{ \Carbon\Carbon::parse($progres->created_at ?? now())->format('Y') }})</span>
                                         </span>
                                         <span class="badge-status {{ $progres->status }}">
                                             {{ $progres->status }}
