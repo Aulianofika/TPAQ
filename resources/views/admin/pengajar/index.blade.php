@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
-@php
-    /** @var \Illuminate\Pagination\LengthAwarePaginator $pengajars */
-@endphp
+@section('title', 'Admin - Pengajar')
 
 @push('styles')
     <style>

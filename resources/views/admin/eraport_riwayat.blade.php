@@ -364,8 +364,7 @@
                                         $noHp = '62' . substr($noHp, 1);
                                     }
                                     
-                                    $pdfUrl = route('admin.eraport.pdf', $raport->id_eraport);
-                                    $pesan = "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nYth. Orang Tua/Wali Santri dari ananda {$namaSantri},\n\nBerikut kami sampaikan bahwa E-Rapor untuk Caturwulan {$raport->caturwulan} Tahun Pelajaran {$raport->tahun_pelajaran} telah diterbitkan dengan rata-rata nilai {$raport->rata_rata}.\n\nBapak/Ibu dapat mengunduh dokumen E-Rapor melalui tautan berikut:\n{$pdfUrl}\n\nCatatan Guru:\n" . ($raport->catatan_guru ?? '-') . "\n\nTerima kasih atas perhatian dan kerja samanya.\n\nTPA Baitur Ridwan";
+                                    $pesan = "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nYth. Orang Tua/Wali Santri dari ananda {$namaSantri},\n\nBerikut kami sampaikan bahwa E-Rapor untuk Caturwulan {$raport->caturwulan} Tahun Pelajaran {$raport->tahun_pelajaran} telah diterbitkan dengan rata-rata nilai {$raport->rata_rata}.\n\nCatatan Guru:\n" . ($raport->catatan_guru ?? '-') . "\n\nTerima kasih atas perhatian dan kerja samanya.\n\nTPA Baitur Ridwan";
                                     
                                     $waText = urlencode($pesan);
                                 @endphp

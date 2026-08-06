@@ -625,10 +625,10 @@
                 
 
                 <!-- Tombol Pindah Kelas / Luluskan -->
-                <button type="button" onclick="openPindahKelasModal()" class="btn-pindah-kelas">
+                <!-- <button type="button" onclick="openPindahKelasModal()" class="btn-pindah-kelas">
                     <span class="material-symbols-outlined">swap_horiz</span>
                     <span>Pindah Kelas / Luluskan</span>
-                </button>
+                </button> -->
             </div>
         </div>
 

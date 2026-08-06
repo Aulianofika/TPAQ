@@ -889,7 +889,7 @@
                             $bgClass = 'avatar-bg-' . ($santri->id_santri % 4);
 
                             if ($statusBadge == 'MENUNGGAK') {
-                                $waPesan = "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nYth. Bapak/Ibu Wali Santri dari ananda {$santri->nama},\n\nKami menginformasikan bahwa saat ini sudah melewati batas waktu pembayaran (tanggal 7) untuk Iuran SPP TPA Baitur Ridwan bulan {$bulan} {$tahun}, namun status pembayaran ananda masih *MENUNGGAK*.\n\nMohon kerjasamanya untuk dapat segera melakukan pelunasan sebesar Rp " . number_format($nominal, 0, ',', '.') . ".\nAbaikan pesan ini jika sudah membayar.\n\nTerima kasih.\n\nWassalamu'alaikum Warahmatullahi Wabarakatuh.";
+                                $waPesan = "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nYth. Bapak/Ibu Wali Santri dari ananda {$santri->nama},\n\nSemoga Bapak/Ibu senantiasa dalam keadaan sehat dan senantiasa berada dalam lindungan Allah SWT.\n\nMelalui pesan ini, kami bermaksud menyampaikan pengingat dengan hormat mengenai Iuran SPP TPA Baitur Ridwan untuk bulan {$bulan} {$tahun}. Berdasarkan catatan kami, iuran atas nama ananda {$santri->nama} sebesar Rp " . number_format($nominal, 0, ',', '.') . " saat ini belum terselesaikan.\n\nKami memohon perkenan Bapak/Ibu untuk dapat melakukan pelunasan. Apabila Bapak/Ibu telah melakukan pembayaran, mohon abaikan pesan ini.\n\nTerima kasih banyak atas perhatian dan kerjasama Bapak/Ibu.\n\nWassalamu'alaikum Warahmatullahi Wabarakatuh.\n\nTPA Baitur Ridwan";
                                 $waText = urlencode($waPesan);
                             }
                         @endphp

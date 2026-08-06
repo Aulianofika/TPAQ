@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
-@php
-    /** @var \Illuminate\Pagination\LengthAwarePaginator $pengurus */
-@endphp
+@section('title', 'Admin - Pengurus')
 
 @push('styles')
     <style>

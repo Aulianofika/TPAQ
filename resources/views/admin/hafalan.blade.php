@@ -4,9 +4,7 @@
 
 @push('styles')
 <style>
-    /* =====================================================================
-       PENGATURAN UMUM & IKON
-       ===================================================================== */
+    /* PENGATURAN UMUM & IKON */
     /* Mengatur gaya ikon material agar terisi atau garis luar saja */
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     .fill-icon { font-variation-settings: 'FILL' 1; }
@@ -14,10 +12,7 @@
     /* Tombol default agar tidak memiliki background dan border bawaan browser */
     button { background: transparent; border: none; padding: 0; cursor: pointer; font-family: inherit; }
 
-    /* =====================================================================
-       LAYOUT UTAMA
-       ===================================================================== */
-    /* .content-canvas adalah pembungkus utama (wrapper) halaman */
+    /* LAYOUT UTAMA */
     .content-canvas {
         display: flex;
         flex-direction: column;
@@ -45,9 +40,7 @@
         box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
 
-    /* =====================================================================
-       HERO HEADER (Bagian Atas Warna Hijau Gelap)
-       ===================================================================== */
+    /* HERO HEADER (Bagian Atas Warna Hijau Gelap) */
     .hero-header {
         position: relative;
         background-color: #003227; /* Hijau utama */
@@ -777,7 +770,7 @@
                             $statusNote = 'Ananda belum memulai setoran untuk target hafalan ini. Yuk kita semangati bersama agar ananda mulai aktif menyetor hafalan barunya.';
                             
                             if ($status === 'melanjutkan') {
-                                $displayStatus = 'Sedang menambah hafalan baru';
+                                $displayStatus = 'Sedang melanjutkan hafalan baru';
                                 $statusNote = 'Alhamdulillah, ananda sedang bersemangat melanjutkan setoran hafalan barunya. Mohon terus didukung ya Pak/Bu.';
                             } elseif ($status === 'mengulang') {
                                 $displayStatus = 'Perlu mengulang agar lebih lancar';

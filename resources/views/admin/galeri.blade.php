@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', 'Admin - Galeri')
 @push('styles')
 <style>
     /* Page Header Section */
