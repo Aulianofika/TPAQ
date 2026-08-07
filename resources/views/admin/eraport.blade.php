@@ -801,21 +801,21 @@
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">DIDIKAN SUBUH</span>
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <input type="number" name="ekstra_subuh" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_subuh') }}">
+                                        <input type="number" name="ekstra_subuh" class="nilai-input-light hitung-nilai" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_subuh') }}">
                                         <span class="grade-badge grade-light" id="grade_ekstra_subuh">-</span>
                                     </div>
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">QASIDAH/REBANA</span>
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <input type="number" name="ekstra_rebana" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_rebana') }}">
+                                        <input type="number" name="ekstra_rebana" class="nilai-input-light hitung-nilai" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_rebana') }}">
                                         <span class="grade-badge grade-light" id="grade_ekstra_rebana">-</span>
                                     </div>
                                 </div>
                                 <div class="nilai-row">
                                     <span class="nilai-label-light">OLAHRAGA</span>
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <input type="number" name="ekstra_olahraga" class="nilai-input-light hitung-ekstra" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_olahraga') }}">
+                                        <input type="number" name="ekstra_olahraga" class="nilai-input-light hitung-nilai" min="0" max="100" style="width: 70px; padding: 10px 8px;" placeholder="Nilai" value="{{ old('ekstra_olahraga') }}">
                                         <span class="grade-badge grade-light" id="grade_ekstra_olahraga">-</span>
                                     </div>
                                 </div>
