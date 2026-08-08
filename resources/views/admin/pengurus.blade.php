@@ -575,7 +575,13 @@
             <div
                 style="background: #ECFDF5; border: 1px solid #10B981; color: #047857; padding: 16px; border-radius: 12px; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;">
                 {{ session('success') }}
-
+            </div>
+        @endif
+        
+        @if(session('error'))
+            <div
+                style="background: #FEF2F2; border: 1px solid #EF4444; color: #B91C1C; padding: 16px; border-radius: 12px; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;">
+                {{ session('error') }}
             </div>
         @endif
         @if($errors->any())

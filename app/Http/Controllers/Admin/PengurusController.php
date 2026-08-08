@@ -125,17 +125,23 @@ class PengurusController extends Controller
     {
         $pengurus = Pengurus::findOrFail($id);
 
+        // Mencegah user menghapus akunnya sendiri
+        if ($pengurus->id_user && $pengurus->id_user == auth()->id()) {
+            return redirect()->back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri!');
+        }
+
         if ($pengurus->foto) {
             Storage::disk('public')->delete($pengurus->foto);
         }
 
-        // Jika memiliki user account, hapus juga (opsional, tergantung policy)
-        // Di sini kita hapus juga akun loginnya
-        if ($pengurus->id_user) {
-            $pengurus->user()->delete();
-        }
+        $user = $pengurus->user;
 
         $pengurus->delete();
+
+        // Hapus akun loginnya setelah data pengurus dihapus agar tidak error foreign key
+        if ($user) {
+            $user->delete();
+        }
 
         return redirect()->back()->with('success', 'Data berhasil dihapus!');
     }
