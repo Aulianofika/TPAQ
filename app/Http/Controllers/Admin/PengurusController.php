@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Pengurus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PengurusController extends Controller
@@ -126,7 +127,7 @@ class PengurusController extends Controller
         $pengurus = Pengurus::findOrFail($id);
 
         // Mencegah user menghapus akunnya sendiri
-        if ($pengurus->id_user && $pengurus->id_user == auth()->id()) {
+        if ($pengurus->id_user && $pengurus->id_user == Auth::id()) {
             return redirect()->back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri!');
         }
 

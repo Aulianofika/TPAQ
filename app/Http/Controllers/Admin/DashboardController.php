@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -72,8 +72,7 @@ class DashboardController extends Controller
         }
 
         $total_iuran = 0;
-        if (auth()->check() && auth()->user()->role === 'admin') {
-            // Mengambil data asli total pembayaran iuran bulan ini yang berstatus Lunas
+        if (Auth::check() && Auth::user()->role === 'admin') {            // Mengambil data asli total pembayaran iuran bulan ini yang berstatus Lunas
             $total_iuran = \App\Models\Pembayaran::where('status', 'Lunas')
                 ->whereMonth('tanggal_bayar', now()->month)
                 ->whereYear('tanggal_bayar', now()->year)

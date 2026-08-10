@@ -359,7 +359,7 @@
                     <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
                     Preview
                 </a> -->
-                <a href="{{ route('admin.absensi.pdf', request()->all()) }}" target="_blank" class="btn-submit" style="text-decoration: none;">
+                <a href="{{ route('admin.absensi.preview', request()->all()) }}" target="_blank" class="btn-submit" style="text-decoration: none;">
                     <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
                     Cetak 
                 </a>

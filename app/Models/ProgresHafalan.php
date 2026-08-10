@@ -12,7 +12,6 @@ class ProgresHafalan extends Model
         'id_santri',
         'caturwulan',
         'capaian',
-        'persentase',
         'status',
         'keterangan',
     ];
