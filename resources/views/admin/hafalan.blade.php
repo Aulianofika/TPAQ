@@ -758,8 +758,9 @@
                             $klsName = $classes->firstWhere('id_kelas', $id_kelas)->nama_kelas ?? 'Kelas';
                             
                             // Menyiapkan Nomor HP untuk WhatsApp
-                            $noHp = $santri->no_hp_wali ?? '';
-                            if (strpos($noHp, '0') === 0) $noHp = '62' . substr($noHp, 1);
+                            $rawNoHp = trim($santri->no_hp_wali ?? '');
+                            $noHp = ($rawNoHp === '-' || $rawNoHp === '') ? '' : $rawNoHp;
+                            if (!empty($noHp) && strpos($noHp, '0') === 0) $noHp = '62' . substr($noHp, 1);
                             $noHpWa = preg_replace('/[^0-9]/', '', $noHp);
                             
                             // Construct WhatsApp message directly
@@ -846,14 +847,19 @@
                                     <button onclick="openUpdateModal('{{ $santri->id_santri }}', '{{ addslashes($santri->nama) }}', '{{ addslashes($capaian) }}', '{{ $status }}', '{{ addslashes($keterangan) }}')" class="btn-icon btn-edit" title="Update Progres">
                                         <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
                                     </button>
-                                    @endif
                                     @if($noHpWa)
                                     <a href="{{ $waUrl }}" target="_blank" class="btn-icon btn-wa" title="Kirim Pesan WhatsApp">
-                                        <!-- Ikon WhatsApp SVG asli -->
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
                                             <path d="M16 .5C7.44.5.5 7.44.5 16c0 2.72.7 5.32 2.05 7.62L.5 31.5l8.1-2.02A15.46 15.46 0 0 0 16 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm0 28.3a13.3 13.3 0 0 1-6.77-1.85l-.48-.29-4.81 1.2 1.23-4.68-.32-.5A13.3 13.3 0 1 1 16 28.8zm7.3-9.97c-.4-.2-2.36-1.16-2.73-1.3-.37-.13-.64-.2-.9.2s-1.03 1.3-1.27 1.57c-.23.27-.46.3-.86.1a10.9 10.9 0 0 1-3.2-1.98 12 12 0 0 1-2.22-2.75c-.23-.4-.02-.62.18-.82.18-.18.4-.46.6-.7.2-.23.27-.4.4-.66.14-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.23-2.97-.32-.77-.65-.67-.9-.68h-.77c-.27 0-.7.1-1.06.5a4.6 4.6 0 0 0-1.44 3.44c0 2.03 1.47 3.98 1.67 4.26.2.27 2.88 4.4 6.98 6.17 2.46 1.06 3.42 1.15 4.65.97 1-.15 2.35-.96 2.68-1.89.33-.93.33-1.73.23-1.9-.1-.16-.37-.26-.77-.46z"/>
                                         </svg>
                                     </a>
+                                    @else
+                                    <button type="button" onclick="Swal.fire({icon: 'warning', title: 'Nomor WhatsApp Tidak Ada', text: 'Nomor wali santri belum tersedia.', confirmButtonColor: '#004B3C', confirmButtonText: 'Mengerti'})" class="btn-icon btn-wa" title="Nomor wali santri belum tersedia" style="opacity: 0.4; cursor: pointer;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
+                                            <path d="M16 .5C7.44.5.5 7.44.5 16c0 2.72.7 5.32 2.05 7.62L.5 31.5l8.1-2.02A15.46 15.46 0 0 0 16 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm0 28.3a13.3 13.3 0 0 1-6.77-1.85l-.48-.29-4.81 1.2 1.23-4.68-.32-.5A13.3 13.3 0 1 1 16 28.8zm7.3-9.97c-.4-.2-2.36-1.16-2.73-1.3-.37-.13-.64-.2-.9.2s-1.03 1.3-1.27 1.57c-.23.27-.46.3-.86.1a10.9 10.9 0 0 1-3.2-1.98 12 12 0 0 1-2.22-2.75c-.23-.4-.02-.62.18-.82.18-.18.4-.46.6-.7.2-.23.27-.4.4-.66.14-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.23-2.97-.32-.77-.65-.67-.9-.68h-.77c-.27 0-.7.1-1.06.5a4.6 4.6 0 0 0-1.44 3.44c0 2.03 1.47 3.98 1.67 4.26.2.27 2.88 4.4 6.98 6.17 2.46 1.06 3.42 1.15 4.65.97 1-.15 2.35-.96 2.68-1.89.33-.93.33-1.73.23-1.9-.1-.16-.37-.26-.77-.46z"/>
+                                        </svg>
+                                    </button>
+                                    @endif
                                     @endif
                                 </div>
                             </td>

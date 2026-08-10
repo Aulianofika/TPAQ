@@ -932,7 +932,19 @@
                             <td style="padding-right: 32px;">
                                 <div class="actions-cell">
                                     @if($statusBadge == 'MENUNGGAK')
-                                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $santri->no_hp_wali ?? '') }}?text={{ $waText ?? '' }}" target="_blank" class="action-btn-text" style="margin-right: 12px;">Ingatkan WA</a>
+                                        @php
+                                            $rawNoHpIuran = trim($santri->no_hp_wali ?? '');
+                                            $noHpIuran = ($rawNoHpIuran === '-' || $rawNoHpIuran === '') ? '' : $rawNoHpIuran;
+                                            if (!empty($noHpIuran) && strpos($noHpIuran, '0') === 0) {
+                                                $noHpIuran = '62' . substr($noHpIuran, 1);
+                                            }
+                                            $noHpWaIuran = preg_replace('/[^0-9]/', '', $noHpIuran);
+                                        @endphp
+                                        @if(!empty($noHpWaIuran))
+                                            <a href="https://wa.me/{{ $noHpWaIuran }}?text={{ $waText ?? '' }}" target="_blank" class="action-btn-text" style="margin-right: 12px;">Ingatkan WA</a>
+                                        @else
+                                            <button type="button" onclick="Swal.fire({icon: 'warning', title: 'Nomor WhatsApp Tidak Ada', text: 'Nomor wali santri belum tersedia.', confirmButtonColor: '#004B3C', confirmButtonText: 'Mengerti'})" class="action-btn-text" style="margin-right: 12px; background: none; border: none; padding: 0; color: #9CA3AF; cursor: pointer;" title="Nomor wali santri belum tersedia">Ingatkan WA</button>
+                                        @endif
                                     @elseif($statusBadge == 'BELUM BAYAR')
                                         <span class="text-data-muted" style="font-size: 10px; font-style: italic; margin-right: 12px;" title="Baru bisa diingatkan setelah tgl 7">Belum Jatuh Tempo</span>
                                     @endif
