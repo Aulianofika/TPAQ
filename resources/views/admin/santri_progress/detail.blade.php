@@ -867,7 +867,7 @@
                                             @endif
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="{{ route('admin.eraport.pdf', $eraport->id_eraport) }}" class="btn-action-sm">
+                                            <a href="{{ route('admin.eraport.preview', $eraport->id_eraport) }}" class="btn-action-sm">
                                                 <span class="material-symbols-outlined">download</span>
                                                 <span>Unduh PDF</span>
                                             </a>
