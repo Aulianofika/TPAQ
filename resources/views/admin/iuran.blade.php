@@ -839,6 +839,12 @@
                     <span class="material-symbols-outlined search-icon">search</span>
                     <input type="text" id="searchInput" placeholder="Cari nama santri..." autocomplete="off" class="input-search">
                 </div>
+                <select name="id_kelas" class="filter-select" onchange="this.form.submit()">
+                    <option value="semua" {{ $id_kelas == 'semua' ? 'selected' : '' }}>Semua Kelas</option>
+                    @foreach($classes as $kls)
+                        <option value="{{ $kls->id_kelas }}" {{ $id_kelas == $kls->id_kelas ? 'selected' : '' }}>{{ $kls->nama_kelas }}</option>
+                    @endforeach
+                </select>
                 <select name="bulan" class="filter-select" onchange="this.form.submit()">
                     @foreach($all_months as $m)
                         <option value="{{ $m }}" {{ $bulan == $m ? 'selected' : '' }}>{{ $m }}</option>

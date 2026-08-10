@@ -73,7 +73,7 @@ class AbsensiController extends Controller
                       ->whereYear('tanggal', $tahun);
             }])->get();
         } elseif ($selected_class_id) {
-            // Get all active students for the selected class, with their attendance for the selected month/year
+            // filter absensi berdasarkan tahun/bulan
             $students = Santri::where('id_kelas', $selected_class_id)->where('status', 'aktif')->with(['kelas', 'absensis' => function($query) use ($bulan, $tahun) {
                 $query->whereMonth('tanggal', $bulan)
                       ->whereYear('tanggal', $tahun);

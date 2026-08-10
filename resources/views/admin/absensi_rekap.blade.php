@@ -348,17 +348,20 @@
                 <select name="tahun" class="filter-select" onchange="document.getElementById('filterForm').submit()">
                     @php
                         $currentYear = date('Y');
-                        $startYear = 2020; // Or whatever start year is appropriate, 2020 is safe
+                        $maxYear = $currentYear + 5; // Hingga 5 tahun ke depan
+                        
+                        // Cari tahun terlama dari data absensi, jika belum ada data maka minimal tahun berjalan
+                        $minYearInDb = \App\Models\Absensi::min(\DB::raw('YEAR(tanggal)'));
+                        $startYear = $minYearInDb ? (int)$minYearInDb : $currentYear;
+                        if ($startYear > $currentYear) {
+                            $startYear = $currentYear;
+                        }
                     @endphp
-                    @for($i = $currentYear; $i >= $startYear; $i--)
+                    @for($i = $maxYear; $i >= $startYear; $i--)
                         <option value="{{ $i }}" {{ (isset($tahun) ? $tahun : $currentYear) == $i ? 'selected' : '' }}>{{ $i }}</option>
                     @endfor
                 </select>
 
-                <!-- <a href="{{ route('admin.absensi.preview', request()->all()) }}" target="_blank" class="btn-submit" style="background: #D97706; border-color: #D97706; text-decoration: none;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
-                    Preview
-                </a> -->
                 <a href="{{ route('admin.absensi.preview', request()->all()) }}" target="_blank" class="btn-submit" style="text-decoration: none;">
                     <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
                     Cetak 

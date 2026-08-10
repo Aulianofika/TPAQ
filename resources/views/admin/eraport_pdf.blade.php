@@ -431,7 +431,7 @@
             <td width="34%" style="vertical-align: top;">
                 <p style="margin: 0;">Kepala TPA<br>Baitur Ridwan</p>
                 <div class="sig-space"></div>
-                <p style="font-weight: bold; text-decoration: underline; margin: 0;">{{ $eraport->kepala_tpa ?? 'H. Ahmad Syukron, S.Pd.I' }}</p>
+                <p style="font-weight: bold; text-decoration: underline; margin: 0;">{{ $eraport->kepala_tpa ?? 'Yopi Andrivo S.pd' }}</p>
             </td>
             <td width="33%" style="vertical-align: top;">
                 <p style="margin: 0;">Wali Kelas / Ustaz(ah)<br>&nbsp;</p>

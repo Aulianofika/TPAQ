@@ -345,7 +345,7 @@
             <div class="filter-btn" data-filter="prestasi">Prestasi</div>
         </div>
 
-        {{-- ======================== MASONRY GALLERY ======================== --}}
+        {{-- ======================== Viewer GALLERY ======================== --}}
         <section class="masonry-container">
             @if($galeris->isEmpty())
                 <div style="text-align:center; padding: 100px 20px;">

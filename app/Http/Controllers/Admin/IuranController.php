@@ -20,29 +20,41 @@ class IuranController extends Controller
         $bulan = $request->input('bulan', $default_bulan);
         $tahun = $request->input('tahun', $default_tahun);
         $status = $request->input('status', 'semua');
+        $id_kelas = $request->input('id_kelas', 'semua');
+
+        // Query Dasar Santri Aktif
+        $santri_query = Santri::where('status', 'aktif');
+        if ($id_kelas !== 'semua') {
+            $santri_query->where('id_kelas', $id_kelas);
+        }
+        $total_santri = (clone $santri_query)->count();
 
         // Metrik Ringkasan Keuangan
         // 1. Total Terkumpul (Bulan Ini)
-        $total_terkumpul = Pembayaran::where('bulan', $bulan)
+        $terkumpul_query = Pembayaran::where('bulan', $bulan)
             ->where('tahun', $tahun)
-            ->where('status', 'lunas')
-            ->sum('jumlah');
+            ->where('status', 'lunas');
+        if ($id_kelas !== 'semua') {
+            $terkumpul_query->whereHas('santri', function($q) use ($id_kelas) {
+                $q->where('id_kelas', $id_kelas)->where('status', 'aktif');
+            });
+        }
+        $total_terkumpul = $terkumpul_query->sum('jumlah');
 
         // 2. Santri Lunas
-        $lunas_count = Pembayaran::where('bulan', $bulan)
+        $lunas_query = Pembayaran::where('bulan', $bulan)
             ->where('tahun', $tahun)
-            ->where('status', 'lunas')
-            ->count();
-            
-        $total_santri = Santri::where('status', 'aktif')->count();
+            ->where('status', 'lunas');
+        if ($id_kelas !== 'semua') {
+            $lunas_query->whereHas('santri', function($q) use ($id_kelas) {
+                $q->where('id_kelas', $id_kelas)->where('status', 'aktif');
+            });
+        }
+        $lunas_count = $lunas_query->count();
 
         // 3. Tunggakan (Untuk bulan yang dipilih)
-        // Santri yang belum lunas pada bulan tersebut
         $santri_tunggakan_count = max(0, $total_santri - $lunas_count);
-        $tunggakan_amount = 0; // Set to 0 since we calculate it dynamically in view
-        
-        // (Opsional) Jika sistem men-generate record 'belum' lunas secara otomatis tiap bulan, 
-        // kita bisa query dari tabel Pembayaran. Namun jika tidak, $total_santri - $lunas_count adalah cara teraman.
+        $tunggakan_amount = 0;
         
         // Ambil Data Santri beserta relasi Pembayaran untuk bulan ini
         $query = Santri::with(['pembayarans' => function($q) use ($bulan, $tahun) {
@@ -57,6 +69,10 @@ class IuranController extends Controller
         })
         ->orderByRaw('COALESCE(pembayarans.updated_at, pembayarans.created_at) DESC')
         ->orderBy('santris.nama', 'asc');
+
+        if ($id_kelas !== 'semua') {
+            $query->where('santris.id_kelas', $id_kelas);
+        }
 
         if ($status == 'lunas') {
             $query->whereHas('pembayarans', function($q) use ($bulan, $tahun) {
@@ -87,7 +103,7 @@ class IuranController extends Controller
         $classes = \App\Models\Kelas::all();
 
         return view('admin.iuran', compact(
-            'bulan', 'tahun', 'status',
+            'bulan', 'tahun', 'status', 'id_kelas',
             'total_terkumpul', 'lunas_count', 'total_santri', 
             'tunggakan_amount', 'santri_tunggakan_count',
             'santris', 'all_months', 'years', 'all_santris', 'classes'
