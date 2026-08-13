@@ -656,7 +656,7 @@
 
                 <!-- Dropdown Laporan & Rekap -->
                 @php
-                    $isRekapActive = request()->routeIs('admin.absensi.rekap') || request()->routeIs('admin.eraport.riwayat');
+                    $isRekapActive = request()->routeIs('admin.absensi.rekap') || request()->routeIs('admin.eraport.riwayat') || request()->routeIs('admin.iuran.rekap');
                 @endphp
                 <div class="nav-group {{ $isRekapActive ? 'open' : '' }}" id="rekapNavGroup">
                     <button type="button" class="nav-link nav-group-toggle" id="rekapToggleBtn">
@@ -674,6 +674,11 @@
                             class="nav-link submenu-link {{ request()->routeIs('admin.eraport.riwayat') ? 'active' : '' }}">
                             <span class="material-symbols-outlined">history</span>
                             <span>Rekap Raport</span>
+                        </a>
+                        <a href="{{ route('admin.iuran.rekap') }}"
+                            class="nav-link submenu-link {{ request()->routeIs('admin.iuran.rekap') ? 'active' : '' }}">
+                            <span class="material-symbols-outlined">request_quote</span>
+                            <span>Rekap Iuran</span>
                         </a>
                     </div>
                 </div>

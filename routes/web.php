@@ -63,6 +63,9 @@ Route::prefix('admin')->middleware(['auth', 'guru', 'nocache'])->group(function 
     // Admin Only Routes
     Route::middleware('admin')->group(function () {
         Route::get('/iuran', [\App\Http\Controllers\Admin\IuranController::class, 'index'])->name('admin.iuran');
+        Route::get('/iuran/rekap', [\App\Http\Controllers\Admin\IuranController::class, 'rekap'])->name('admin.iuran.rekap');
+        Route::get('/iuran/rekap/pdf', [\App\Http\Controllers\Admin\IuranController::class, 'cetakPdfRekap'])->name('admin.iuran.rekap.pdf');
+        Route::get('/iuran/rekap/preview', [\App\Http\Controllers\Admin\IuranController::class, 'previewPdfRekap'])->name('admin.iuran.rekap.preview');
         Route::post('/iuran', [\App\Http\Controllers\Admin\IuranController::class, 'store'])->name('admin.iuran.store');
         Route::put('/iuran/{id}', [\App\Http\Controllers\Admin\IuranController::class, 'update'])->name('admin.iuran.update');
         Route::delete('/iuran/{id}', [\App\Http\Controllers\Admin\IuranController::class, 'destroy'])->name('admin.iuran.destroy');

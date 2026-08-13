@@ -436,6 +436,29 @@
         color: #FFFFFF;
     }
 
+    .btn-bukti-view {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        background: #F0FDF4;
+        border: 1px solid #A7F3D0;
+        border-radius: 9999px;
+        color: #047857;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+
+    .btn-bukti-view:hover {
+        background: #D1FAE5;
+        border-color: #059669;
+        transform: translateY(-1px);
+    }
+
     .btn-add-mini {
         background: #F6F3EC;
         color: #003227;
@@ -870,6 +893,7 @@
                         <th style="padding-left: 32px;">Nama Santri</th>
                         <th style="text-align: center;">Tanggal Dibayar</th>
                         <th>Jumlah</th>
+                        <th>Bukti & Pencatat</th>
                         <th>Status</th>
                         <th style="text-align: right; padding-right: 32px;">Aksi</th>
                     </tr>
@@ -921,6 +945,37 @@
                                 <p class="text-amount">Rp {{ number_format($nominal, 0, ',', '.') }}</p>
                             </td>
                             <td>
+                                @if($pembayaran)
+                                    @php
+                                        $buktiUrl = $pembayaran->bukti_pembayaran ? asset('storage/' . $pembayaran->bukti_pembayaran) : '';
+                                        $dicatatBy = $pembayaran->dicatat_oleh ?? 'Tidak dicatat';
+                                        $ket = $pembayaran->keterangan ?? '';
+                                        $tglFormated = $pembayaran->tanggal_bayar ? \Carbon\Carbon::parse($pembayaran->tanggal_bayar)->format('d M Y') : '-';
+                                        $namaSantriClean = htmlspecialchars(addslashes($santri->nama));
+                                        $dicatatByClean = htmlspecialchars(addslashes($dicatatBy));
+                                        $ketClean = htmlspecialchars(addslashes($ket));
+                                        $tglStr = $pembayaran->tanggal_bayar ? $pembayaran->tanggal_bayar->format('Y-m-d') : '';
+                                        
+                                        $onclickViewBukti = 'onclick="openViewBuktiModal(\'' . $namaSantriClean . '\', \'' . $bulan . ' ' . $tahun . '\', \'Rp ' . number_format($nominal, 0, ',', '.') . '\', \'' . strtoupper($pembayaran->status) . '\', \'' . $tglFormated . '\', \'' . $dicatatByClean . '\', \'' . $ketClean . '\', \'' . $buktiUrl . '\', \'' . $pembayaran->id_pembayaran . '\', ' . $pembayaran->jumlah . ', \'' . $pembayaran->status . '\', \'' . $tglStr . '\')"';
+                                    @endphp
+                                    <button type="button" class="btn-bukti-view" {!! $onclickViewBukti !!}>
+                                        @if($pembayaran->bukti_pembayaran)
+                                            <span class="material-symbols-outlined" style="font-size: 16px; color: #047857;">verified</span>
+                                            <span>Lihat Bukti</span>
+                                        @else
+                                            <span class="material-symbols-outlined" style="font-size: 16px; color: #D97706;">receipt_long</span>
+                                            <span>Detail Pencatat</span>
+                                        @endif
+                                    </button>
+                                    <div style="font-size: 11px; color: #78716C; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
+                                        <span class="material-symbols-outlined" style="font-size: 12px;">person</span>
+                                        <span>{{ Str::limit($dicatatBy, 22) }}</span>
+                                    </div>
+                                @else
+                                    <span class="text-data-muted" style="font-size: 12px; font-style: italic;">Belum Ada</span>
+                                @endif
+                            </td>
+                            <td>
                                 @if($isLunas)
                                     <span class="badge badge-lunas">Lunas</span>
                                 @elseif($statusBadge == 'MENUNGGAK')
@@ -952,7 +1007,9 @@
                                     @if($pembayaran)
                                         @php
                                             $tglStr = $pembayaran->tanggal_bayar ? $pembayaran->tanggal_bayar->format('Y-m-d') : '';
-                                            $onclickEdit = 'onclick="openEditModal(' . $pembayaran->id_pembayaran . ', ' . $pembayaran->jumlah . ', \'' . $pembayaran->status . '\', \'' . $tglStr . '\')"';
+                                            $buktiUrl = $pembayaran->bukti_pembayaran ? asset('storage/' . $pembayaran->bukti_pembayaran) : '';
+                                            $ketClean = htmlspecialchars(addslashes($pembayaran->keterangan ?? ''));
+                                            $onclickEdit = 'onclick="openEditModal(' . $pembayaran->id_pembayaran . ', ' . $pembayaran->jumlah . ', \'' . $pembayaran->status . '\', \'' . $tglStr . '\', \'' . $ketClean . '\', \'' . $buktiUrl . '\')"';
                                         @endphp
                                         <button type="button" class="action-btn" {!! $onclickEdit !!} title="Edit">
                                             <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
@@ -971,7 +1028,7 @@
                         </tr>
                     @empty
                         <tr class="empty-row">
-                            <td colspan="5" style="text-align: center; padding: 48px; color: #A8A29E;">
+                            <td colspan="6" style="text-align: center; padding: 48px; color: #A8A29E;">
                                 <span class="material-symbols-outlined" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;">payments</span>
                                 <p style="font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; font-weight: 700;">Belum ada data</p>
                                 <p style="font-family: 'Plus Jakarta Sans', sans-serif; margin: 4px 0 0 0; font-size: 14px;">Tidak ada data santri ditemukan.</p>
@@ -979,7 +1036,7 @@
                         </tr>
                     @endforelse
                     <tr id="noSearchResult" style="display: none;">
-                        <td colspan="5" style="text-align: center; padding: 48px; color: #A8A29E;">
+                        <td colspan="6" style="text-align: center; padding: 48px; color: #A8A29E;">
                             <span class="material-symbols-outlined" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;">search_off</span>
                             <p style="font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; font-weight: 700;">Data Santri tidak ditemukan</p>
                             <p style="font-family: 'Plus Jakarta Sans', sans-serif; margin: 4px 0 0 0; font-size: 14px;">Tidak ada santri yang cocok dengan kata kunci pencarian Anda.</p>
@@ -1004,7 +1061,7 @@
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <form action="{{ route('admin.iuran.store') }}" method="POST">
+        <form action="{{ route('admin.iuran.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="form-label">Nama Santri</label>
@@ -1033,7 +1090,26 @@
                     </select>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="form-label">Unggah Bukti Pembayaran (Foto/Nota/Struk Transfer)</label>
+                <input type="file" name="bukti_pembayaran" class="form-control" accept="image/*,.pdf">
+                <span style="font-size: 11px; color: #78716C; margin-top: 2px;">Format: JPG, PNG, WEBP, PDF. Maksimal 2MB.</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Catatan / Keterangan Pembayaran</label>
+                <input type="text" name="keterangan" placeholder="Contoh: Tunai diserahkan ke Bendahara / Transfer BCA" class="form-control">
+            </div>
             
+            <div style="background-color: #FEF3C7; border: 1px solid #F59E0B; border-radius: 16px; padding: 14px; margin-top: 12px; font-size: 12px; color: #92400E; display: flex; gap: 10px; align-items: flex-start;">
+                <span class="material-symbols-outlined" style="font-size: 20px; color: #D97706; flex-shrink: 0;">warning</span>
+                <div>
+                    <strong>Konfirmasi Penerimaan:</strong> Pastikan uang/bukti pembayaran sudah benar-benar masuk ke <strong>Bendahara</strong> sebelum mencatat status Lunas.<br>
+                    <span style="font-style: italic; color: #78350F;">Pencatat otomatis tersimpan sebagai: <strong>{{ Auth::user()->name ?? 'Akun Login' }}</strong></span>
+                </div>
+            </div>
+
             <div class="form-actions">
                 <button type="button" class="cancel-btn" onclick="closeModal('createModal')">Batal</button>
                 <button type="submit" class="save-btn">Simpan Data</button>
@@ -1051,7 +1127,7 @@
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <form id="editForm" method="POST">
+        <form id="editForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -1071,11 +1147,86 @@
                     </select>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="form-label">Ganti / Unggah Bukti Pembayaran</label>
+                <input type="file" name="bukti_pembayaran" class="form-control" accept="image/*,.pdf">
+                <div id="editBuktiPreview" style="margin-top: 6px; font-size: 12px; color: #047857;"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Catatan / Keterangan Pembayaran</label>
+                <input type="text" name="keterangan" id="editKeterangan" placeholder="Contoh: Tunai ke Bendahara / Transfer BCA" class="form-control">
+            </div>
+
+            <div style="background-color: #FEF3C7; border: 1px solid #F59E0B; border-radius: 16px; padding: 14px; margin-top: 12px; font-size: 12px; color: #92400E; display: flex; gap: 10px; align-items: flex-start;">
+                <span class="material-symbols-outlined" style="font-size: 20px; color: #D97706; flex-shrink: 0;">warning</span>
+                <div>
+                    <strong>Konfirmasi Perubahan:</strong> Pembaruan data akan mencatat <strong>{{ Auth::user()->name ?? 'Akun Login' }}</strong> sebagai pengguna terakhir yang mengonfirmasi/memperbarui data ini.
+                </div>
+            </div>
+
             <div class="form-actions">
                 <button type="button" class="cancel-btn" onclick="closeModal('editModal')">Batal</button>
                 <button type="submit" class="save-btn">Update Data</button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal Detail & Bukti Pembayaran -->
+<div class="modal-overlay" id="viewBuktiModal">
+    <div class="modal-container" style="max-width: 520px;">
+        <div class="modal-header">
+            <h3 class="modal-title">Detail & Bukti Pembayaran</h3>
+            <button type="button" class="modal-close" onclick="closeModal('viewBuktiModal')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="background-color: #F6F3EC; padding: 16px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h4 id="vb_nama_santri" style="margin: 0 0 4px 0; font-family: 'Epilogue', sans-serif; font-size: 18px; color: #003227;">-</h4>
+                    <p id="vb_bulan_tahun" style="margin: 0; font-size: 13px; color: #57534E;">-</p>
+                </div>
+                <div style="text-align: right;">
+                    <h4 id="vb_nominal" style="margin: 0 0 4px 0; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #003227;">-</h4>
+                    <span id="vb_status_badge" class="badge badge-lunas">LUNAS</span>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;">
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #E5E7EB; padding-bottom: 8px;">
+                    <span style="color: #6B7280; font-weight: 600;">Tanggal Pembayaran:</span>
+                    <span id="vb_tanggal" style="color: #1F2937; font-weight: 700;">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #E5E7EB; padding-bottom: 8px;">
+                    <span style="color: #6B7280; font-weight: 600;">Dicatat / Dikonfirmasi Oleh:</span>
+                    <span id="vb_dicatat_oleh" style="color: #004B3C; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">verified_user</span>
+                        <span id="vb_dicatat_name">-</span>
+                    </span>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #E5E7EB; padding-bottom: 8px;">
+                    <span style="color: #6B7280; font-weight: 600;">Catatan / Keterangan:</span>
+                    <span id="vb_keterangan" style="color: #1F2937; font-weight: 500;">-</span>
+                </div>
+            </div>
+
+            <div>
+                <label style="font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 13px; color: #003227; display: block; margin-bottom: 8px;">File Bukti Pembayaran</label>
+                <div id="vb_bukti_container" style="text-align: center; background: #F9FAFB; border: 2px dashed #E5E7EB; border-radius: 16px; padding: 16px; min-height: 120px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+
+            <div class="form-actions" style="margin-top: 12px;">
+                <button type="button" class="cancel-btn" onclick="closeModal('viewBuktiModal')">Tutup</button>
+                <button type="button" id="vb_edit_btn" class="save-btn" style="display: flex; align-items: center; gap: 6px;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">edit</span> Edit Pembayaran
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1096,15 +1247,76 @@
         openModal('createModal');
     }
 
-    function openEditModal(id, jumlah, status, tanggal) {
+    function openEditModal(id, jumlah, status, tanggal, keterangan = '', buktiUrl = '') {
         const form = document.getElementById('editForm');
         form.action = `{{ url('/admin/iuran') }}/${id}`;
         
         document.getElementById('editJumlah').value = jumlah;
         document.getElementById('editStatus').value = status;
         document.getElementById('editTanggal').value = tanggal;
+        document.getElementById('editKeterangan').value = keterangan;
+        
+        const previewDiv = document.getElementById('editBuktiPreview');
+        if (buktiUrl) {
+            previewDiv.innerHTML = `<span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">attachment</span> Ada file bukti terlampir. Unggah file baru jika ingin mengganti.`;
+        } else {
+            previewDiv.innerHTML = `<span style="color: #6B7280;">Belum ada file bukti terlampir.</span>`;
+        }
         
         openModal('editModal');
+    }
+
+    function openViewBuktiModal(namaSantri, bulanTahun, nominal, status, tanggal, dicatatOleh, keterangan, buktiUrl, id, jumlah, rawStatus, rawTanggal) {
+        document.getElementById('vb_nama_santri').textContent = namaSantri;
+        document.getElementById('vb_bulan_tahun').textContent = 'SPP Bulan ' + bulanTahun;
+        document.getElementById('vb_nominal').textContent = nominal;
+        
+        const badge = document.getElementById('vb_status_badge');
+        badge.textContent = status;
+        if (status === 'LUNAS') {
+            badge.className = 'badge badge-lunas';
+        } else {
+            badge.className = 'badge badge-menunggak';
+        }
+
+        document.getElementById('vb_tanggal').textContent = tanggal || '-';
+        document.getElementById('vb_dicatat_name').textContent = dicatatOleh || 'Sistem / Belum dicatat';
+        document.getElementById('vb_keterangan').textContent = keterangan || 'Tidak ada catatan tambahan';
+
+        const container = document.getElementById('vb_bukti_container');
+        if (buktiUrl) {
+            const isPdf = buktiUrl.toLowerCase().endsWith('.pdf');
+            if (isPdf) {
+                container.innerHTML = `
+                    <span class="material-symbols-outlined" style="font-size: 40px; color: #DC2626;">picture_as_pdf</span>
+                    <span style="font-size: 13px; color: #374151; font-weight: 600;">File Bukti (PDF)</span>
+                    <a href="${buktiUrl}" target="_blank" class="save-btn" style="padding: 6px 16px; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span> Buka Dokumen PDF
+                    </a>
+                `;
+            } else {
+                container.innerHTML = `
+                    <a href="${buktiUrl}" target="_blank" title="Klik untuk memperbesar gambar">
+                        <img src="${buktiUrl}" alt="Bukti Pembayaran" style="max-width: 100%; max-height: 240px; border-radius: 12px; object-fit: contain; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                    </a>
+                    <span style="font-size: 11px; color: #6B7280; margin-top: 4px;">Klik foto di atas untuk memperbesar</span>
+                `;
+            }
+        } else {
+            container.innerHTML = `
+                <span class="material-symbols-outlined" style="font-size: 36px; color: #9CA3AF;">receipt</span>
+                <span style="font-size: 13px; color: #6B7280; font-weight: 600;">Belum Ada Foto Bukti Pembayaran</span>
+                <span style="font-size: 11px; color: #9CA3AF;">Unggah bukti transfer atau struk nota melalui tombol edit di bawah.</span>
+            `;
+        }
+
+        const editBtn = document.getElementById('vb_edit_btn');
+        editBtn.onclick = function() {
+            closeModal('viewBuktiModal');
+            openEditModal(id, jumlah, rawStatus, rawTanggal, keterangan, buktiUrl);
+        };
+
+        openModal('viewBuktiModal');
     }
 
 

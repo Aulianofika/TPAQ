@@ -14,10 +14,16 @@ class Absensi extends Model
         'id_santri',
         'tanggal',
         'status',
+        'id_user',
     ];
 
     public function santri()
     {
         return $this->belongsTo(Santri::class, 'id_santri');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

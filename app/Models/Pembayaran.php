@@ -14,7 +14,10 @@ class Pembayaran extends Model
         'tahun',
         'jumlah',
         'status',
-        'tanggal_bayar'
+        'tanggal_bayar',
+        'bukti_pembayaran',
+        'dicatat_oleh',
+        'keterangan'
     ];
 
     protected $casts = [

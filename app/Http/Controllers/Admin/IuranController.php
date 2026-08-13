@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Santri;
 use App\Models\Pembayaran;
 
@@ -110,8 +112,6 @@ class IuranController extends Controller
         ));
     }
 
-
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -121,7 +121,22 @@ class IuranController extends Controller
             'jumlah' => 'required|integer|min:0',
             'status' => 'required|in:lunas,belum',
             'tanggal_bayar' => 'nullable|date',
+            'bukti_pembayaran' => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:2048',
+            'keterangan' => 'nullable|string|max:500',
+        ], [
+            'bukti_pembayaran.file' => 'Bukti pembayaran harus berupa file.',
+            'bukti_pembayaran.mimes' => 'Format bukti pembayaran harus jpeg, png, jpg, webp, atau pdf.',
+            'bukti_pembayaran.max' => 'Ukuran file maksimal 2MB.',
         ]);
+
+        if ($request->hasFile('bukti_pembayaran')) {
+            $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+            $validated['bukti_pembayaran'] = $path;
+        }
+
+        $user = Auth::user();
+        $roleStr = $user && isset($user->role) ? ' (' . ucfirst($user->role) . ')' : '';
+        $validated['dicatat_oleh'] = $user ? $user->name . $roleStr : 'Sistem';
 
         Pembayaran::create($validated);
 
@@ -130,14 +145,33 @@ class IuranController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'jumlah' => 'required|integer',
             'status' => 'required|in:lunas,belum',
             'tanggal_bayar' => 'nullable|date',
+            'bukti_pembayaran' => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:2048',
+            'keterangan' => 'nullable|string|max:500',
+        ], [
+            'bukti_pembayaran.file' => 'Bukti pembayaran harus berupa file.',
+            'bukti_pembayaran.mimes' => 'Format bukti pembayaran harus jpeg, png, jpg, webp, atau pdf.',
+            'bukti_pembayaran.max' => 'Ukuran file maksimal 2MB.',
         ]);
 
         $pembayaran = Pembayaran::findOrFail($id);
-        $pembayaran->update($request->only(['jumlah', 'status', 'tanggal_bayar']));
+
+        if ($request->hasFile('bukti_pembayaran')) {
+            if ($pembayaran->bukti_pembayaran) {
+                Storage::disk('public')->delete($pembayaran->bukti_pembayaran);
+            }
+            $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+            $validated['bukti_pembayaran'] = $path;
+        }
+
+        $user = Auth::user();
+        $roleStr = $user && isset($user->role) ? ' (' . ucfirst($user->role) . ')' : '';
+        $validated['dicatat_oleh'] = $user ? $user->name . $roleStr : 'Sistem';
+
+        $pembayaran->update($validated);
 
         return redirect()->back()->with('success', 'Data pembayaran berhasil diperbarui.');
     }
@@ -145,8 +179,194 @@ class IuranController extends Controller
     public function destroy(string $id)
     {
         $pembayaran = Pembayaran::findOrFail($id);
+        if ($pembayaran->bukti_pembayaran) {
+            Storage::disk('public')->delete($pembayaran->bukti_pembayaran);
+        }
         $pembayaran->delete();
 
         return redirect()->back()->with('success', 'Data pembayaran berhasil dihapus.');
+    }
+
+    public function rekap(Request $request)
+    {
+        $all_months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $tahun = $request->input('tahun', date('Y'));
+        $id_kelas = $request->input('id_kelas', 'semua');
+        $search = $request->input('search', '');
+
+        // Query santri
+        $query = Santri::where('status', 'aktif')->with(['kelas', 'pembayarans' => function($q) use ($tahun) {
+            $q->where('tahun', $tahun);
+        }]);
+
+        if ($id_kelas !== 'semua') {
+            $query->where('id_kelas', $id_kelas);
+        }
+
+        if (!empty($search)) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+
+        $santris = $query->orderBy('nama', 'asc')->get();
+
+        // Process matrix per santri
+        foreach ($santris as $santri) {
+            $monthly_map = [];
+            $lunas_count = 0;
+            $total_paid = 0;
+
+            $pembayaransByBulan = $santri->pembayarans->keyBy('bulan');
+
+            foreach ($all_months as $m) {
+                $pem = $pembayaransByBulan->get($m);
+                if ($pem && $pem->status === 'lunas') {
+                    $monthly_map[$m] = [
+                        'status' => 'lunas',
+                        'jumlah' => $pem->jumlah,
+                        'tanggal' => $pem->tanggal_bayar ? $pem->tanggal_bayar->format('d/m/Y') : '-',
+                        'bukti' => $pem->bukti_pembayaran ? asset('storage/' . $pem->bukti_pembayaran) : null,
+                        'pencatat' => $pem->dicatat_oleh ?? '-',
+                        'keterangan' => $pem->keterangan ?? '-',
+                    ];
+                    $lunas_count++;
+                    $total_paid += $pem->jumlah;
+                } else {
+                    $monthly_map[$m] = [
+                        'status' => $pem ? $pem->status : 'belum',
+                        'jumlah' => $pem ? $pem->jumlah : 0,
+                        'tanggal' => null,
+                        'bukti' => null,
+                        'pencatat' => null,
+                        'keterangan' => null,
+                    ];
+                }
+            }
+
+            $santri->monthly_map = $monthly_map;
+            $santri->lunas_count = $lunas_count;
+            $santri->total_paid = $total_paid;
+            $santri->tunggakan_count = 12 - $lunas_count;
+        }
+
+        // Available years
+        $years_in_db = Pembayaran::select('tahun')->distinct()->pluck('tahun')->toArray();
+        $years = array_unique(array_merge([date('Y')], $years_in_db));
+        rsort($years);
+
+        $classes = \App\Models\Kelas::all();
+
+        // Summary Metrics
+        $total_santri = $santris->count();
+        $total_terkumpul_tahun = Pembayaran::where('tahun', $tahun)->where('status', 'lunas')->sum('jumlah');
+        $target_setahun = $total_santri * 12 * 15000;
+        $lunas_full_count = $santris->filter(fn($s) => $s->lunas_count >= 12)->count();
+        $persentase_pelunasan = $target_setahun > 0 ? round(($total_terkumpul_tahun / $target_setahun) * 100) : 0;
+
+        return view('admin.iuran_rekap', compact(
+            'santris', 'all_months', 'tahun', 'id_kelas', 'search',
+            'years', 'classes', 'total_santri', 'total_terkumpul_tahun',
+            'target_setahun', 'lunas_full_count', 'persentase_pelunasan'
+        ));
+    }
+
+    public function cetakPdfRekap(Request $request)
+    {
+        $all_months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $tahun = $request->input('tahun', date('Y'));
+        $id_kelas = $request->input('id_kelas', 'semua');
+
+        $kelas = $id_kelas === 'semua' ? null : \App\Models\Kelas::find($id_kelas);
+
+        $query = Santri::where('status', 'aktif')->with(['kelas', 'pembayarans' => function($q) use ($tahun) {
+            $q->where('tahun', $tahun);
+        }]);
+
+        if ($id_kelas !== 'semua') {
+            $query->where('id_kelas', $id_kelas);
+        }
+
+        $santris = $query->orderBy('nama', 'asc')->get();
+
+        foreach ($santris as $santri) {
+            $monthly_map = [];
+            $lunas_count = 0;
+            $total_paid = 0;
+            $pembayaransByBulan = $santri->pembayarans->keyBy('bulan');
+
+            foreach ($all_months as $m) {
+                $pem = $pembayaransByBulan->get($m);
+                if ($pem && $pem->status === 'lunas') {
+                    $monthly_map[$m] = 'LUNAS';
+                    $lunas_count++;
+                    $total_paid += $pem->jumlah;
+                } else {
+                    $monthly_map[$m] = '-';
+                }
+            }
+
+            $santri->monthly_map = $monthly_map;
+            $santri->lunas_count = $lunas_count;
+            $santri->total_paid = $total_paid;
+        }
+
+        $user = Auth::user();
+        $nama_pengurus = $user ? $user->name : 'Bendahara TPA';
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.iuran_rekap_pdf', compact(
+            'santris', 'all_months', 'tahun', 'kelas', 'nama_pengurus'
+        ))->setPaper('a4', 'landscape');
+
+        $kelasName = $kelas ? $kelas->nama_kelas : 'Semua_Kelas';
+        return $pdf->download('Rekap_Iuran_'.$kelasName.'_'.$tahun.'.pdf');
+    }
+
+    public function previewPdfRekap(Request $request)
+    {
+        $all_months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $tahun = $request->input('tahun', date('Y'));
+        $id_kelas = $request->input('id_kelas', 'semua');
+
+        $kelas = $id_kelas === 'semua' ? null : \App\Models\Kelas::find($id_kelas);
+
+        $query = Santri::where('status', 'aktif')->with(['kelas', 'pembayarans' => function($q) use ($tahun) {
+            $q->where('tahun', $tahun);
+        }]);
+
+        if ($id_kelas !== 'semua') {
+            $query->where('id_kelas', $id_kelas);
+        }
+
+        $santris = $query->orderBy('nama', 'asc')->get();
+
+        foreach ($santris as $santri) {
+            $monthly_map = [];
+            $lunas_count = 0;
+            $total_paid = 0;
+            $pembayaransByBulan = $santri->pembayarans->keyBy('bulan');
+
+            foreach ($all_months as $m) {
+                $pem = $pembayaransByBulan->get($m);
+                if ($pem && $pem->status === 'lunas') {
+                    $monthly_map[$m] = 'LUNAS';
+                    $lunas_count++;
+                    $total_paid += $pem->jumlah;
+                } else {
+                    $monthly_map[$m] = '-';
+                }
+            }
+
+            $santri->monthly_map = $monthly_map;
+            $santri->lunas_count = $lunas_count;
+            $santri->total_paid = $total_paid;
+        }
+
+        $user = Auth::user();
+        $nama_pengurus = $user ? $user->name : 'Bendahara TPA';
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.iuran_rekap_pdf', compact(
+            'santris', 'all_months', 'tahun', 'kelas', 'nama_pengurus'
+        ))->setPaper('a4', 'landscape');
+
+        return $pdf->stream('Preview_Rekap_Iuran.pdf');
     }
 }

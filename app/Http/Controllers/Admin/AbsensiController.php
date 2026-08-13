@@ -34,7 +34,8 @@ class AbsensiController extends Controller
         $total_students = $students->count();
 
         if ($total_students > 0) {
-            $existing_attendance = Absensi::whereIn('id_santri', $students->pluck('id_santri'))
+            $existing_attendance = Absensi::with('user.pengajar')
+                ->whereIn('id_santri', $students->pluck('id_santri'))
                 ->where('tanggal', $selected_date)
                 ->get()
                 ->keyBy('id_santri');
@@ -188,6 +189,7 @@ class AbsensiController extends Controller
                 'id_santri' => $id_santri,
                 'tanggal' => $date,
                 'status' => $status,
+                'id_user' => auth()->id(),
             ]);
         }
 

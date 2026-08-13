@@ -523,6 +523,7 @@
                             <th>Santri</th>
                             <th>Kelas</th>
                             <th style="text-align: center;">Status Kehadiran</th>
+                            <th style="text-align: center;">Dicatat Oleh</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -563,10 +564,24 @@
                                         <button type="button" class="status-btn {{ $status == 'alfa' ? 'active-alpa' : '' }}" {!! $onAlfa !!}>Alpa</button>
                                     </div>
                                 </td>
+                                <td style="text-align: center; font-weight: 600; color: #003227;">
+                                    @php
+                                        $pencatat = '-';
+                                        if ($existing_attendance->has($student->id_santri)) {
+                                            $attendanceRecord = $existing_attendance[$student->id_santri];
+                                            if ($attendanceRecord->user) {
+                                                $pencatat = $attendanceRecord->user->pengajar ? $attendanceRecord->user->pengajar->nama : $attendanceRecord->user->name;
+                                            } else {
+                                                $pencatat = 'Sistem';
+                                            }
+                                        }
+                                    @endphp
+                                    {{ $pencatat }}
+                                </td>
                             </tr>
                         @empty
                             <tr class="empty-row">
-                                <td colspan="3">
+                                <td colspan="4">
                                     <div class="empty-state">
                                         <span class="material-symbols-outlined empty-icon">group</span>
                                         <p style="margin: 0; font-weight: 600; font-size: 16px;">Tidak ada data santri ditemukan</p>
@@ -576,7 +591,7 @@
                             </tr>
                         @endforelse
                         <tr id="noSearchResult" style="display: none;">
-                            <td colspan="3">
+                            <td colspan="4">
                                 <div class="empty-state">
                                     <span class="material-symbols-outlined empty-icon">search_off</span>
                                     <p style="margin: 0; font-weight: 600; font-size: 16px;">Data Santri tidak ditemukan</p>
