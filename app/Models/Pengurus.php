@@ -16,7 +16,6 @@ class Pengurus extends Model
         'is_kepala',
         'no_hp',
         'alamat',
-        'quote',
         'foto',
         'id_user',
     ];

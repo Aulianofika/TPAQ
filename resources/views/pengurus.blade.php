@@ -458,14 +458,12 @@
                 <div class="kepala-info">
                     <span class="role-badge kepala">Kepala TPA</span>
                     <h3 class="kepala-name">{{ $kepala->nama }}</h3>
-                    @if($kepala->quote)
                     <div class="kepala-quote-box">
                         <svg class="quote-mark-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
                         </svg>
-                        <p class="kepala-quote-text">"{{ $kepala->quote }}"</p>
+                        <p class="kepala-quote-text">"Kami membantu menanamkan benih, namun Ayah dan Bundalah yang menyiramnya di rumah"</p>
                     </div>
-                    @endif
                 </div>
             </div>
             @endif
@@ -487,9 +485,6 @@
                     </div>
                     <h3 class="member-name">{{ $pengurus->nama }}</h3>
                     <span class="role-badge pengurus">Pengurus TPA</span>
-                    @if($pengurus->quote)
-                        <p class="member-quote">"{{ $pengurus->quote }}"</p>
-                    @endif
                 </div>
                 @endforeach
             </div>

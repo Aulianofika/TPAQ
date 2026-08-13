@@ -59,7 +59,6 @@ class PengurusController extends Controller
             'jenis_kelamin' => 'required|in:L,P',
             'no_hp' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
-            'quote' => 'nullable|string',
             'is_kepala' => 'nullable|boolean',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ], $messages);
@@ -96,7 +95,6 @@ class PengurusController extends Controller
             'jenis_kelamin' => 'required|in:L,P',
             'no_hp' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
-            'quote' => 'nullable|string',
             'is_kepala' => 'nullable|boolean',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ], $messages);
